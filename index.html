@@ -1,12 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="lt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DP FILMS | Dominik Šuškevič</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>DP.PORTFOLIO | Dominik Šuškevič | Kino operatorius</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Dominik Šuškevič – kino operatorius ir režisierius. Tarptautinių festivalių nugalėtojas, kuriantis atmosferinius trumpametražius filmus, pasižyminčius unikaliu šviesos dizainu ir kinematografine estetika.">
+    <meta name="keywords" content="Dominik Šuškevič, kino operatorius, kinematografija, režisierius, filmai, DP portfolio, Kaunas, Frozen Time, kino gamyba">
+    <meta name="author" content="Dominik Šuškevič">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://films.dominikphotofficial.lt">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://films.dominikphotofficial.lt">
+    <meta property="og:title" content="DP.PORTFOLIO | Dominik Šuškevič | Kino operatorius">
+    <meta property="og:description" content="Atraskite apdovanojimus pelniusius kino projektus ir vizualines istorijas, sukurtas kino operatoriaus Dominik Šuškevič.">
+    <meta property="og:image" content="https://portfolio.dominikphotofficial.lt/assets/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://films.dominikphotofficial.lt">
+    <meta property="twitter:title" content="DP.PORTFOLIO | Dominik Šuškevič | Kino operatorius">
+    <meta property="twitter:description" content="Atraskite apdovanojimus pelniusius kino projektus ir vizualines istorijas, sukurtas kino operatoriaus Dominik Šuškevič.">
+    <meta property="twitter:image" content="https://portfolio.dominikphotofficial.lt/assets/og-image.jpg">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;700&display=swap" rel="stylesheet">
+
     <style>
         * {
             margin: 0;
@@ -15,58 +39,90 @@
         }
         html {
             scroll-behavior: smooth;
+            background-color: #060606;
         }
         body {
-            background-color: #0b0b0b;
+            background-color: #060606;
             color: #ffffff;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.01em;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
         }
+        
+        /* Кинематографичный фоновый свет */
+        .ambient-glow {
+            position: absolute;
+            top: 0;
+            left: 25%;
+            width: 60vw;
+            height: 70vh;
+            background: radial-gradient(circle, rgba(17,57,57,0.18) 0%, rgba(6,6,6,0) 70%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            background-color: rgba(11, 11, 11, 0.85);
-            backdrop-filter: blur(20px);
+            background-color: rgba(6, 6, 6, 0.75);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
         }
         .nav-container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 30px 40px;
+            padding: 25px 5%;
         }
         .logo {
-            font-weight: 600;
-            font-size: 0.95rem;
-            letter-spacing: 0.15em;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.25em;
             color: #ffffff;
             text-decoration: none;
+            transition: opacity 0.3s;
+        }
+        .logo:hover {
+            opacity: 0.8;
         }
         .logo span {
             color: #113939;
         }
+        nav {
+            display: flex;
+            align-items: center;
+        }
         nav a {
-            color: #777777;
+            color: #888888;
             text-decoration: none;
-            margin-left: 40px;
-            font-size: 0.85rem;
+            margin-left: 45px;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            transition: color 0.4s ease;
+            letter-spacing: 0.15em;
+            font-weight: 600;
+            transition: color 0.4s ease, transform 0.3s ease;
         }
         nav a:hover {
             color: #ffffff;
+            transform: translateY(-1px);
         }
+
         section {
-            padding: 140px 40px;
-            max-width: 1400px;
+            padding: 160px 5%;
+            max-width: 1600px;
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
+        
         .hero {
             height: 100vh;
             display: flex;
@@ -74,112 +130,164 @@
             justify-content: center;
             align-items: flex-start;
             padding-top: 0;
+            padding-bottom: 5vh;
+        }
+        .hero-meta {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: #113939;
+            margin-bottom: 25px;
+            font-weight: 700;
         }
         .hero h1 {
-            font-size: 5rem;
-            font-weight: 200;
+            font-size: calc(2.8rem + 2.5vw);
+            font-weight: 100;
             line-height: 1.05;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             letter-spacing: -0.04em;
-            max-width: 900px;
+            max-width: 1100px;
         }
         .hero h1 span {
-            color: #113939;
-            font-weight: 400;
+            color: #ffffff;
+            font-weight: 600;
+            position: relative;
+        }
+        .hero h1 span::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 8px;
+            width: 100%;
+            height: 2px;
+            background-color: #113939;
+            opacity: 0.5;
         }
         .hero p {
-            font-size: 1.25rem;
-            color: #666666;
-            font-weight: 400;
-            margin-bottom: 50px;
-            max-width: 650px;
-            line-height: 1.5;
+            font-size: calc(1rem + 0.3vw);
+            color: #777777;
+            font-weight: 300;
+            margin-bottom: 60px;
+            max-width: 700px;
+            line-height: 1.6;
         }
         .btn {
-            display: inline-block;
-            padding: 18px 40px;
-            border: 1px solid #113939;
+            display: inline-flex;
+            align-items: center;
+            padding: 20px 45px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(180deg, rgba(17,57,57,0.1) 0%, rgba(17,57,57,0) 100%);
             color: #ffffff;
             text-decoration: none;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            border-radius: 2px;
-            transition: background-color 0.4s ease, border-color 0.4s ease;
-        }
-        .btn:hover {
-            background-color: #113939;
-        }
-        .section-title {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 0.2em;
-            color: #113939;
-            margin-bottom: 80px;
             font-weight: 600;
+            border-radius: 2px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
         }
+        .btn:hover {
+            border-color: #113939;
+            background: #113939;
+            box-shadow: 0 0 30px rgba(17, 57, 57, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: #113939;
+            margin-bottom: 90px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        .section-title::before {
+            content: '';
+            width: 30px;
+            height: 1px;
+            background-color: #113939;
+            margin-right: 15px;
+        }
+
         .about-layout {
             display: grid;
             grid-template-columns: 1.2fr 0.8fr;
-            gap: 100px;
+            gap: 120px;
         }
         .about-text p {
-            color: #999999;
-            margin-bottom: 30px;
-            font-size: 1.35rem;
-            font-weight: 200;
-            line-height: 1.6;
+            color: #ababab;
+            margin-bottom: 35px;
+            font-size: calc(1.1rem + 0.3vw);
+            font-weight: 300;
+            line-height: 1.65;
         }
         .about-text p strong {
             color: #ffffff;
-            font-weight: 400;
+            font-weight: 600;
         }
         .meta-links {
             display: flex;
-            gap: 30px;
-            margin-top: 50px;
+            gap: 40px;
+            margin-top: 60px;
         }
         .meta-links a {
             color: #ffffff;
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.1em;
             opacity: 0.4;
-            transition: opacity 0.4s ease, color 0.4s ease;
+            font-weight: 600;
+            transition: all 0.4s ease;
+            display: inline-flex;
+            align-items: center;
         }
         .meta-links a:hover {
             opacity: 1;
             color: #113939;
         }
+        .about-awards {
+            border-left: 1px solid rgba(17, 57, 57, 0.3);
+            padding-left: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
         .award-badge {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.2em;
             color: #113939;
-            margin-bottom: 15px;
-            font-weight: 600;
+            margin-bottom: 20px;
+            font-weight: 700;
         }
         .award-title {
-            font-size: 1.8rem;
-            font-weight: 200;
+            font-size: calc(1.4rem + 0.4vw);
+            font-weight: 300;
             line-height: 1.3;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            letter-spacing: -0.02em;
         }
         .award-venue {
-            color: #555555;
-            font-size: 0.95rem;
+            color: #666666;
+            font-size: 0.9rem;
+            font-weight: 400;
         }
+
         .showreel-section {
-            padding: 60px 40px;
+            padding: 80px 5%;
         }
-        .showreel-wrapper {
+        .showreel-container {
             position: relative;
             padding-bottom: 56.25%;
             height: 0;
             background-color: #000;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.7);
         }
-        .showreel-wrapper iframe {
+        .showreel-container iframe {
             position: absolute;
             top: 0;
             left: 0;
@@ -187,16 +295,16 @@
             height: 100%;
             border: 0;
         }
+
         .works-list {
             display: flex;
             flex-direction: column;
-            gap: 120px;
-            margin-top: 40px;
+            gap: 160px;
         }
         .work-item {
             display: grid;
-            grid-template-columns: 1.3fr 0.7fr;
-            gap: 60px;
+            grid-template-columns: 1.25fr 0.75fr;
+            gap: 80px;
             align-items: center;
         }
         .video-viewport {
@@ -204,7 +312,8 @@
             padding-bottom: 56.25%;
             height: 0;
             background-color: #000;
-            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            transition: transform 0.5s ease;
         }
         .video-viewport iframe {
             position: absolute;
@@ -218,166 +327,182 @@
             padding-left: 20px;
         }
         .work-category {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.2em;
             color: #113939;
-            margin-bottom: 15px;
-            font-weight: 600;
+            margin-bottom: 20px;
+            font-weight: 700;
         }
         .work-title {
-            font-size: 2.2rem;
-            font-weight: 200;
-            margin-bottom: 20px;
+            font-size: calc(1.8rem + 0.5vw);
+            font-weight: 300;
+            margin-bottom: 25px;
             letter-spacing: -0.03em;
         }
         .work-description {
-            color: #666666;
+            color: #777777;
             font-size: 1rem;
-            line-height: 1.6;
-            font-weight: 400;
+            line-height: 1.7;
+            font-weight: 300;
         }
+
         .contact-layout {
-            max-width: 800px;
+            max-width: 1000px;
         }
         .contact-layout p {
-            font-size: 2rem;
-            font-weight: 200;
+            font-size: calc(1.6rem + 0.6vw);
+            font-weight: 100;
             line-height: 1.4;
-            color: #999999;
-            margin-bottom: 50px;
+            color: #ababab;
+            letter-spacing: -0.03em;
         }
         .contact-layout p a {
             color: #ffffff;
             text-decoration: none;
+            font-weight: 400;
             border-bottom: 1px solid #113939;
-            transition: color 0.4s ease, border-color 0.4s ease;
+            transition: all 0.4s ease;
+            padding-bottom: 4px;
         }
         .contact-layout p a:hover {
             color: #113939;
             border-color: #ffffff;
         }
+
         footer {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
-            padding: 80px 40px;
-            border-top: 1px solid #151515;
+            padding: 100px 5% 60px 5%;
+            border-top: 1px solid rgba(255,255,255,0.02);
             display: flex;
+            flex-direction: row;
             justify-content: space-between;
             align-items: center;
             color: #444444;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             letter-spacing: 0.05em;
         }
-        footer a {
+        .footer-right a {
             color: #444444;
             text-decoration: none;
+            font-weight: 600;
             transition: color 0.3s ease;
         }
-        footer a:hover {
+        .footer-right a:hover {
             color: #ffffff;
         }
+
+        /* Анимации появления */
         .fade-in {
             opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 1s cubic-bezier(0.215, 0.610, 0.355, 1), transform 1s cubic-bezier(0.215, 0.610, 0.355, 1);
+            transform: translateY(50px);
+            transition: opacity 1.2s cubic-bezier(0.165, 0.84, 0.44, 1), transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
         .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Полная адаптивность под планшеты и смартфоны */
+        @media (max-width: 1200px) {
+            .about-layout { gap: 60px; }
+            .work-item { gap: 40px; }
+        }
         @media (max-width: 992px) {
             .hero h1 { font-size: 3.5rem; }
-            .about-layout, .work-item { grid-template-columns: 1fr; gap: 50px; }
+            .about-layout { grid-template-columns: 1fr; gap: 60px; }
+            .about-awards { border-left: none; border-top: 1px solid rgba(17, 57, 57, 0.3); padding-left: 0; padding-top: 40px; }
+            .work-item { grid-template-columns: 1fr; gap: 40px; }
             .work-details { padding-left: 0; }
+        }
+        @media (max-width: 768px) {
+            .nav-container { padding: 20px 6%; }
             nav { display: none; }
+            section { padding: 100px 6%; }
+            .hero h1 { font-size: 2.8rem; }
+            .hero p { margin-bottom: 40px; }
+            footer { flex-direction: column; gap: 20px; text-align: center; padding: 60px 6% 40px 6%; }
         }
     </style>
 </head>
 <body>
 
+    <div class="ambient-glow"></div>
+
     <header>
         <div class="nav-container">
-            <a href="#" class="logo">DP <span>FILMS</span></a>
+            <a href="#" class="logo">DP.<span>FILMS</span></a>
             <nav>
-                <a href="#about">Overview</a>
+                <a href="#about">Apžvalga</a>
                 <a href="#showreel">Showreel</a>
-                <a href="#projects">Selected Works</a>
-                <a href="#contact">Contact</a>
+                <a href="#projects">Kino darbai</a>
+                <a href="#contact">Kontaktai</a>
             </nav>
         </div>
     </header>
 
     <main>
         <section class="hero">
-            <h1>Cinematography is the art of <span>sculpting light</span> and time.</h1>
-            <p>A refined portfolio of moving images, focused on atmospheric narratives, precision composition, and high-end independent film production.</p>
-            <a href="#showreel" class="btn">Play Showreel</a>
+            <div class="hero-meta">DP.PORTFOLIO &copy; 2026</div>
+            <h1>Kinematografija yra menas <span>lipdyti šviesą</span> ir laiką.</h1>
+            <p>Subtilus judančių vaizdų archyvas, orientuotas į gilias atmosferines istorijas, griežtą kadrų geometriją ir nepriklausomo kino gamybą.</p>
+            <a href="#showreel" class="btn">Paleisti Showreel</a>
         </section>
 
         <section id="about" class="fade-in">
-            <div class="section-title">Overview</div>
+            <div class="section-title">Apžvalga</div>
             <div class="about-layout">
                 <div class="about-text">
-                    <p>I am a Lithuanian-based cinematographer and director, dedicated to capturing <strong>raw emotional depth</strong> through sophisticated visual language.</p>
-                    <p>By blending the discipline of traditional analog photography with cutting-edge digital technology, I construct immersive cinematic spaces where lighting defines the story.</p>
+                    <p>Esu vizualaus meno kūrėjas, kino operatorius ir režisierius, siekiantis užfiksuoti <strong>tikrą emocinį gylį</strong> per griežtą vizualinę kalbą.</p>
+                    <p>Sujungdamas tradicinės analoginės fotografijos discipliną su skaitmeninėmis technologijomis, kuriu įtraukiančias kinematografines erdves, kuriose šviesa diktuoja siužetą.</p>
                     <div class="meta-links">
-                        <a href="https://www.imdb.com" target="_blank">IMDb Profile</a>
+                        <a href="https://www.imdb.com" target="_blank">IMDb Profilis</a>
                         <a href="https://www.kinopoisk.ru" target="_blank">Kinopoisk</a>
                     </div>
                 </div>
                 <div class="about-awards">
-                    <div class="award-badge">Festival Recognition</div>
-                    <div class="award-title">I Prize — "Frozen Time"</div>
-                    <div class="award-venue">„Ąžuolynas“ International Film Festival (2026)</div>
+                    <div class="award-badge">Festivalių įvertinimai</div>
+                    <div class="award-title">I vieta — „Frozen Time“</div>
+                    <div class="award-venue">„Ąžuolynas“ tarptautinis kino festivalis | 2026</div>
                 </div>
             </div>
         </section>
 
         <section id="showreel" class="showreel-section fade-in">
-            <div class="section-title">Cinematography Showreel</div>
-            <div class="showreel-wrapper">
-                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&showinfo=0&modestbranding=1" allowfullscreen></iframe>
+            <div class="section-title">Kino operatoriaus Showreel</div>
+            <div class="showreel-container">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&amp;controls=1&amp;showinfo=0&amp;modestbranding=1" allowfullscreen></iframe>
             </div>
         </section>
 
         <section id="projects" class="fade-in">
-            <div class="section-title">Selected Works</div>
+            <div class="section-title">Pasirinkti kino darbai</div>
             <div class="works-list">
                 <div class="work-item">
                     <div class="video-viewport">
-                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&showinfo=0&modestbranding=1" allowfullscreen></iframe>
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&amp;controls=1&amp;showinfo=0&amp;modestbranding=1" allowfullscreen></iframe>
                     </div>
                     <div class="work-details">
-                        <div class="work-category">Short Film / Main Prize</div>
+                        <div class="work-category">Trumpametražis filmas / Pagrindinis prizas</div>
                         <div class="work-title">Frozen Time</div>
-                        <div class="work-description">An award-winning cinematic meditation on isolation and the architectural passage of time. Shot with high-contrast shadows and strict spatial geometry.</div>
-                    </div>
-                </div>
-                <div class="work-item">
-                    <div class="video-viewport">
-                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&showinfo=0&modestbranding=1" allowfullscreen></iframe>
-                    </div>
-                    <div class="work-details">
-                        <div class="work-category">Narrative Fiction</div>
-                        <div class="work-title">Upcoming Project</div>
-                        <div class="work-description">A deep dive into complex lighting scenarios, character-driven close-ups, and handheld kinetic camerawork. Currently in post-production.</div>
+                        <div class="work-description">Apdovanojimą pelniusi kinematografinė meditacija apie izoliaciją ir laiko tėkmę. Filmas sukurtas naudojant aukšto kontrasto šešėlius bei griežtą erdvinę geometriją.</div>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="contact" class="fade-in">
-            <div class="section-title">Inquiries</div>
+            <div class="section-title">Užklausos</div>
             <div class="contact-layout">
-                <p>For narrative scripts, commercial treatments, or collaborative film projects worldwide, please connect via <a href="mailto:info@dominikphotofficial.lt">info@dominikphotofficial.lt</a></p>
+                <p>Dėl bendrų kino projektų, komercinių užsakymų ar scenarijų ekranizavimo susisiekite el. paštu: <a href="mailto:info@dominikphotofficial.lt">info@dominikphotofficial.lt</a></p>
             </div>
         </section>
     </main>
 
     <footer>
-        <div>&copy; 2026 DP Portfolio. Dominik Šuškevič.</div>
-        <div>Designed for <a href="https://dominikphotofficial.lt" target="_blank">dominikphotofficial.lt</a></div>
+        <div class="footer-left">&copy; 2026 DP.PORTFOLIO. Dominik Šuškevič. Visos teisės saugomos.</div>
+        <div class="footer-right">Sukurta projektui <a href="https://portfolio.dominikphotofficial.lt" target="_blank">portfolio.dominikphotofficial.lt</a></div>
     </footer>
 
     <script>
