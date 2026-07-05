@@ -33,7 +33,7 @@ body {
     height: 100vh;
     pointer-events: none;
     z-index: 9999;
-    opacity: 0.04;
+    opacity: 0.05;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
@@ -44,9 +44,15 @@ body {
     width: 150vw;
     height: 150vh;
     transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(229, 176, 92, 0.05) 0%, rgba(10, 10, 12, 0) 60%);
+    background: radial-gradient(circle at center, rgba(229, 176, 92, 0.08) 0%, rgba(10, 10, 12, 0) 65%);
     z-index: -1;
     pointer-events: none;
+    animation: pulseGlow 8s ease-in-out infinite alternate;
+}
+
+@keyframes pulseGlow {
+    0% { opacity: 0.6; transform: translate(-50%, -50%) scale(0.95); }
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
 }
 
 .container {
@@ -70,12 +76,15 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    padding: 40px 5vw;
+    padding: 20px 5vw;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
-    mix-blend-mode: difference;
+    background: rgba(10, 10, 12, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--glass-border);
 }
 
 .logo {
@@ -84,7 +93,7 @@ header {
 }
 
 .logo img {
-    max-height: 60px;
+    max-height: 50px;
     width: auto;
     display: block;
     mix-blend-mode: screen;
@@ -140,7 +149,9 @@ header {
     left: 0;
     width: 100%;
     height: 100vh;
-    background-color: var(--bg);
+    background-color: rgba(10, 10, 12, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     z-index: 999;
     display: flex;
     align-items: center;
@@ -599,10 +610,10 @@ footer {
 
 @media (max-width: 768px) {
     header {
-        padding: 20px 5vw;
+        padding: 15px 5vw;
     }
     .logo img {
-        max-height: 45px;
+        max-height: 40px;
     }
     .data-row {
         flex-direction: column;
