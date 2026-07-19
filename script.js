@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Hamburger Menu Logic
     const hamburger = document.querySelector(".hamburger");
     const overlayMenu = document.querySelector(".overlay-menu");
     const menuLinks = document.querySelectorAll(".menu-link");
@@ -13,18 +14,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     menuLinks.forEach(link => {
         link.addEventListener("click", () => {
-            if (overlayMenu.classList.contains("active")) {
-                toggleMenu();
-            }
+            if (overlayMenu.classList.contains("active")) toggleMenu();
         });
     });
 
-    const observerOptions = {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.15
-    };
-
+    // Scroll Reveal Logic
+    const observerOptions = { root: null, rootMargin: "0px", threshold: 0.15 };
     const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -34,18 +29,15 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }, observerOptions);
 
-    document.querySelectorAll(".reveal").forEach(element => {
-        observer.observe(element);
-    });
+    document.querySelectorAll(".reveal").forEach(element => observer.observe(element));
 
+    // Magnetic Effect Logic
     const magnetics = document.querySelectorAll(".magnetic");
-    
     magnetics.forEach(magnetic => {
         magnetic.addEventListener("mousemove", (e) => {
             const position = magnetic.getBoundingClientRect();
             const x = e.clientX - position.left - position.width / 2;
             const y = e.clientY - position.top - position.height / 2;
-            
             magnetic.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
         });
 
@@ -59,6 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // Calculator Logic
     const calcDuration = document.getElementById("calc-duration");
     const calcComplexity = document.getElementById("calc-complexity");
     const calcTotal = document.getElementById("calc-total");
@@ -67,13 +60,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const duration = parseFloat(calcDuration.value) || 0;
         const complexity = parseFloat(calcComplexity.value) || 1;
         const basePricePerMinute = 10;
-        
         let total = duration * basePricePerMinute * complexity;
-        
-        if (total < 20) {
-            total = 20;
-        }
-
+        if (total < 20) total = 20;
         calcTotal.textContent = Math.round(total);
     };
 
@@ -81,4 +69,18 @@ document.addEventListener("DOMContentLoaded", () => {
         calcDuration.addEventListener("input", calculatePrice);
         calcComplexity.addEventListener("change", calculatePrice);
     }
+
+    // Language Toggle Logic
+    const langToggle = document.getElementById("lang-toggle");
+    let currentLang = "lt";
+    const translatableElements = document.querySelectorAll("[data-lt]");
+
+    langToggle.addEventListener("click", () => {
+        currentLang = currentLang === "lt" ? "en" : "lt";
+        langToggle.textContent = currentLang === "lt" ? "EN" : "LT";
+        
+        translatableElements.forEach(el => {
+            el.innerHTML = el.getAttribute(`data-${currentLang}`);
+        });
+    });
 });
