@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>DP FILMS | Dominik Šuškevič</title>
-    <meta name="description" content="Dominik Šuškevič – vaizdo įrašų kūrėjas ir operatorius. Vaizdo gamybos paslaugos ir asmeniniai kino projektai.">
+    <meta name="description" content="Dominik Šuškevič – kūrėjas, siekiantis profesionalaus kino operatoriaus meistriškumo. Vaizdo gamybos paslaugos ir asmeniniai kino projektai.">
     <meta name="keywords" content="Dominik Šuškevič, DP FILMS, vaizdo įrašų kūrimas, operatorius, kinematografija, Lietuva, Kaunas">
     <meta name="author" content="Dominik Šuškevič">
     <meta name="robots" content="index, follow, max-image-preview:large, max-video-preview:-1">
@@ -12,21 +12,24 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="DP FILMS">
     <meta property="og:title" content="DP FILMS | Dominik Šuškevič">
-    <meta property="og:description" content="Dominik Šuškevič – vaizdo įrašų kūrėjas ir operatorius. Vaizdo gamybos paslaugos ir asmeniniai kino projektai.">
+    <meta property="og:description" content="Dominik Šuškevič – kūrėjas, siekiantis profesionalaus kino operatoriaus meistriškumo.">
     <meta property="og:url" content="https://films.dominikphotofficial.lt/">
     <meta property="og:image" content="https://i.postimg.cc/cLk6K37Z/Frozen-time-2026.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="800">
     <meta property="og:locale" content="lt_LT">
+    
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="DP FILMS | Dominik Šuškevič">
-    <meta name="twitter:description" content="Dominik Šuškevič – vaizdo įrašų kūrėjas ir operatorius. Vaizdo gamybos paslaugos ir asmeniniai kino projektai.">
+    <meta name="twitter:description" content="Dominik Šuškevič – kūrėjas, siekiantis profesionalaus kino operatoriaus meistriškumo.">
     <meta name="twitter:image" content="https://i.postimg.cc/cLk6K37Z/Frozen-time-2026.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png">
     <link rel="stylesheet" href="style.css">
+
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -45,7 +48,7 @@
                 "@type": "Person",
                 "@id": "https://films.dominikphotofficial.lt/#person",
                 "name": "Dominik Šuškevič",
-                "jobTitle": "Videographer",
+                "jobTitle": "Cinematographer",
                 "url": "https://films.dominikphotofficial.lt/",
                 "sameAs": [
                     "https://www.imdb.com/name/nm18467620/",
@@ -62,20 +65,6 @@
                 "image": "https://i.postimg.cc/cLk6K37Z/Frozen-time-2026.png",
                 "director": {
                     "@id": "https://films.dominikphotofficial.lt/#person"
-                },
-                "description": "Trumpametražis studentų filmas apie pasaulį, kuriame šaltis tampa amžinas."
-            },
-            {
-                "@type": "Service",
-                "name": "Vaizdo įrašų kūrimas",
-                "provider": {
-                    "@id": "https://films.dominikphotofficial.lt/#person"
-                },
-                "offers": {
-                    "@type": "Offer",
-                    "price": "20.00",
-                    "priceCurrency": "EUR",
-                    "description": "Bazinė kaina už 2 minučių trukmės vaizdo įrašą."
                 }
             }
         ]
@@ -90,38 +79,41 @@
         <a href="#" class="logo magnetic">
             <img src="https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png" alt="DP FILMS">
         </a>
-        <button class="hamburger magnetic" aria-label="Meniu">
-            <span class="line"></span>
-            <span class="line"></span>
-        </button>
+        <div class="header-controls">
+            <button id="lang-toggle" class="lang-btn magnetic">EN</button>
+            <button class="hamburger magnetic" aria-label="Menu">
+                <span class="line"></span>
+                <span class="line"></span>
+            </button>
+        </div>
     </header>
 
     <div class="overlay-menu">
         <nav>
-            <a href="#apie-autoriu" class="menu-link">Apie autorių</a>
-            <a href="#kino-darbai" class="menu-link">Kino darbai</a>
-            <a href="#paslaugos" class="menu-link">Paslaugos</a>
-            <a href="#kontaktai" class="menu-link">Kontaktai</a>
-            <a href="https://portfolio.dominikphotofficial.lt" target="_blank" rel="noopener noreferrer" class="menu-link external">Fotografijos paslaugos</a>
+            <a href="#apie-autoriu" class="menu-link" data-lt="Apie autorių" data-en="About">Apie autorių</a>
+            <a href="#kino-darbai" class="menu-link" data-lt="Kino darbai" data-en="Selected Works">Kino darbai</a>
+            <a href="#paslaugos" class="menu-link" data-lt="Paslaugos" data-en="Services">Paslaugos</a>
+            <a href="#kontaktai" class="menu-link" data-lt="Kontaktai" data-en="Contacts">Kontaktai</a>
+            <a href="https://portfolio.dominikphotofficial.lt" target="_blank" rel="noopener noreferrer" class="menu-link external" data-lt="Fotografijos paslaugos" data-en="Photography Services">Fotografijos paslaugos</a>
         </nav>
     </div>
 
     <main>
         <section id="apie-autoriu" class="hero-section">
             <div class="container">
-                <h1 class="reveal">Kinematografija:<br><strong>ERDVĖ, ŠVIESA, EMOCIJA.</strong></h1>
+                <h1 class="reveal" data-lt="Kinematografija:<br><strong>ERDVĖ, ŠVIESA, EMOCIJA.</strong>" data-en="Cinematography:<br><strong>SPACE, LIGHT, EMOTION.</strong>">Kinematografija:<br><strong>ERDVĖ, ŠVIESA, EMOCIJA.</strong></h1>
                 <div class="author-grid">
                     <div class="author-image reveal">
                         <img src="https://i.postimg.cc/KvsGrfh4/imdb-portrait-D-S-1.jpg" alt="Dominik Šuškevič">
                     </div>
                     <div class="author-info reveal">
-                        <p>
-                            <strong>Dominik Šuškevič.</strong> Šis puslapis skirtas mano vaizdo įrašų kūrimo ir kinematografijos darbams.
+                        <p data-lt="<strong>Dominik Šuškevič.</strong> Šis puslapis atspindi mano kūrybinį kelią ir siekį tapti profesionaliu kino operatoriumi bei kūrėju." data-en="<strong>Dominik Šuškevič.</strong> This page reflects my creative journey and my ambition to become a professional cinematographer and creator.">
+                            <strong>Dominik Šuškevič.</strong> Šis puslapis atspindi mano kūrybinį kelią ir siekį tapti profesionaliu kino operatoriumi bei kūrėju.
                         </p>
-                        <p>
-                            Kuriu vaizdo įrašus ir gilinuosi į kino operatoriaus amatą. Naudoju Fujifilm X-S20 sistemą, didžiausią dėmesį skirdamas šviesai, erdvei ir kadro kompozicijai. Šiuo metu gyvenu ir dirbu Kaune.
+                        <p data-lt="Kinas man – tai menas, kur erdvė, šviesa ir emocija susilieja į vieną visumą. Dirbant su šešėliais ir šviesa, formuojamos figūros ir erdvės, leidžiančios žiūrovui išgyventi tikras emocijas. Nuo 2024 metų gyvendamas ir kurdamas Kaune, naudodamas Fujifilm X-S20 sistemą, aš mokausi ir gilinuosi į atmosferos kūrimą bei kadro geometriją." data-en="Cinema to me is an art where space, light, and emotion merge into one. By working with shadows and light, figures and spaces are formed, allowing the viewer to experience genuine emotions. Living and creating in Kaunas since 2024, using the Fujifilm X-S20 system, I am learning and delving into atmosphere creation and frame geometry.">
+                            Kinas man – tai menas, kur erdvė, šviesa ir emocija susilieja į vieną visumą. Dirbant su šešėliais ir šviesa, formuojamos figūros ir erdvės, leidžiančios žiūrovui išgyventi tikras emocijas. Nuo 2024 metų gyvendamas ir kurdamas Kaune, naudodamas Fujifilm X-S20 sistemą, aš mokausi ir gilinuosi į atmosferos kūrimą bei kadro geometriją.
                         </p>
-                        <a href="https://www.imdb.com/name/nm18467620/?ref_=ext_shr_lnk" target="_blank" rel="noopener noreferrer" class="btn magnetic">IMDB PROFILIS</a>
+                        <a href="https://www.imdb.com/name/nm18467620/?ref_=ext_shr_lnk" target="_blank" rel="noopener noreferrer" class="btn magnetic" data-lt="IMDB PROFILIS" data-en="IMDB PROFILE">IMDB PROFILIS</a>
                     </div>
                 </div>
             </div>
@@ -129,7 +121,7 @@
 
         <section id="kino-darbai" class="spotlight-section">
             <div class="container">
-                <div class="festival-badge reveal">
+                <div class="festival-badge reveal" data-lt="FESTIVAL WINNER | Ąžuolyno kino festivalis 2026 | I-oji vieta – Studentų kategorija" data-en="FESTIVAL WINNER | Ąžuolynas Film Festival 2026 | 1st Place – Student Category">
                     FESTIVAL WINNER | Ąžuolyno kino festivalis 2026 | I-oji vieta – Studentų kategorija
                 </div>
                 <div class="film-grid">
@@ -138,41 +130,47 @@
                     </div>
                     <div class="film-details reveal">
                         <h2>Frozen Time: What If</h2>
-                        <p>Trumpametražis studentų filmas apie pasaulį, kuriame šaltis tampa amžinas. Per asmeninius prisiminimus ir reikšmingas vietas filmas tyrinėja, kaip šiluma gali egzistuoti net ir nesibaigiančioje žiemoje. Tai asmeninis projektas, atspindintis mano mokymosi procesą ir vizualinius ieškojimus.</p>
+                        <p data-lt="Kas, jeigu žiema niekada nesibaigtų? „Frozen Time“ – tai trumpametražis studentų filmas apie pasaulį, kuriame šaltis tampa amžinas, o laikas tarsi sustingsta. Per asmeninius prisiminimus, reikšmingas vietas ir žmones filmas tyrinėja, kaip šiluma gali egzistuoti net ir nesibaigiančioje žiemoje. Tai asmeninis projektas, atspindintis mano mokymosi procesą ir vizualinius ieškojimus." data-en="What if winter never ended? 'Frozen Time' is a short student film about a world where cold becomes permanent, and time seems to stand still. Through personal memories, significant places, and people, the film explores how warmth can exist even in an endless winter. It is a personal project reflecting my learning process and visual explorations.">
+                            Kas, jeigu žiema niekada nesibaigtų? „Frozen Time“ – tai trumpametražis studentų filmas apie pasaulį, kuriame šaltis tampa amžinas, o laikas tarsi sustingsta. Per asmeninius prisiminimus, reikšmingas vietas ir žmones filmas tyrinėja, kaip šiluma gali egzistuoti net ir nesibaigiančioje žiemoje. Tai asmeninis projektas, atspindintis mano mokymosi procesą ir vizualinius ieškojimus.
+                        </p>
+                        
                         <div class="film-data-card">
-                            <h3>FILMO DUOMENYS</h3>
+                            <h3 data-lt="FILMO DUOMENYS" data-en="FILM DATA">FILMO DUOMENYS</h3>
                             <div class="data-row">
-                                <span class="data-label">KŪRĖJAS</span>
+                                <span class="data-label" data-lt="KŪRĖJAS" data-en="CREATOR">KŪRĖJAS</span>
                                 <span class="data-value">Dominik Šuškevič</span>
                             </div>
                             <div class="data-row">
-                                <span class="data-label">LOKACIJA</span>
+                                <span class="data-label" data-lt="LOKACIJA" data-en="LOCATION">LOKACIJA</span>
                                 <span class="data-value">Cirkliškis Manor</span>
                             </div>
                             <div class="data-row">
-                                <span class="data-label">SUKURTA</span>
+                                <span class="data-label" data-lt="SUKURTA" data-en="CREATED">SUKURTA</span>
                                 <span class="data-value">2026.01.02</span>
                             </div>
                             <div class="data-row">
-                                <span class="data-label">APDOVANOTAS</span>
+                                <span class="data-label" data-lt="APDOVANOTAS" data-en="AWARDED">APDOVANOTAS</span>
                                 <span class="data-value highlight">2026.04.30 (KTG)</span>
                             </div>
                             <div class="data-row">
-                                <span class="data-label">RENGINIO VIETA</span>
-                                <span class="data-value">Kauno tarptautinė<br>gimnazija</span>
-                            </div>
-                            <div class="data-row">
-                                <span class="data-label">MUZIKA</span>
+                                <span class="data-label" data-lt="MUZIKA" data-en="MUSIC">MUZIKA</span>
                                 <span class="data-value">Never Felt So Alone</span>
                             </div>
-                            <div class="data-action">
-                                <a href="https://www.imdb.com/title/tt42315532/?ref_=ext_shr_lnk" target="_blank" rel="noopener noreferrer" class="btn-imdb magnetic">IMDB</a>
+                        </div>
+
+                        <div class="rate-section">
+                            <h4 data-lt="ĮVERTINKITE FILMĄ" data-en="RATE THE FILM">ĮVERTINKITE FILMĄ</h4>
+                            <div class="rate-links">
+                                <a href="https://letterboxd.com/film/frozen-time-what-if/" target="_blank" class="rate-btn magnetic">Letterboxd</a>
+                                <a href="https://www.themoviedb.org/movie/1733078-frozen-time-what-if?language=en-US" target="_blank" class="rate-btn magnetic">TMDB</a>
+                                <a href="https://www.imdb.com/title/tt42315532/" target="_blank" class="rate-btn magnetic">IMDb</a>
+                                <a href="https://www.kinopoisk.ru/film/12823952/" target="_blank" class="rate-btn magnetic">Kinopoisk</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="video-container reveal">
-                    <iframe src="https://youtube.com/embed/0BRh5jcmt1w?is=_YdKI4gUcRwDYNIo?autoplay=0&controls=1&rel=0&showinfo=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/aqz-KE-bpKQ?autoplay=0&controls=1&rel=0&showinfo=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
             </div>
         </section>
@@ -181,27 +179,29 @@
             <div class="container">
                 <div class="services-grid reveal">
                     <div class="services-info">
-                        <h2>Vaizdo įrašų kūrimas</h2>
-                        <p>Kuriu vaizdo įrašus asmeniniams ir komerciniams projektams. Bazinė kaina prasideda nuo 20 € už maždaug 2 minučių trukmės vaizdo įrašą. Galutinė kaina priklauso nuo projekto sudėtingumo, lokacijų skaičiaus ir techninių reikalavimų.</p>
+                        <h2 data-lt="Vaizdo įrašų kūrimas" data-en="Video Production">Vaizdo įrašų kūrimas</h2>
+                        <p data-lt="Kuriu vaizdo įrašus asmeniniams ir komerciniams projektams. Bazinė kaina prasideda nuo 20 € už maždaug 2 minučių trukmės vaizdo įrašą. Galutinė kaina priklauso nuo projekto sudėtingumo, lokacijų skaičiaus ir techninių reikalavimų." data-en="I create videos for personal and commercial projects. The base price starts at 20 € for an approximately 2-minute video. The final price depends on the project's complexity, number of locations, and technical requirements.">
+                            Kuriu vaizdo įrašus asmeniniams ir komerciniams projektams. Bazinė kaina prasideda nuo 20 € už maždaug 2 minučių trukmės vaizdo įrašą. Galutinė kaina priklauso nuo projekto sudėtingumo, lokacijų skaičiaus ir techninių reikalavimų.
+                        </p>
                     </div>
                     <div class="calculator-card">
-                        <h3>Sąmatos skaičiuoklė</h3>
+                        <h3 data-lt="Sąmatos skaičiuoklė" data-en="Estimate Calculator">Sąmatos skaičiuoklė</h3>
                         <div class="calc-group">
-                            <label for="calc-duration">Vaizdo įrašo trukmė (minutėmis)</label>
+                            <label for="calc-duration" data-lt="Vaizdo įrašo trukmė (minutėmis)" data-en="Video duration (minutes)">Vaizdo įrašo trukmė (minutėmis)</label>
                             <input type="number" id="calc-duration" value="2" min="1" max="60">
                         </div>
                         <div class="calc-group">
-                            <label for="calc-complexity">Projekto sudėtingumas</label>
+                            <label for="calc-complexity" data-lt="Projekto sudėtingumas" data-en="Project complexity">Projekto sudėtingumas</label>
                             <select id="calc-complexity">
-                                <option value="1">Bazinė realizacija (Paprastas montažas, 1 lokacija)</option>
-                                <option value="1.5">Vidutinis sudėtingumas (Kūrybinis montažas, kelios lokacijos)</option>
-                                <option value="2.5">Aukštas lygis (Sudėtingas apšvietimas, spalvų korekcija)</option>
+                                <option value="1" data-lt="Bazinė realizacija (Paprastas montažas, 1 lokacija)" data-en="Basic realization (Simple editing, 1 location)">Bazinė realizacija (Paprastas montažas, 1 lokacija)</option>
+                                <option value="1.5" data-lt="Vidutinis sudėtingumas (Kūrybinis montažas, kelios lokacijos)" data-en="Medium complexity (Creative editing, multiple locations)">Vidutinis sudėtingumas (Kūrybinis montažas, kelios lokacijos)</option>
+                                <option value="2.5" data-lt="Aukštas lygis (Sudėtingas apšvietimas, spalvų korekcija)" data-en="High level (Complex lighting, color grading)">Aukštas lygis (Sudėtingas apšvietimas, spalvų korekcija)</option>
                             </select>
                         </div>
                         <div class="calc-result">
-                            Orientacinė kaina: <span id="calc-total">20</span> €
+                            <span data-lt="Orientacinė kaina:" data-en="Estimated price:">Orientacinė kaina:</span> <strong id="calc-total">20</strong> €
                         </div>
-                        <p class="calc-note">*Tai yra preliminari kaina. Dėl tikslios sąmatos susisiekite nurodytais kontaktais.</p>
+                        <p class="calc-note" data-lt="*Tai yra preliminari kaina. Dėl tikslios sąmatos susisiekite nurodytais kontaktais." data-en="*This is an estimated price. For an exact quote, please contact me directly.">*Tai yra preliminari kaina. Dėl tikslios sąmatos susisiekite nurodytais kontaktais.</p>
                     </div>
                 </div>
             </div>
@@ -210,8 +210,8 @@
         <section id="kontaktai" class="contact-section">
             <div class="container">
                 <div class="contact-wrapper reveal">
-                    <h2>Susisiekite</h2>
-                    <p class="contact-desc">Jei turite idėją vaizdo įrašui arba norite bendradarbiauti, parašykite man.</p>
+                    <h2 data-lt="Susisiekite" data-en="Get in Touch">Susisiekite</h2>
+                    <p class="contact-desc" data-lt="Jei turite idėją vaizdo įrašui arba norite bendradarbiauti, parašykite man." data-en="If you have a video idea or want to collaborate, drop me a message.">Jei turite idėją vaizdo įrašui arba norite bendradarbiauti, parašykite man.</p>
                     <a href="mailto:Dominikphotofficial.lt@gmail.com" class="email-link magnetic">Dominikphotofficial.lt@gmail.com</a>
                     
                     <div class="social-icons">
@@ -232,7 +232,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 DP Corporation. Visos teisės saugomos.</p>
+            <p>&copy; 2026 DP Corporation. <span data-lt="Visos teisės saugomos." data-en="All rights reserved.">Visos teisės saugomos.</span></p>
         </div>
     </footer>
 
