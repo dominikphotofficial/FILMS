@@ -1,7 +1,7 @@
 :root {
     --bg: #060606;
     --text: #FFFFFF;
-    --text-muted: #A0A0A5;
+    --text-muted: #888888;
     --accent: #FFFFFF;
     --radius: 12px;
     --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
@@ -39,21 +39,20 @@ body {
 
 .animated-bg {
     position: fixed;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.02) 0%, transparent 30%);
-    animation: slowPan 25s ease-in-out infinite alternate;
+    top: 50%;
+    left: 50%;
+    width: 150vw;
+    height: 150vh;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.04) 0%, rgba(6, 6, 6, 0) 60%);
     z-index: -2;
     pointer-events: none;
+    animation: pulseGlow 10s ease-in-out infinite alternate;
 }
 
-@keyframes slowPan {
-    0% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(2%, 3%) scale(1.05); }
-    100% { transform: translate(-2%, -1%) scale(1); }
+@keyframes pulseGlow {
+    0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.9); }
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
 }
 
 .container {
@@ -69,7 +68,7 @@ section {
 a {
     text-decoration: none;
     color: inherit;
-    transition: color 0.4s ease;
+    transition: all 0.4s ease;
 }
 
 header {
@@ -82,10 +81,9 @@ header {
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
-    background: rgba(6, 6, 6, 0.7);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: linear-gradient(to bottom, rgba(6, 6, 6, 0.9) 0%, rgba(6, 6, 6, 0) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .logo {
@@ -94,25 +92,46 @@ header {
 }
 
 .logo img {
-    max-height: 50px;
+    max-height: 45px;
     width: auto;
     display: block;
     mix-blend-mode: screen;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.lang-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+    transition: color 0.3s ease;
+}
+
+.lang-btn:hover {
+    color: var(--accent);
 }
 
 .hamburger {
     background: transparent;
     border: none;
     cursor: pointer;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-end;
     gap: 8px;
     z-index: 1001;
-    will-change: transform;
 }
 
 .hamburger .line {
@@ -122,23 +141,14 @@ header {
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.hamburger .line:nth-child(1) {
-    width: 30px;
-}
-
-.hamburger .line:nth-child(2) {
-    width: 20px;
-}
-
-.hamburger:hover .line {
-    width: 30px;
-}
+.hamburger .line:nth-child(1) { width: 30px; }
+.hamburger .line:nth-child(2) { width: 20px; }
+.hamburger:hover .line { width: 30px; }
 
 .hamburger.active .line:nth-child(1) {
     transform: translateY(4.5px) rotate(45deg);
     width: 30px;
 }
-
 .hamburger.active .line:nth-child(2) {
     transform: translateY(-4.5px) rotate(-45deg);
     width: 30px;
@@ -194,9 +204,7 @@ header {
 .overlay-menu.active .menu-link:nth-child(4) { transition-delay: 0.25s; }
 .overlay-menu.active .menu-link:nth-child(5) { transition-delay: 0.3s; }
 
-.menu-link:hover {
-    color: var(--text-muted);
-}
+.menu-link:hover { color: var(--text-muted); }
 
 .menu-link.external {
     font-size: clamp(1rem, 2vw, 1.5rem);
@@ -223,9 +231,7 @@ h1 {
     margin-bottom: 100px;
 }
 
-h1 strong {
-    font-weight: 700;
-}
+h1 strong { font-weight: 700; }
 
 .author-grid {
     display: grid;
@@ -244,9 +250,7 @@ h1 strong {
     transition: filter 0.8s ease;
 }
 
-.author-image:hover img {
-    filter: grayscale(0%);
-}
+.author-image:hover img { filter: grayscale(0%); }
 
 .author-info p {
     font-size: clamp(1.1rem, 1.5vw, 1.5rem);
@@ -275,7 +279,6 @@ h1 strong {
     text-transform: uppercase;
     background: transparent;
     transition: all 0.4s ease;
-    will-change: transform;
     margin-top: 30px;
 }
 
@@ -374,34 +377,42 @@ h1 strong {
     font-weight: 700;
 }
 
-.data-action {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 30px;
+.rate-section {
+    margin-top: 50px;
+    text-align: center;
 }
 
-.btn-imdb {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 15px 50px;
-    border: 1px solid var(--accent);
-    color: var(--text);
+.rate-section h4 {
+    font-size: 0.85rem;
     font-weight: 300;
-    font-size: 1rem;
+    color: var(--text-muted);
     letter-spacing: 0.2em;
+    margin-bottom: 20px;
     text-transform: uppercase;
-    background: transparent;
-    transition: all 0.4s ease;
-    will-change: transform;
-    border-radius: 4px;
 }
 
-.btn-imdb:hover {
+.rate-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.rate-btn {
+    padding: 12px 24px;
+    border: 1px solid var(--glass-border);
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all 0.4s ease;
+}
+
+.rate-btn:hover {
     background: var(--accent);
     color: var(--bg);
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+    border-color: var(--accent);
 }
 
 .video-container {
@@ -459,9 +470,7 @@ h1 strong {
     letter-spacing: 0.1em;
 }
 
-.calc-group {
-    margin-bottom: 30px;
-}
+.calc-group { margin-bottom: 30px; }
 
 .calc-group label {
     display: block;
@@ -487,9 +496,7 @@ h1 strong {
 }
 
 .calc-group input:focus,
-.calc-group select:focus {
-    border-color: var(--accent);
-}
+.calc-group select:focus { border-color: var(--accent); }
 
 .calc-result {
     font-size: 1.2rem;
@@ -499,7 +506,7 @@ h1 strong {
     border-top: 1px solid var(--glass-border);
 }
 
-.calc-result span {
+.calc-result strong {
     font-size: 2.5rem;
     font-weight: 700;
     color: var(--accent);
@@ -511,9 +518,7 @@ h1 strong {
     margin-top: 20px;
 }
 
-.contact-section {
-    text-align: center;
-}
+.contact-section { text-align: center; }
 
 .contact-wrapper {
     background: var(--glass-bg);
@@ -541,7 +546,6 @@ h1 strong {
     font-weight: 300;
     display: inline-block;
     margin-bottom: 80px;
-    will-change: transform;
     border-bottom: 1px solid transparent;
     padding-bottom: 5px;
 }
@@ -561,18 +565,17 @@ h1 strong {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 60px;
-    height: 60px;
+    width: 65px;
+    height: 65px;
     border: 1px solid var(--glass-border);
     border-radius: 50%;
     transition: all 0.4s ease;
-    will-change: transform;
     background: transparent;
 }
 
 .social-icons svg {
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
     fill: var(--text);
     transition: fill 0.4s ease;
 }
@@ -580,12 +583,11 @@ h1 strong {
 .social-icons a:hover {
     background: var(--accent);
     border-color: var(--accent);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
 }
 
-.social-icons a:hover svg {
-    fill: var(--bg);
-}
+.social-icons a:hover svg { fill: var(--bg); }
 
 footer {
     text-align: center;
@@ -619,24 +621,15 @@ footer {
 }
 
 @media (max-width: 768px) {
-    header {
-        padding: 15px 5vw;
-    }
-    .logo img {
-        max-height: 40px;
-    }
+    header { padding: 15px 5vw; }
+    .logo img { max-height: 35px; }
     .data-row {
         flex-direction: column;
         align-items: flex-start;
         gap: 5px;
     }
-    .data-value {
-        text-align: left;
-    }
-    .calculator-card, .contact-wrapper {
-        padding: 30px 20px;
-    }
-    .social-icons {
-        gap: 20px;
-    }
+    .data-value { text-align: left; }
+    .calculator-card, .contact-wrapper { padding: 30px 20px; }
+    .social-icons { gap: 20px; }
+    .social-icons a { width: 55px; height: 55px; }
 }
