@@ -1,0 +1,7 @@
+{
+  "name": "DP FILMS | Dominik Šuškevič",
+  "description": "Dominik Šuškevič – kino operatorius ir režisierius. Autoriniai kino projektai, „Frozen Time: What If“, Ąžuolyno tarptautinio kino festivalio 2026 nugalėtojas.",
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
