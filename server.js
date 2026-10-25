@@ -12,15 +12,20 @@ const HOST = '0.0.0.0';
 // Serve static assets from root
 app.use(express.static(__dirname));
 
-// Direct route for English version
-app.get('/en', (req, res) => {
-  res.sendFile(path.join(__dirname, 'en.html'));
+// Route for English version
+app.get(['/en', '/en/'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'en', 'index.html'));
 });
 
-// Fallback to index.html for root or other routes
+// Route for Lithuanian version (redirect to root /)
+app.get(['/lt', '/lt/'], (req, res) => {
+  res.redirect(301, '/');
+});
+
+// Fallback route handler
 app.get('*', (req, res) => {
   if (req.path.startsWith('/en')) {
-    res.sendFile(path.join(__dirname, 'en.html'));
+    res.sendFile(path.join(__dirname, 'en', 'index.html'));
   } else {
     res.sendFile(path.join(__dirname, 'index.html'));
   }
