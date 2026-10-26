@@ -8,18 +8,23 @@ service firebase.storage {
           && request.auth.token.email == 'dominikphotofficial.lt@gmail.com';
     }
 
-    // Dedicated Film Portfolio uploads directory
-    match /film_uploads/{fileName} {
-      // Public visitors can ONLY upload files up to 25 MB
+    // =========================================================================
+    // Photography Portfolio Storage Rules (PRESERVED - DO NOT DELETE)
+    // =========================================================================
+    match /submissions/{fileName} {
+      // Public visitors can upload files up to 25 MB
       allow create: if request.resource.size < 25 * 1024 * 1024;
-
-      // Only the portfolio owner can read, download, or delete uploaded documents & scripts
       allow read, delete, update: if isAdmin();
     }
 
-    // Legacy submissions folder compatibility
-    match /submissions/{fileName} {
+    // =========================================================================
+    // Film Portfolio Storage Rules (APPENDED)
+    // =========================================================================
+    match /film_uploads/{fileName} {
+      // Public visitors can upload files up to 25 MB
       allow create: if request.resource.size < 25 * 1024 * 1024;
+
+      // Only Dominik Šuškevič can view, download, or delete uploaded files
       allow read, delete, update: if isAdmin();
     }
   }

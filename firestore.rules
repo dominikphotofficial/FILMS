@@ -8,25 +8,29 @@ service cloud.firestore {
           && request.auth.token.email == 'dominikphotofficial.lt@gmail.com';
     }
 
-    // Dedicated Film Portfolio submissions collection
-    match /film_submissions/{submissionId} {
-      // Public users can ONLY submit their proposals (no read, no list, no edit, no delete)
-      allow create: if request.resource.data.name is string
-                    && request.resource.data.contactType is string
-                    && request.resource.data.handle is string
-                    && request.resource.data.message is string;
-
-      // Full management access restricted strictly to Dominik Šuškevič
-      allow read, update, delete: if isAdmin();
-    }
-
-    // Legacy submissions collection for backward compatibility
+    // =========================================================================
+    // Photography Portfolio Rules (PRESERVED - DO NOT DELETE)
+    // =========================================================================
     match /submissions/{submissionId} {
       allow create: if request.resource.data.name is string;
       allow read, update, delete: if isAdmin();
     }
 
-    // Email queue collection (Firebase Trigger Email extension)
+    // =========================================================================
+    // Film Portfolio Rules (APPENDED)
+    // =========================================================================
+    match /film_submissions/{submissionId} {
+      // Public visitors can only submit forms (no public read/list/delete)
+      allow create: if request.resource.data.name is string
+                    && request.resource.data.contactType is string
+                    && request.resource.data.handle is string
+                    && request.resource.data.message is string;
+
+      // Full management access strictly for Dominik Šuškevič
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Email queue / notification collection (Firebase Trigger Email extension)
     match /mail/{mailId} {
       allow read, write: if isAdmin();
     }

@@ -525,6 +525,22 @@ const initSubmissionForm = () => {
 };
 
 // ==========================================================================
+// 5. Language Switcher Persistence
+// ==========================================================================
+const initLanguageSwitcher = () => {
+  document.querySelectorAll('.lang-switcher a').forEach(link => {
+    link.addEventListener('click', () => {
+      const href = link.getAttribute('href') || '';
+      if (href.startsWith('/lt') || href.includes('/lt')) {
+        try { localStorage.setItem('dp_film_language_pref', 'lt'); } catch(e) {}
+      } else {
+        try { localStorage.setItem('dp_film_language_pref', 'en'); } catch(e) {}
+      }
+    });
+  });
+};
+
+// ==========================================================================
 // Initialize Everything on DOMContentLoaded
 // ==========================================================================
 document.addEventListener('DOMContentLoaded', () => {
@@ -532,4 +548,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initVideoModal();
   initFilmsShowcase();
   initSubmissionForm();
+  initLanguageSwitcher();
 });

@@ -42,7 +42,12 @@ export const contactLinks = {
     badge: "Chat"
   },
   photographyPortfolio: "https://portfolio.dominikphotofficial.lt",
-  festival: "https://azuolynasinternationalfilmfestival.github.io/"
+  festival: {
+    name: "Ąžuolynas International Film Festival (AISFF)",
+    instagramUrl: "https://www.instagram.com/azuolynasfilmfestival",
+    instagramHandle: "@azuolynasfilmfestival",
+    websiteUrl: "https://azuolynasinternationalfilmfestival.github.io/"
+  }
 };
 
 export const filmsList = [
