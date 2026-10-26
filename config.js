@@ -12,7 +12,9 @@ export const firebaseConfig = {
   appId: "1:542082314917:web:34889b7aa21c7eaed0d34c",
   measurementId: "G-DHC9C90YR2"
 };
-
+export const FIRESTORE_COLLECTION = 'film_submissions';
+export const STORAGE_FOLDER = 'film_uploads';
+export const ADMIN_EMAIL = 'dominikphotofficial.lt@gmail.com';
 export const contactLinks = {
   email: "info@dominikphotofficial.lt",
   instagram: {

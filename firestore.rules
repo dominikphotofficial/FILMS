@@ -1,0 +1,34 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper: Verify if the authenticated user is the designated portfolio admin
+    function isAdmin() {
+      return request.auth != null 
+          && request.auth.token.email == 'dominikphotofficial.lt@gmail.com';
+    }
+
+    // Dedicated Film Portfolio submissions collection
+    match /film_submissions/{submissionId} {
+      // Public users can ONLY submit their proposals (no read, no list, no edit, no delete)
+      allow create: if request.resource.data.name is string
+                    && request.resource.data.contactType is string
+                    && request.resource.data.handle is string
+                    && request.resource.data.message is string;
+
+      // Full management access restricted strictly to Dominik Šuškevič
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Legacy submissions collection for backward compatibility
+    match /submissions/{submissionId} {
+      allow create: if request.resource.data.name is string;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Email queue collection (Firebase Trigger Email extension)
+    match /mail/{mailId} {
+      allow read, write: if isAdmin();
+    }
+  }
+}

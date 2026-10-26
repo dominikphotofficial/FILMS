@@ -22,6 +22,11 @@ app.get(['/lt', '/lt/'], (req, res) => {
   res.redirect(301, '/');
 });
 
+// Admin panel (stealth URL - accessed directly via address bar)
+app.get(['/admin', '/admin.html'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'admin.html'));
+});
+
 // Fallback route handler
 app.get('*', (req, res) => {
   if (req.path.startsWith('/en')) {

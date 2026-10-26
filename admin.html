@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DP | FILMS — Admin Panel</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png">
+
+  <!-- Typography: Jost & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-body: #f8faf9;
+      --bg-card: #ffffff;
+      --primary: #113939;
+      --primary-light: #194e4e;
+      --primary-tint: rgba(17, 57, 57, 0.06);
+      --primary-tint-hover: rgba(17, 57, 57, 0.12);
+      
+      --text-main: #0f2020;
+      --text-secondary: #354a47;
+      --text-muted: #6b827e;
+      --text-light: #94aba6;
+
+      --border: #e4ecea;
+      --border-dark: #d0deda;
+      
+      --status-new: #113939;
+      --status-read: #4a6661;
+      --status-replied: #1b7a60;
+      --status-archived: #839b96;
+
+      --font-sans: 'Jost', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --shadow-sm: 0 1px 3px rgba(17, 57, 57, 0.05);
+      --shadow-md: 0 4px 14px rgba(17, 57, 57, 0.08);
+      --shadow-lg: 0 10px 30px rgba(17, 57, 57, 0.12);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Auth Gates */
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      background: #ffffff;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .auth-card {
+      background: #ffffff;
+      border: 1px solid var(--border-dark);
+      border-radius: 12px;
+      padding: 44px 36px;
+      width: 100%;
+      max-width: 440px;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .auth-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .auth-logo .dp {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .auth-logo .line {
+      font-size: 1.4rem;
+      color: var(--primary);
+      opacity: 0.4;
+    }
+
+    .auth-logo .films {
+      font-size: 1.3rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      color: var(--text-main);
+    }
+
+    .auth-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .auth-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 28px;
+    }
+
+    .btn-google {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      padding: 13px 20px;
+      background: #ffffff;
+      border: 1px solid var(--border-dark);
+      border-radius: 8px;
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-google:hover {
+      background: var(--bg-body);
+      border-color: var(--primary);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .auth-error-banner {
+      display: none;
+      margin-top: 18px;
+      padding: 12px 14px;
+      background: #fff5f5;
+      border: 1px solid #feb2b2;
+      color: #9b2c2c;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      text-align: left;
+    }
+
+    /* Admin App Shell */
+    .admin-app {
+      display: none;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .admin-header {
+      height: 64px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      z-index: 10;
+    }
+
+    .admin-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .admin-badge {
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .admin-user-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .user-email-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: var(--primary-tint);
+      padding: 5px 12px;
+      border-radius: 20px;
+    }
+
+    .user-status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+    }
+
+    .btn-signout {
+      background: none;
+      border: 1px solid var(--border-dark);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-signout:hover {
+      background: #fff5f5;
+      color: #9b2c2c;
+      border-color: #feb2b2;
+    }
+
+    /* Master-Detail Layout */
+    .master-detail-container {
+      display: flex;
+      flex: 1;
+      height: calc(100vh - 64px);
+      overflow: hidden;
+    }
+
+    /* Master Column: Inbox */
+    .inbox-column {
+      width: 440px;
+      border-right: 1px solid var(--border);
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      height: 100%;
+    }
+
+    @media (max-width: 960px) {
+      .master-detail-container {
+        flex-direction: column;
+      }
+      .inbox-column {
+        width: 100%;
+        height: 45vh;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+    }
+
+    .inbox-controls {
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: #ffffff;
+    }
+
+    .search-box {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 9px 12px 9px 34px;
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-light);
+      pointer-events: none;
+    }
+
+    .filter-pills-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .filter-pill-btn {
+      background: var(--bg-body);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .filter-pill-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .filter-pill-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .pill-counter {
+      background: rgba(255, 255, 255, 0.25);
+      font-size: 0.7rem;
+      padding: 1px 6px;
+      border-radius: 10px;
+    }
+
+    .filter-pill-btn:not(.active) .pill-counter {
+      background: var(--border);
+      color: var(--text-secondary);
+    }
+
+    .inbox-list {
+      flex: 1;
+      overflow-y: auto;
+      list-style: none;
+    }
+
+    .inbox-item {
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+      position: relative;
+    }
+
+    .inbox-item:hover {
+      background-color: var(--primary-tint);
+    }
+
+    .inbox-item.active {
+      background-color: #f0f6f4;
+      border-left: 4px solid var(--primary);
+    }
+
+    .inbox-item.unread .item-sender-name {
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .item-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .item-sender-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .unread-indicator-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--primary);
+      flex-shrink: 0;
+      display: inline-block;
+    }
+
+    .item-sender-name {
+      font-size: 0.95rem;
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    .item-date {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      font-family: var(--font-mono);
+    }
+
+    .item-type-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: var(--primary-tint);
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .item-snippet {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .item-footer-badges {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.75rem;
+    }
+
+    .item-channel-tag {
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .item-has-file-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--primary);
+      font-weight: 600;
+      background: #e7f0ee;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .item-status-pill {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .status-new { background: #e0ece9; color: var(--primary); }
+    .status-read { background: #e2e8f0; color: #475569; }
+    .status-replied { background: #d1fae5; color: #065f46; }
+    .status-archived { background: #f1f5f9; color: #94a3b8; }
+
+    /* Detail Column: Submission Viewer */
+    .detail-column {
+      flex: 1;
+      height: 100%;
+      background: var(--bg-body);
+      overflow-y: auto;
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .empty-detail-state {
+      margin: auto;
+      text-align: center;
+      max-width: 400px;
+      color: var(--text-muted);
+    }
+
+    .empty-state-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 1px solid var(--border-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      color: var(--primary);
+    }
+
+    /* Detail View Card */
+    .detail-card {
+      background: #ffffff;
+      border: 1px solid var(--border-dark);
+      border-radius: 10px;
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+    }
+
+    .detail-header-bar {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .detail-sender-name {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .detail-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-action {
+      background: #ffffff;
+      border: 1px solid var(--border-dark);
+      color: var(--text-secondary);
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-action:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-tint);
+    }
+
+    .btn-action.btn-danger:hover {
+      border-color: #feb2b2;
+      color: #9b2c2c;
+      background: #fff5f5;
+    }
+
+    /* Metadata Grid */
+    .metadata-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      background: var(--bg-body);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .meta-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .meta-value {
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    .meta-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .meta-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Message Body Box */
+    .message-section-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .message-text-box {
+      font-size: 1.02rem;
+      line-height: 1.7;
+      color: var(--text-main);
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin-bottom: 28px;
+    }
+
+    /* Attachment & PDF Section */
+    .attachment-card {
+      background: var(--bg-body);
+      border: 1px solid var(--border-dark);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 28px;
+    }
+
+    .attachment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .attachment-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pdf-preview-container {
+      width: 100%;
+      height: 480px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #ffffff;
+      overflow: hidden;
+      margin-top: 14px;
+    }
+
+    .pdf-preview-container iframe,
+    .pdf-preview-container object {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Quick Reply Section */
+    .quick-reply-card {
+      background: #ffffff;
+      border: 1px solid var(--border-dark);
+      border-radius: 10px;
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .reply-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .reply-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .template-selector-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .template-select {
+      padding: 7px 12px;
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      color: var(--text-main);
+      outline: none;
+      background: #ffffff;
+    }
+
+    .reply-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .reply-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+    }
+
+    .reply-input,
+    .reply-textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      font-family: var(--font-sans);
+      font-size: 0.92rem;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .reply-input:focus,
+    .reply-textarea:focus {
+      border-color: var(--primary);
+    }
+
+    .reply-textarea {
+      min-height: 140px;
+      line-height: 1.6;
+      resize: vertical;
+    }
+
+    .reply-actions-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn-send-email {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 6px;
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-send-email:hover {
+      background: var(--primary-light);
+      transform: translateY(-1px);
+    }
+
+    .reply-status-indicator {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: #10b981;
+    }
+
+    /* Modal for Deletion Confirmation */
+    .confirm-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(17, 57, 57, 0.4);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .confirm-modal-overlay.active {
+      display: flex;
+    }
+
+    .confirm-modal-card {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 28px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .confirm-modal-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .confirm-modal-text {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+
+    .confirm-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======================================================================
+       1. AUTH GATE (GOOGLE AUTH FOR dominikphotofficial.lt@gmail.com ONLY)
+       ====================================================================== -->
+  <div class="auth-overlay" id="auth-overlay">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <span class="dp">DP</span>
+        <span class="line">|</span>
+        <span class="films">FILMS</span>
+      </div>
+      <h1 class="auth-title">Administratoriaus Prisijungimas</h1>
+      <p class="auth-subtitle">
+        Prieiga apribota. Tik autorizuotas administratorius (<strong>dominikphotofficial.lt@gmail.com</strong>) turi prieigą prie pasiūlymų ir failų.
+      </p>
+
+      <button type="button" class="btn-google" id="btn-google-login">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+        Prisijungti su Google paskyra
+      </button>
+
+      <div class="auth-error-banner" id="auth-error-box"></div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       2. ADMIN MAIN WORKSPACE (MASTER-DETAIL)
+       ====================================================================== -->
+  <div class="admin-app" id="admin-app">
+    <!-- Header -->
+    <header class="admin-header">
+      <div class="admin-brand">
+        <a href="/" target="_blank" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 8px;">
+          <strong style="color: var(--primary); font-size: 1.2rem;">DP</strong>
+          <span style="opacity: 0.3;">|</span>
+          <span style="letter-spacing: 0.15em; font-weight: 500;">FILMS</span>
+        </a>
+        <span class="admin-badge">Admin Panel</span>
+      </div>
+
+      <div class="admin-user-info">
+        <div class="user-email-chip">
+          <span class="user-status-dot"></span>
+          <span id="admin-user-email">dominikphotofficial.lt@gmail.com</span>
+        </div>
+        <button type="button" class="btn-signout" id="btn-admin-signout">Atsijungti</button>
+      </div>
+    </header>
+
+    <!-- Master - Detail Container -->
+    <div class="master-detail-container">
+
+      <!-- LEFT: INBOX MASTER COLUMN -->
+      <aside class="inbox-column">
+        <div class="inbox-controls">
+          <div class="search-box">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="inbox-search" class="search-input" placeholder="Ieškoti pagal vardą, pranešimą, kontaktą...">
+          </div>
+
+          <div class="filter-pills-row">
+            <button type="button" class="filter-pill-btn active" data-status-filter="all">
+              Visi <span class="pill-counter" id="count-all">0</span>
+            </button>
+            <button type="button" class="filter-pill-btn" data-status-filter="new">
+              Nauji <span class="pill-counter" id="count-new">0</span>
+            </button>
+            <button type="button" class="filter-pill-btn" data-status-filter="read">
+              Skaityti <span class="pill-counter" id="count-read">0</span>
+            </button>
+            <button type="button" class="filter-pill-btn" data-status-filter="replied">
+              Atsakyta <span class="pill-counter" id="count-replied">0</span>
+            </button>
+            <button type="button" class="filter-pill-btn" data-status-filter="archived">
+              Archyvas <span class="pill-counter" id="count-archived">0</span>
+            </button>
+          </div>
+        </div>
+
+        <ul class="inbox-list" id="inbox-items-container">
+          <!-- Populated by admin.js -->
+        </ul>
+      </aside>
+
+      <!-- RIGHT: SUBMISSION DETAIL COLUMN -->
+      <main class="detail-column" id="detail-column">
+        <div class="empty-detail-state" id="empty-detail-state">
+          <div class="empty-state-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <h2 style="font-size: 1.2rem; font-weight: 600; color: var(--primary); margin-bottom: 6px;">Pasirinkite pranešimą</h2>
+          <p style="font-size: 0.88rem; color: var(--text-muted);">Spustelėkite bet kurį pranešimą kairiajame sąraše, norėdami peržiūrėti detales, pridėtą PDF failą ir išsiųsti greitą atsakymą.</p>
+        </div>
+
+        <div id="detail-active-view" style="display: none; width: 100%;">
+          <!-- Populated dynamically -->
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="confirm-modal-overlay" id="delete-modal">
+    <div class="confirm-modal-card">
+      <h3 class="confirm-modal-title">Ištrinti pranešimą?</h3>
+      <p class="confirm-modal-text">Šis veiksmas negrįžtamai pašalins pasirinktą pasiūlymą iš duomenų bazės.</p>
+      <div class="confirm-actions">
+        <button type="button" class="btn-action" id="cancel-delete-btn">Atšaukti</button>
+        <button type="button" class="btn-action btn-danger" id="confirm-delete-btn" style="background: #9b2c2c; color: #ffffff; border-color: #9b2c2c;">Ištrinti</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase & Admin Application Logic -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+    import { 
+      getFirestore, 
+      collection, 
+      query, 
+      orderBy, 
+      onSnapshot, 
+      doc, 
+      updateDoc, 
+      deleteDoc, 
+      addDoc, 
+      serverTimestamp,
+      arrayUnion
+    } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+    import { 
+      getAuth, 
+      GoogleAuthProvider, 
+      signInWithPopup, 
+      signOut, 
+      onAuthStateChanged 
+    } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import { firebaseConfig, FIRESTORE_COLLECTION, ADMIN_EMAIL } from './config.js';
+
+    // State
+    let db = null;
+    let auth = null;
+    let currentUser = null;
+    let submissions = [];
+    let activeSubmissionId = null;
+    let currentFilter = 'all';
+    let searchQuery = '';
+    let pendingDeleteId = null;
+
+    const authOverlay = document.getElementById('auth-overlay');
+    const adminApp = document.getElementById('admin-app');
+    const authErrorBox = document.getElementById('auth-error-box');
+    const btnGoogleLogin = document.getElementById('btn-google-login');
+    const btnAdminSignout = document.getElementById('btn-admin-signout');
+    const adminUserEmailDisplay = document.getElementById('admin-user-email');
+    const inboxContainer = document.getElementById('inbox-items-container');
+    const searchInput = document.getElementById('inbox-search');
+    const filterPillButtons = document.querySelectorAll('.filter-pill-btn');
+    const emptyDetailState = document.getElementById('empty-detail-state');
+    const detailActiveView = document.getElementById('detail-active-view');
+    const deleteModal = document.getElementById('delete-modal');
+    const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+    const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+
+    // Email Templates
+    const emailTemplates = {
+      collab: {
+        title: "Padėka už bendradarbiavimo idėją",
+        subject: "DP | FILMS — Dėkojame už jūsų idėjos pasiūlymą",
+        body: (name) => `Sveiki, ${name || 'kūrėjau'},\n\nDėkoju už atsiųstą kino idėją ir pasitikėjimą mano kūrybine vizija. Susipažinau su jūsų pasiūlymu ir norėčiau suderinti trumpą pokalbį aptarti galimybes bei tolimesnius žingsnius.\n\nKada jums būtų patogiausia susisiekti?\n\nPagarbiai,\nDominik Šuškevič\nKino operatorius ir režisierius\nDP | FILMS\ninfo@dominikphotofficial.lt`
+      },
+      script: {
+        title: "Scenarijaus peržiūra ir tolesni žingsniai",
+        subject: "DP | FILMS — Scenarijaus peržiūros atsakymas",
+        body: (name) => `Sveiki, ${name || 'kūrėjau'},\n\nDėkoju už atsiųstą scenarijų. Esu atidus tekstų struktūrai, vizualinei atmosferai ir kinematografiniam potencialui. Medžiaga mane sudomino.\n\nNorėčiau su jumis susisiekti ir detaliau aptarti lokacijas, vizualinį stilių bei gamybos etapą.\n\nPagarbiai,\nDominik Šuškevič · DP | FILMS`
+      },
+      festival: {
+        title: "Festivalio paraiškos patvirtinimas",
+        subject: "DP | FILMS / AISFF — Festivalio paraiška gauta",
+        body: (name) => `Sveiki, ${name || 'autoriau'},\n\nJūsų paraiška dėl dalyvavimo festivalyje sėkmingai gauta ir užregistruota.\n\nPeržiūrėsime pateiktą informaciją bei failus ir artimiausiu metu atsiųsime oficialų patvirtinimą.\n\nPagarbiai,\nDominik Šuškevič\nĄžuolynas International Student Film Festival (AISFF)`
+      },
+      questions: {
+        title: "Papildomi klausimai dėl projekto",
+        subject: "DP | FILMS — Papildomi klausimai dėl jūsų užklausos",
+        body: (name) => `Sveiki, ${name || 'kūrėjau'},\n\nDėkoju už jūsų žinutę. Norėčiau pasitikslinti keletą techninių detalių dėl numatomo filmavimo grafiko, vietovės bei pageidaujamo formato.\n\nLauksiu jūsų atsakymo šiuo el. paštu.\n\nPagarbiai,\nDominik Šuškevič · DP | FILMS`
+      },
+      custom: {
+        title: "Individualus atsakymas",
+        subject: "DP | FILMS — Atsakymas į jūsų užklausą",
+        body: (name) => `Sveiki, ${name || ''},\n\n`
+      }
+    };
+
+    // 1. Initialize Firebase
+    try {
+      const app = initializeApp(firebaseConfig);
+      db = getFirestore(app);
+      auth = getAuth(app);
+    } catch (e) {
+      console.error('Firebase init error in admin:', e);
+      showAuthError('Klaida inicializuojant Firebase: ' + e.message);
+    }
+
+    function showAuthError(msg) {
+      if (authErrorBox) {
+        authErrorBox.textContent = msg;
+        authErrorBox.style.display = 'block';
+      }
+    }
+
+    function clearAuthError() {
+      if (authErrorBox) {
+        authErrorBox.textContent = '';
+        authErrorBox.style.display = 'none';
+      }
+    }
+
+    // 2. Authentication Flow
+    btnGoogleLogin?.addEventListener('click', async () => {
+      clearAuthError();
+      try {
+        const provider = new GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: 'select_account' });
+        const result = await signInWithPopup(auth, provider);
+        handleUserAuth(result.user);
+      } catch (err) {
+        console.error('Google Sign-in error:', err);
+        showAuthError('Nepavyko prisijungti per Google: ' + (err.message || 'Nežinoma klaida'));
+      }
+    });
+
+    btnAdminSignout?.addEventListener('click', async () => {
+      try {
+        await signOut(auth);
+        window.location.reload();
+      } catch (e) {
+        console.error('Signout error:', e);
+      }
+    });
+
+    function handleUserAuth(user) {
+      if (!user) {
+        authOverlay.style.display = 'flex';
+        adminApp.style.display = 'none';
+        return;
+      }
+
+      // Check strictly against whitelist
+      if (user.email !== ADMIN_EMAIL) {
+        authOverlay.style.display = 'flex';
+        adminApp.style.display = 'none';
+        showAuthError(`Prieiga atmesta! Paskyra ${user.email} neturi administratoriaus teisių. Prisijunkite su ${ADMIN_EMAIL}.`);
+        signOut(auth);
+        return;
+      }
+
+      // Authorized!
+      currentUser = user;
+      adminUserEmailDisplay.textContent = user.email;
+      authOverlay.style.display = 'none';
+      adminApp.style.display = 'flex';
+
+      // Start listening to real-time submissions
+      subscribeToSubmissions();
+    }
+
+    onAuthStateChanged(auth, (user) => {
+      handleUserAuth(user);
+    });
+
+    // 3. Real-Time Firestore Subscription
+    function subscribeToSubmissions() {
+      if (!db) return;
+
+      const q = query(
+        collection(db, FIRESTORE_COLLECTION),
+        orderBy('createdAt', 'desc')
+      );
+
+      onSnapshot(q, (snapshot) => {
+        const list = [];
+        snapshot.forEach((d) => {
+          list.push({ id: d.id, ...d.data() });
+        });
+        submissions = list;
+        updateCounters();
+        renderInbox();
+        if (activeSubmissionId) {
+          const current = submissions.find(s => s.id === activeSubmissionId);
+          if (current) renderDetailView(current);
+        }
+      }, (err) => {
+        console.error('Firestore snapshot error:', err);
+      });
+    }
+
+    // 4. Update Counters
+    function updateCounters() {
+      const counts = { all: submissions.length, new: 0, read: 0, replied: 0, archived: 0 };
+      submissions.forEach(s => {
+        const st = s.status || (s.unread ? 'new' : 'read');
+        if (counts[st] !== undefined) counts[st]++;
+      });
+
+      document.getElementById('count-all').textContent = counts.all;
+      document.getElementById('count-new').textContent = counts.new;
+      document.getElementById('count-read').textContent = counts.read;
+      document.getElementById('count-replied').textContent = counts.replied;
+      document.getElementById('count-archived').textContent = counts.archived;
+    }
+
+    // 5. Render Inbox Master List
+    function renderInbox() {
+      let filtered = submissions.filter(s => {
+        // Status filter
+        if (currentFilter !== 'all') {
+          const st = s.status || (s.unread ? 'new' : 'read');
+          if (st !== currentFilter) return false;
+        }
+
+        // Search query
+        if (searchQuery) {
+          const q = searchQuery.toLowerCase();
+          const name = (s.name || '').toLowerCase();
+          const handle = (s.handle || '').toLowerCase();
+          const msg = (s.message || '').toLowerCase();
+          const type = (s.type || '').toLowerCase();
+          return name.includes(q) || handle.includes(q) || msg.includes(q) || type.includes(q);
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        inboxContainer.innerHTML = `
+          <div style="padding: 40px 20px; text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+            Pranešimų nerasta.
+          </div>
+        `;
+        return;
+      }
+
+      inboxContainer.innerHTML = filtered.map(item => {
+        const isSelected = item.id === activeSubmissionId;
+        const isUnread = item.unread !== false && item.status !== 'read' && item.status !== 'replied' && item.status !== 'archived';
+        
+        // Date formatting
+        let dateStr = 'Neseniai';
+        if (item.createdAt?.toDate) {
+          const d = item.createdAt.toDate();
+          dateStr = d.toLocaleDateString('lt-LT', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
+
+        const hasPdf = item.fileName && (item.fileUrl || item.fileDataUrl);
+        const status = item.status || (isUnread ? 'new' : 'read');
+
+        return `
+          <li class="inbox-item ${isSelected ? 'active' : ''} ${isUnread ? 'unread' : ''}" data-id="${item.id}">
+            <div class="item-top-row">
+              <div class="item-sender-wrapper">
+                ${isUnread ? '<span class="unread-indicator-dot"></span>' : ''}
+                <span class="item-sender-name">${escapeHtml(item.name || 'Anonimas')}</span>
+              </div>
+              <span class="item-date">${dateStr}</span>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="item-type-badge">${escapeHtml(item.type || 'Pasiūlymas')}</span>
+              <span class="item-status-pill status-${status}">${status}</span>
+            </div>
+
+            <p class="item-snippet">${escapeHtml(item.message || '')}</p>
+
+            <div class="item-footer-badges">
+              <span class="item-channel-tag">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                ${escapeHtml(item.contactType || 'Kontaktas')}: ${escapeHtml(item.handle || '')}
+              </span>
+              ${hasPdf ? `
+                <span class="item-has-file-badge" title="${escapeHtml(item.fileName)}">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  PDF
+                </span>
+              ` : ''}
+            </div>
+          </li>
+        `;
+      }).join('');
+
+      // Add click handlers
+      inboxContainer.querySelectorAll('.inbox-item').forEach(el => {
+        el.addEventListener('click', () => {
+          const id = el.getAttribute('data-id');
+          selectSubmission(id);
+        });
+      });
+    }
+
+    // 6. Select Submission
+    async function selectSubmission(id) {
+      activeSubmissionId = id;
+      const sub = submissions.find(s => s.id === id);
+      if (!sub) return;
+
+      renderInbox();
+      renderDetailView(sub);
+
+      // Auto mark as read if it was new
+      if (sub.unread === true || sub.status === 'new') {
+        try {
+          await updateDoc(doc(db, FIRESTORE_COLLECTION, id), {
+            unread: false,
+            status: sub.status === 'new' ? 'read' : sub.status
+          });
+        } catch (e) {
+          console.warn('Update read status warning:', e);
+        }
+      }
+    }
+
+    // 7. Render Detail View
+    function renderDetailView(sub) {
+      emptyDetailState.style.display = 'none';
+      detailActiveView.style.display = 'block';
+
+      let dateFormatted = 'Nenurodyta';
+      if (sub.createdAt?.toDate) {
+        dateFormatted = sub.createdAt.toDate().toLocaleString('lt-LT', {
+          year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+        });
+      }
+
+      // Contact direct URL
+      let contactHref = '#';
+      let contactLabel = `${sub.contactType}: ${sub.handle}`;
+      const h = (sub.handle || '').trim();
+
+      if (sub.contactType === 'Email') {
+        contactHref = `mailto:${h}`;
+      } else if (sub.contactType === 'Instagram') {
+        const cleanH = h.replace('@', '');
+        contactHref = `https://instagram.com/${cleanH}`;
+      } else if (sub.contactType === 'Telegram') {
+        const cleanH = h.replace('@', '');
+        contactHref = `https://t.me/${cleanH}`;
+      } else if (sub.contactType === 'WhatsApp') {
+        const cleanH = h.replace(/[^0-9]/g, '');
+        contactHref = `https://wa.me/${cleanH}`;
+      } else if (sub.contactType === 'Messenger') {
+        contactHref = `https://m.me/${h}`;
+      }
+
+      // File attachment display
+      const fileUrl = sub.fileUrl || sub.fileDataUrl;
+      const fileName = sub.fileName || 'prisegtas_failas.pdf';
+      const isPdf = fileName.toLowerCase().endsWith('.pdf') || (sub.fileMimeType && sub.fileMimeType.includes('pdf'));
+      const fileSize = sub.fileSizeBytes ? (sub.fileSizeBytes / (1024 * 1024)).toFixed(2) + ' MB' : '';
+
+      let attachmentHtml = '';
+      if (fileUrl) {
+        attachmentHtml = `
+          <div class="attachment-card">
+            <div class="attachment-header">
+              <div class="attachment-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                <span>${escapeHtml(fileName)} ${fileSize ? `(${fileSize})` : ''}</span>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <a href="${fileUrl}" target="_blank" download="${escapeHtml(fileName)}" class="btn-action" style="color: var(--primary);">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  Atsisiųsti failą
+                </a>
+                <a href="${fileUrl}" target="_blank" rel="noopener noreferrer" class="btn-action">
+                  Atidaryti naujame lange ↗
+                </a>
+              </div>
+            </div>
+
+            ${isPdf ? `
+              <div class="pdf-preview-container">
+                <iframe src="${fileUrl}#view=FitH" title="PDF peržiūra"></iframe>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      } else if (sub.fileName) {
+        attachmentHtml = `
+          <div class="attachment-card" style="background: #fffdf5; border-color: #fef08a;">
+            <div class="attachment-title" style="color: #854d0e;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Failas pažymėtas: ${escapeHtml(sub.fileName)}
+            </div>
+            <p style="font-size: 0.85rem; color: #713f12; margin-top: 6px;">
+              Saugykla užfiksavo failo meta-duomenis. Jei failas neatsisiunčia tiesiogiai, susisiekite su siuntėju per ${escapeHtml(sub.contactType)}.
+            </p>
+          </div>
+        `;
+      }
+
+      // Default quick reply email target
+      const replyTargetEmail = sub.contactType === 'Email' ? sub.handle : '';
+
+      detailActiveView.innerHTML = `
+        <div class="detail-card">
+          <div class="detail-header-bar">
+            <div>
+              <h2 class="detail-sender-name">${escapeHtml(sub.name || 'Anonimas')}</h2>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="item-type-badge">${escapeHtml(sub.type || 'Pasiūlymas')}</span>
+                <span class="item-status-pill status-${sub.status || 'read'}">${sub.status || 'read'}</span>
+              </div>
+            </div>
+
+            <div class="detail-header-actions">
+              <button type="button" class="btn-action" id="btn-toggle-read">
+                ${sub.unread ? 'Pažymėti skaitytu' : 'Pažymėti neperskaitytu'}
+              </button>
+              <button type="button" class="btn-action" id="btn-toggle-archive">
+                ${sub.status === 'archived' ? 'Grąžinti iš archyvo' : 'Archyvuoti'}
+              </button>
+              <button type="button" class="btn-action btn-danger" id="btn-delete-submission">
+                Ištrinti
+              </button>
+            </div>
+          </div>
+
+          <div class="metadata-grid">
+            <div class="meta-item">
+              <span class="meta-label">Pateikta</span>
+              <span class="meta-value">${dateFormatted}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Kontaktas</span>
+              <a href="${contactHref}" target="_blank" class="meta-link">
+                ${escapeHtml(contactLabel)} ↗
+              </a>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Kalba</span>
+              <span class="meta-value">${(sub.lang || 'lt').toUpperCase()}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">ID</span>
+              <span class="meta-value" style="font-family: var(--font-mono); font-size: 0.78rem;">${sub.id}</span>
+            </div>
+          </div>
+
+          <div class="message-section-title">Pranešimo turinys</div>
+          <div class="message-text-box">${escapeHtml(sub.message || '')}</div>
+
+          ${attachmentHtml}
+        </div>
+
+        <!-- QUICK REPLY BOX -->
+        <div class="quick-reply-card">
+          <div class="reply-header">
+            <h3 class="reply-title">Greitas atsakymas / El. laiškas</h3>
+            <div class="template-selector-box">
+              <label for="template-select" style="font-size: 0.82rem; color: var(--text-muted);">Šablonas:</label>
+              <select id="template-select" class="template-select">
+                <option value="collab">1. Padėka už idėją</option>
+                <option value="script">2. Scenarijaus peržiūra</option>
+                <option value="festival">3. Festivalio paraiška</option>
+                <option value="questions">4. Papildomi klausimai</option>
+                <option value="custom">5. Individualus tekstas</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="reply-field-group">
+            <label class="reply-label" for="reply-to">Gavėjo el. paštas</label>
+            <input type="email" id="reply-to" class="reply-input" value="${escapeHtml(replyTargetEmail)}" placeholder="pvz. jonas@gmail.com">
+          </div>
+
+          <div class="reply-field-group">
+            <label class="reply-label" for="reply-subject">Tema</label>
+            <input type="text" id="reply-subject" class="reply-input" value="${escapeHtml(emailTemplates.collab.subject)}">
+          </div>
+
+          <div class="reply-field-group">
+            <label class="reply-label" for="reply-body">Laiško tekstas</label>
+            <textarea id="reply-body" class="reply-textarea">${escapeHtml(emailTemplates.collab.body(sub.name))}</textarea>
+          </div>
+
+          <div class="reply-actions-row">
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <button type="button" class="btn-send-email" id="btn-send-reply">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Siųsti per Firebase Email
+              </button>
+              <button type="button" class="btn-action" id="btn-open-mailto">
+                Atidaryti pašto programoje (mailto) ↗
+              </button>
+            </div>
+            <span class="reply-status-indicator" id="reply-status-indicator"></span>
+          </div>
+        </div>
+      `;
+
+      // Wire Detail View Actions
+      const btnToggleRead = document.getElementById('btn-toggle-read');
+      const btnToggleArchive = document.getElementById('btn-toggle-archive');
+      const btnDeleteSubmission = document.getElementById('btn-delete-submission');
+      const templateSelect = document.getElementById('template-select');
+      const replySubject = document.getElementById('reply-subject');
+      const replyBody = document.getElementById('reply-body');
+      const replyTo = document.getElementById('reply-to');
+      const btnSendReply = document.getElementById('btn-send-reply');
+      const btnOpenMailto = document.getElementById('btn-open-mailto');
+      const replyStatusIndicator = document.getElementById('reply-status-indicator');
+
+      btnToggleRead?.addEventListener('click', async () => {
+        const newUnread = !sub.unread;
+        await updateDoc(doc(db, FIRESTORE_COLLECTION, sub.id), {
+          unread: newUnread,
+          status: newUnread ? 'new' : 'read'
+        });
+      });
+
+      btnToggleArchive?.addEventListener('click', async () => {
+        const newStatus = sub.status === 'archived' ? 'read' : 'archived';
+        await updateDoc(doc(db, FIRESTORE_COLLECTION, sub.id), {
+          status: newStatus,
+          unread: false
+        });
+      });
+
+      btnDeleteSubmission?.addEventListener('click', () => {
+        pendingDeleteId = sub.id;
+        deleteModal.classList.add('active');
+      });
+
+      templateSelect?.addEventListener('change', () => {
+        const tmpl = emailTemplates[templateSelect.value];
+        if (tmpl) {
+          replySubject.value = tmpl.subject;
+          replyBody.value = tmpl.body(sub.name);
+        }
+      });
+
+      btnOpenMailto?.addEventListener('click', () => {
+        const to = replyTo.value.trim();
+        const subject = encodeURIComponent(replySubject.value.trim());
+        const body = encodeURIComponent(replyBody.value.trim());
+        window.open(`mailto:${to}?subject=${subject}&body=${body}`, '_blank');
+      });
+
+      btnSendReply?.addEventListener('click', async () => {
+        const to = replyTo.value.trim();
+        const subject = replySubject.value.trim();
+        const text = replyBody.value.trim();
+
+        if (!to) {
+          alert('Prašome nurodyti gavėjo el. pašto adresą.');
+          replyTo.focus();
+          return;
+        }
+
+        btnSendReply.disabled = true;
+        btnSendReply.textContent = 'Siunčiama...';
+
+        try {
+          // Write to 'mail' collection (Firebase Trigger Email extension standard schema)
+          await addDoc(collection(db, 'mail'), {
+            to: [to],
+            message: {
+              subject: subject,
+              text: text,
+              html: `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; line-height: 1.6; color: #113939;">
+                  <div style="border-bottom: 2px solid #113939; padding-bottom: 12px; margin-bottom: 20px;">
+                    <h2 style="margin: 0; color: #113939; letter-spacing: 0.05em;">DP | FILMS</h2>
+                    <p style="margin: 4px 0 0; font-size: 12px; color: #6b827e; letter-spacing: 0.15em;">ERDVĖ. ŠVIESA. EMOCIJA.</p>
+                  </div>
+                  <div style="font-size: 15px; color: #1a2e2b; white-space: pre-wrap;">${escapeHtml(text)}</div>
+                  <div style="border-top: 1px solid #e4ecea; margin-top: 30px; padding-top: 14px; font-size: 12px; color: #8fa5a1;">
+                    Dominik Šuškevič · DP | FILMS · <a href="https://films.dominikphotofficial.lt" style="color: #113939;">films.dominikphotofficial.lt</a>
+                  </div>
+                </div>
+              `
+            },
+            submissionId: sub.id,
+            createdAt: serverTimestamp()
+          });
+
+          // Mark submission as replied in Firestore
+          await updateDoc(doc(db, FIRESTORE_COLLECTION, sub.id), {
+            status: 'replied',
+            unread: false,
+            lastRepliedAt: serverTimestamp(),
+            replyHistory: arrayUnion({
+              to,
+              subject,
+              sentAt: new Date().toISOString()
+            })
+          });
+
+          replyStatusIndicator.textContent = '✓ Laiškas sėkmingai išsiųstas!';
+          setTimeout(() => {
+            replyStatusIndicator.textContent = '';
+          }, 4000);
+        } catch (mailErr) {
+          console.error('Mail error:', mailErr);
+          alert('Klaida siunčiant: ' + mailErr.message);
+        } finally {
+          btnSendReply.disabled = false;
+          btnSendReply.textContent = 'Siųsti per Firebase Email';
+        }
+      });
+    }
+
+    // Modal delete confirmation handlers
+    cancelDeleteBtn?.addEventListener('click', () => {
+      deleteModal.classList.remove('active');
+      pendingDeleteId = null;
+    });
+
+    confirmDeleteBtn?.addEventListener('click', async () => {
+      if (!pendingDeleteId) return;
+      try {
+        await deleteDoc(doc(db, FIRESTORE_COLLECTION, pendingDeleteId));
+        deleteModal.classList.remove('active');
+        if (activeSubmissionId === pendingDeleteId) {
+          activeSubmissionId = null;
+          emptyDetailState.style.display = 'block';
+          detailActiveView.style.display = 'none';
+        }
+        pendingDeleteId = null;
+      } catch (e) {
+        alert('Klaida trinant: ' + e.message);
+      }
+    });
+
+    // Filter and search handlers
+    filterPillButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterPillButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.getAttribute('data-status-filter') || 'all';
+        renderInbox();
+      });
+    });
+
+    searchInput?.addEventListener('input', (e) => {
+      searchQuery = e.target.value.trim();
+      renderInbox();
+    });
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+</body>
+</html>

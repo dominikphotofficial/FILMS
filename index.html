@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DP | FILMS — Dominik Šuškevič</title>
-  <meta name="description" content="Dominik Šuškevič – kino operatorius, režisierius ir fotografas. Autoriniai filmai, „Frozen Time: What If“, Ąžuolyno tarptautinio studentų kino festivalio nugalėtojas.">
+  <meta name="description" content="Dominik Šuškevič – kino operatorius, režisierius ir videografas. Autoriniai filmai, „Frozen Time: What If“, Ąžuolyno tarptautinio studentų kino festivalio nugalėtojas.">
   <meta name="keywords" content="DP FILMS, Dominik Šuškevič, kino operatorius, režisierius, filmai, Frozen Time What If, AISFF">
   <meta name="author" content="Dominik Šuškevič">
   <meta name="robots" content="index, follow">
@@ -16,49 +16,87 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="DP | FILMS">
   <meta property="og:title" content="DP | FILMS — Dominik Šuškevič">
-  <meta property="og:description" content="Kino operatorius, režisierius ir fotografas. ERDVĖ. ŠVIESA. EMOCIJA.">
+  <meta property="og:description" content="Kino operatorius, režisierius ir videografas. ERDVĖ. ŠVIESA. EMOCIJA.">
   <meta property="og:url" content="https://films.dominikphotofficial.lt/">
   <meta property="og:image" content="https://i.postimg.cc/GtJB0hqn/Portrait-nuotrauka-1.jpg">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="DP | FILMS — Dominik Šuškevič">
-  <meta name="twitter:description" content="Kino operatorius, režisierius ir fotografas. ERDVĖ. ŠVIESA. EMOCIJA.">
+  <meta name="twitter:description" content="Kino operatorius, režisierius ir videografas. ERDVĖ. ŠVIESA. EMOCIJA.">
   <meta name="twitter:image" content="https://i.postimg.cc/GtJB0hqn/Portrait-nuotrauka-1.jpg">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png">
 
-  <!-- Typography: Space Grotesk & Inter -->
+  <!-- Typography: Jost & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="/style.css">
+
+  <!-- Structured Data: Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://films.dominikphotofficial.lt/#dominik",
+        "name": "Dominik Šuškevič",
+        "alternateName": ["Dominik Suskevic", "DP"],
+        "jobTitle": "Kino operatorius, videografas ir režisierius",
+        "description": "Dominik Šuškevič – Lietuvos kino operatorius, videografas ir režisierius. Ąžuolyno tarptautinio studentų kino festivalio (AISFF) 1 vietos nugalėtojas su filmu „Frozen Time: What If“.",
+        "url": "https://films.dominikphotofficial.lt/",
+        "image": "https://i.postimg.cc/GtJB0hqn/Portrait-nuotrauka-1.jpg",
+        "sameAs": [
+          "https://www.instagram.com/dominikphotofficial",
+          "https://portfolio.dominikphotofficial.lt",
+          "https://azuolynasinternationalfilmfestival.github.io/"
+        ],
+        "worksFor": {
+          "@type": "Brand",
+          "name": "DP | FILMS",
+          "url": "https://films.dominikphotofficial.lt/",
+          "logo": "https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png",
+          "slogan": "ERDVĖ. ŠVIESA. EMOCIJA."
+        },
+        "award": "1 PLACE FESTIVAL — Ąžuolynas International Student Film Festival (AISFF 2026)"
+      },
+      {
+        "@type": "Movie",
+        "@id": "https://films.dominikphotofficial.lt/#frozen-time-what-if",
+        "name": "FROZEN TIME: WHAT IF",
+        "datePublished": "2026",
+        "inLanguage": "lt",
+        "director": { "@id": "https://films.dominikphotofficial.lt/#dominik" },
+        "award": "1 PLACE FESTIVAL — Ąžuolynas International Student Film Festival (AISFF 2026)",
+        "description": "Nugalėtojo filmas Ąžuolyno tarptautiniame studentų kino festivalyje. Laiko, erdvės ir egzistencinių pasirinkimų kinematografinė analizė."
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
-  <div class="film-grain" aria-hidden="true"></div>
-  <div class="cinema-glow" aria-hidden="true"></div>
+  <div class="ambient-pattern" aria-hidden="true"></div>
 
-  <!-- Header / Top Bar (3-zone contract) -->
+  <!-- Header -->
   <header class="header">
     <div class="header-container">
-      <!-- Zone 1: Wordmark -->
       <a href="#hero" class="brand" aria-label="DP FILMS Pradžia">
         <span class="brand-dp">DP</span>
         <span class="brand-divider">|</span>
         <span class="brand-films">FILMS</span>
       </a>
 
-      <!-- Zone 2: Navigation Links -->
       <nav class="nav" aria-label="Pagrindinė navigacija">
-        <a href="#films" class="nav-link">Filmai</a>
-        <a href="#about" class="nav-link">Apie</a>
-        <a href="#idea" class="nav-link">Pasiūlyti idėją</a>
-        <a href="#contacts" class="nav-link">Kontaktai</a>
+        <button type="button" class="nav-tab-link active" data-tab-target="films">Filmai</button>
+        <button type="button" class="nav-tab-link" data-tab-target="about">Apie mane</button>
+        <button type="button" class="nav-tab-link" data-tab-target="idea">Pasiūlyti idėją</button>
+        <button type="button" class="nav-tab-link" data-tab-target="contacts">Kontaktai</button>
       </nav>
 
-      <!-- Zone 3: Language Switcher -->
       <div class="nav-actions">
         <div class="lang-switcher" aria-label="Kalbos pasirinkimas">
           <span class="lang-btn active">LT</span>
@@ -69,199 +107,393 @@
     </div>
   </header>
 
-  <main>
-    <!-- 1. HERO SECTION -->
-    <section id="hero" class="hero container">
-      <div class="reveal">
-        <h1 class="hero-wordmark">
-          <span class="hero-dp">DP</span>
-          <span class="hero-divider">|</span>
-          <span class="hero-films">FILMS</span>
-        </h1>
-        <div class="hero-motto">
-          <span>ERDVĖ</span>
-          <span class="motto-dot" aria-hidden="true">·</span>
-          <span>ŠVIESA</span>
-          <span class="motto-dot" aria-hidden="true">·</span>
-          <span>EMOCIJA</span>
-        </div>
-        <p class="hero-sub">
-          <span>Dominik Šuškevič</span> — videografija, kinematografija ir režisūra.
-        </p>
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <span class="hero-pretitle">Dominik Šuškevič · Portfolio</span>
+      <h1 class="hero-wordmark">
+        <span>DP</span><span class="divider">|</span><span class="films">FILMS</span>
+      </h1>
+      <p class="hero-motto">ERDVĖ. ŠVIESA. EMOCIJA.</p>
+      <p class="hero-bio-short">
+        Kino operatorystė, režisūra ir vizualinis pasakojimas. Kuriu kinematografinius filmus, kuriuose susijungia natūrali šviesa, kompozicinė ramybė ir gilios žmogiškos emocijos.
+      </p>
+      <div class="hero-jump-links">
+        <button type="button" class="jump-chip" data-jump-tab="films">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          Žiūrėti filmus (11)
+        </button>
+        <button type="button" class="jump-chip" data-jump-tab="idea">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          Pasiūlyti idėją / scenarijų
+        </button>
+        <a href="https://portfolio.dominikphotofficial.lt" target="_blank" rel="noopener noreferrer" class="jump-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Fotografijos portfolio ↗
+        </a>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- 2. FILMS SECTION -->
-    <section id="films" class="section">
-      <div class="container">
-        <div class="section-header reveal">
+  <!-- Main Tabs Content -->
+  <main class="tab-content-area">
+    <div class="container">
+
+      <!-- ==================================================================
+           TAB 1: FILMAI
+           ================================================================== -->
+      <section id="tab-films" class="tab-pane active" aria-label="Filmų galerija">
+        <div class="section-header">
           <span class="section-tag">Katalogas</span>
-          <h2 class="section-title">Filmai & Vaizdo darbai</h2>
+          <h2 class="section-title">Autoriniai filmai ir kinematografija</h2>
+          <p class="section-description">
+            Visi mano trumpametražiai filmai, vizualinės studijos ir festivalio nugalėtojo darbai. Pasirinkite filtrą arba peržiūrėkite visus darbus.
+          </p>
         </div>
 
-        <!-- Stacked Cinematic List filled by script.js from config.js -->
-        <div class="films-stack" id="films-stack"></div>
-
-        <!-- Photography Portfolio Link -->
-        <div class="photo-banner reveal">
-          <div class="photo-banner-text">
-            <h4>Fotografijos darbai</h4>
-            <p>Portretai, peizažai ir reportažai publikuojami mano autorinėje fotografijos svetainėje.</p>
+        <!-- Filter Bar -->
+        <div class="films-filter-bar">
+          <div class="films-filter-chips">
+            <button type="button" class="filter-chip active" data-filter="all">Visi (11)</button>
+            <button type="button" class="filter-chip" data-filter="awards">Apdovanojimai (AISFF)</button>
+            <button type="button" class="filter-chip" data-filter="2026">2026</button>
+            <button type="button" class="filter-chip" data-filter="2025">2025 (Žiemos serija)</button>
+            <button type="button" class="filter-chip" data-filter="2024">2024</button>
           </div>
-          <a href="https://portfolio.dominikphotofficial.lt" target="_blank" rel="noopener noreferrer" class="photo-banner-link">
-            <span>portfolio.dominikphotofficial.lt</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3. ABOUT SECTION -->
-    <section id="about" class="section">
-      <div class="container">
-        <div class="section-header reveal">
-          <span class="section-tag">Kūrėjas</span>
-          <h2 class="section-title">Apie mane</h2>
+          <span class="films-count-badge" id="films-count-display">Rodoma: 11 filmų</span>
         </div>
 
-        <div class="about-grid reveal">
-          <p class="about-lead">
-            Esu Dominik Šuškevič — kino operatorius, videografas ir režisierius. Mano kūrybos ašis yra vizualus pasakojimas, kuriame techninis tikslumas tarnauja grynai emocijai.
-          </p>
-          <p class="about-body">
-            Kuriu trumpametražius filmus, kinematografinius vaizdo projektus ir atmosferines gamtos studijas. Vertinu natūralią šviesą, organinį judesį ir kadrų ritmiką, leidžiančią žiūrovui pajusti erdvę. Nuolat ieškau naujų formų, tobulinu režisūrinę kalbą bei gilinuosi į šviesos ir šešėlių santykį.
-          </p>
-          <div class="about-quote">
-            <p>„Kinas prasideda ten, kur baigiasi atsitiktinumas — kiekvienas spindulys ir kiekviena sekundė turi prasmę.“</p>
-            <cite>— Dominik Šuškevič</cite>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4. SEND AN IDEA / SCRIPT SECTION -->
-    <section id="idea" class="section">
-      <div class="container">
-        <div class="section-header reveal">
-          <span class="section-tag">Bendradarbiavimas</span>
-          <h2 class="section-title">Pasiūlyti idėją ar scenarijų</h2>
-        </div>
-
-        <div class="form-card reveal">
-          <p class="form-lead">
-            Turite idėją trumpametražiui filmui, paruoštą scenarijų arba norite dalyvauti kino festivalyje? Užpildykite žemiau esančią formą. Galite prisegti bet kokį failą (iki 25 MB).
-          </p>
-
-          <div id="form-alert" class="form-alert" role="alert"></div>
-
-          <!-- Submission Form -->
-          <form id="idea-form" class="submission-form" novalidate>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="form-name" class="form-label">Jūsų vardas <span class="required">*</span></label>
-                <input type="text" id="form-name" name="name" class="form-input" placeholder="Vardas Pavardė" required maxlength="100">
-              </div>
-
-              <div class="form-group">
-                <label for="form-contact-type" class="form-label">Patogiausias kontaktas <span class="required">*</span></label>
-                <select id="form-contact-type" name="contactType" class="form-select" required>
-                  <option value="instagram">Instagram</option>
-                  <option value="telegram">Telegram</option>
-                  <option value="whatsapp">WhatsApp</option>
-                  <option value="messenger">Messenger</option>
-                  <option value="email">El. paštas</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label for="form-handle" class="form-label">Kontakto vartotojo vardas / adresas <span class="required">*</span></label>
-                <input type="text" id="form-handle" name="handle" class="form-input" placeholder="@vartotojas arba el. paštas" required maxlength="120">
-              </div>
-
-              <div class="form-group">
-                <label for="form-type" class="form-label">Kreipimosi tipas <span class="required">*</span></label>
-                <select id="form-type" name="type" class="form-select" required>
-                  <option value="idea">Idėja filmavimui</option>
-                  <option value="script">Scenarijus</option>
-                  <option value="festival">Dalyvavimas kino festivalyje</option>
-                  <option value="other">Kita</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="form-message" class="form-label">Žinutė / Idėjos aprašymas <span class="required">*</span></label>
-              <textarea id="form-message" name="message" class="form-textarea" placeholder="Trumpai aprašykite savo idėją, scenarijaus siužetą arba festivalio pasiūlymą..." required maxlength="4000"></textarea>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Prisegti failą (neprivaloma)</label>
-              <div class="file-upload-box">
-                <input type="file" id="form-file" class="file-upload-input" accept="*/*">
-                <div class="file-upload-content">
-                  <svg class="file-upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                  <span class="file-upload-text">Spustelėkite arba įtempkite failą (PDF, DOCX, TXT ir kt.)</span>
-                  <span class="file-upload-limit">Maksimalus failo dydis: 25 MB</span>
+        <!-- Featured Film Card (FROZEN TIME: WHAT IF) -->
+        <div class="featured-film-card" id="featured-film-banner">
+          <div class="featured-film-grid">
+            <div class="featured-video-preview" data-youtube-id="bcLq-VXBpzI" title="Paleisti FROZEN TIME: WHAT IF">
+              <img src="https://img.youtube.com/vi/bcLq-VXBpzI/maxresdefault.jpg" alt="FROZEN TIME: WHAT IF filmo kadras" loading="eager" onerror="this.src='https://img.youtube.com/vi/bcLq-VXBpzI/hqdefault.jpg'">
+              <div class="video-play-overlay">
+                <div class="play-circle-btn" aria-label="Paleisti filmą">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
                 </div>
               </div>
-              <div id="file-selected-info" class="file-selected-info">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                <span id="file-name-display"></span>
+            </div>
+            <div class="featured-film-body">
+              <div class="award-ribbon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                1 Vieta — Ąžuolynas International Student Film Festival (AISFF)
               </div>
-              <div id="upload-progress-container" class="upload-progress-container">
-                <div id="upload-progress-bar" class="upload-progress-bar"></div>
+              <h3 class="featured-film-title">FROZEN TIME: WHAT IF</h3>
+              <p class="featured-film-specs">2026 · Shot on iPhone 15 · Kinematografinė studija</p>
+              <p class="featured-film-desc">
+                Nugalėtojo filmas Ąžuolyno tarptautiniame studentų kino festivalyje. Laiko, erdvės ir egzistencinių pasirinkimų kinematografinė analizė.
+              </p>
+              <div class="featured-film-actions">
+                <button type="button" class="btn-primary open-video-btn" data-youtube-id="bcLq-VXBpzI">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  Žiūrėti filmą
+                </button>
+                <a href="https://youtu.be/bcLq-VXBpzI" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+                  YouTube kanale ↗
+                </a>
               </div>
             </div>
-
-            <button type="submit" id="form-submit-btn" class="btn-submit">
-              <span>Siųsti pasiūlymą</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </button>
-          </form>
-
-          <!-- Success Card -->
-          <div id="form-success-card" class="form-success-card" role="status">
-            <svg class="form-success-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 12 15 16 10"/></svg>
-            <h3 class="form-success-title">Pasiūlymas gautas</h3>
-            <p class="form-success-desc">
-              Dėkoju už jūsų idėją! Informacija sėkmingai išsaugota. Peržiūrėsiu medžiagą ir netrukus susisieksiu jūsų nurodytu kontaktu.
-            </p>
-            <button type="button" id="btn-submit-another" class="btn-reset">Siųsti kitą pasiūlymą</button>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- 5. CONTACTS SECTION -->
-    <section id="contacts" class="section">
-      <div class="container">
-        <div class="section-header reveal">
+        <!-- Films Dynamic Grid -->
+        <div class="films-grid" id="films-grid-container">
+          <!-- Populated by script.js -->
+        </div>
+
+        <!-- Photography callout -->
+        <div class="photo-portfolio-callout">
+          <div class="photo-callout-text">
+            <h3>Ieškote fotografijos darbų?</h3>
+            <p>Mano fotografijos kadrai ir komercinis portfolio patalpinti atskiroje platformoje.</p>
+          </div>
+          <a href="https://portfolio.dominikphotofficial.lt" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+            portfolio.dominikphotofficial.lt ↗
+          </a>
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           TAB 2: APIE MANE
+           ================================================================== -->
+      <section id="tab-about" class="tab-pane" aria-label="Apie autorių">
+        <div class="section-header">
+          <span class="section-tag">Autorius</span>
+          <h2 class="section-title">Dominik Šuškevič</h2>
+          <p class="section-description">
+            Kino operatorius, videografas ir režisierius, ieškantis autentiškumo kiekviename kadre.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-photo-card">
+            <img src="https://i.postimg.cc/GtJB0hqn/Portrait-nuotrauka-1.jpg" alt="Dominik Šuškevič portretas" class="about-portrait-img">
+            <div class="about-photo-caption">
+              <h3 class="about-name">Dominik Šuškevič</h3>
+              <p class="about-title">Kino operatorius / Režisierius</p>
+            </div>
+          </div>
+
+          <div class="about-content-body">
+            <div class="about-manifesto-box">
+              <p class="about-motto-quote">ERDVĖ. ŠVIESA. EMOCIJA.</p>
+              <p class="about-manifesto-text">
+                Kinas man nėra tik techninis kameros judesys – tai gebėjimas sustabdyti laiką, atverti aplinkos atmosferą ir leisti žiūrovui pajausti tai, kas dažnai lieka nematoma plika akimi.
+              </p>
+            </div>
+
+            <p class="about-prose">
+              Kuriu nepriklausomus trumpametražius filmus, muzikinius bei atmosferinius vaizdo projektus. Esu Ąžuolyno tarptautinio studentų kino festivalio (AISFF 2026) 1 vietos laimėtojas su filmu <em>„FROZEN TIME: WHAT IF“</em>.
+            </p>
+
+            <p class="about-prose">
+              Mano kūrybinis principas – nuolatinis meistriškumo siekis. Nesvarbu, ar filmuoju profesionalia kino technika, ar kompaktišku išmaniuoju telefonu, svarbiausia išlieka kadro kompozicija, natūralus šviesos jausmas ir pasakojimo gylis.
+            </p>
+
+            <div class="about-pillars">
+              <div class="pillar-card">
+                <div class="pillar-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                </div>
+                <h4 class="pillar-title">Erdvė</h4>
+                <p class="pillar-desc">Tikslus aplinkos pojūtis, architektūrinė kadro geometrija ir mastelio dinamika.</p>
+              </div>
+
+              <div class="pillar-card">
+                <div class="pillar-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                </div>
+                <h4 class="pillar-title">Šviesa</h4>
+                <p class="pillar-desc">Pagarba natūraliai šviesai, šaltos ir šiltos tonacijos harmonija bei subtilus spalvų koregavimas.</p>
+              </div>
+
+              <div class="pillar-card">
+                <div class="pillar-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                </div>
+                <h4 class="pillar-title">Emocija</h4>
+                <p class="pillar-desc">Tikros istorijos, personažų būsena ir vizualinis poveikis, išliekantis pasibaigus filmui.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           TAB 3: PASIŪLYTI IDĖJĄ / SCENARIJŲ
+           ================================================================== -->
+      <section id="tab-idea" class="tab-pane" aria-label="Pasiūlyti idėją ar scenarijų">
+        <div class="section-header">
+          <span class="section-tag">Bendradarbiavimas</span>
+          <h2 class="section-title">Pasiūlyti idėją arba scenarijų</h2>
+          <p class="section-description">
+            Turite vizualinę idėją, parašytą scenarijų ar norite dalyvauti kino festivalyje? Užpildykite žemiau esančią formą.
+          </p>
+        </div>
+
+        <div class="submit-section-wrapper">
+          <div class="submit-intro-card">
+            <h3 class="submit-intro-title">Atviras naujiems kino projektams ir idėjoms</h3>
+            <p class="submit-intro-p">
+              Galite atsiųsti trumpą siužeto aprašymą, pilną scenarijų ar festivalio paraišką. Prie pranešimo galite pridėti bet kokio formato failą (PDF, DOCX, TXT ar kitą iki 25 MB).
+            </p>
+          </div>
+
+          <div class="form-card">
+            <form id="submission-form" class="form-grid" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="input-name" class="form-label">Jūsų vardas / Pavardė <span class="required">*</span></label>
+                  <input type="text" id="input-name" name="name" class="form-input" placeholder="Pvz. Jonas Kazlauskas" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="select-type" class="form-label">Pasiūlymo tipas <span class="required">*</span></label>
+                  <select id="select-type" name="type" class="form-select" required>
+                    <option value="" disabled selected>Pasirinkite tipą...</option>
+                    <option value="Idėja">Kino idėja / Koncepcija</option>
+                    <option value="Scenarijus">Pilnas scenarijus</option>
+                    <option value="Festivalio paraiška">Festivalio dalyvavimas (AISFF)</option>
+                    <option value="Kita">Kitas bendradarbiavimas</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="select-contact-type" class="form-label">Patogiausias kontaktas <span class="required">*</span></label>
+                  <select id="select-contact-type" name="contactType" class="form-select" required>
+                    <option value="Instagram">Instagram</option>
+                    <option value="Telegram">Telegram</option>
+                    <option value="WhatsApp">WhatsApp</option>
+                    <option value="Messenger">Messenger</option>
+                    <option value="Email">El. paštas</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="input-handle" class="form-label">Kontakto vartotojo vardas / El. paštas <span class="required">*</span></label>
+                  <input type="text" id="input-handle" name="handle" class="form-input" placeholder="pvz. @username arba jonas@gmail.com" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="textarea-message" class="form-label">Pranešimas / Idėjos aprašymas <span class="required">*</span></label>
+                <textarea id="textarea-message" name="message" class="form-textarea" placeholder="Aprašykite savo idėją, siužeto liniją ar pasiūlymą bendram filmavimui..." required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Prisegti failą (Scenarijus, PDF, DOCX ir kt.)</label>
+                <div class="file-upload-zone" id="file-drop-zone">
+                  <input type="file" id="input-file" class="file-input-hidden" accept=".pdf,.doc,.docx,.txt,.rtf,.odt">
+                  <div class="file-upload-icon">
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  </div>
+                  <p class="file-upload-text">Spustelėkite arba įtempkite failą čia</p>
+                  <p class="file-upload-hint">Priimami PDF, DOCX, TXT formatai iki 25 MB</p>
+                </div>
+
+                <div class="file-selected-badge" id="file-info-badge">
+                  <span class="file-name-span" id="file-name-display">failas.pdf</span>
+                  <button type="button" class="file-remove-btn" id="file-remove-btn">Pašalinti ✕</button>
+                </div>
+
+                <div class="upload-progress-box" id="upload-progress-box">
+                  <div class="progress-track">
+                    <div class="progress-fill" id="upload-progress-bar"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-alert" id="form-alert-box"></div>
+
+              <button type="submit" class="btn-primary" id="form-submit-btn" style="justify-content: center; padding: 14px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Siųsti pasiūlymą
+              </button>
+            </form>
+
+            <div class="form-success-card" id="form-success-card">
+              <div class="success-check-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <h3 class="success-card-title">Pasiūlymas sėkmingai gautas!</h3>
+              <p class="success-card-desc" id="form-success-desc">
+                Dėkoju už jūsų idėją. Dominik peržiūrės medžiagą ir netrukus susisieks jūsų nurodytu kontaktu.
+              </p>
+              <button type="button" class="btn-secondary" id="form-reset-btn">Pasiūlyti kitą idėją</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           TAB 4: KONTAKTAI
+           ================================================================== -->
+      <section id="tab-contacts" class="tab-pane" aria-label="Kontaktai">
+        <div class="section-header">
           <span class="section-tag">Ryšys</span>
-          <h2 class="section-title">Kontaktai</h2>
+          <h2 class="section-title">Susisiekite tiesiogiai</h2>
+          <p class="section-description">
+            Esu pasiekiamas per populiariausias platformas. Pasirinkite patogiausią būdą parašyti.
+          </p>
         </div>
 
-        <div class="contacts-grid" id="contacts-grid"></div>
+        <div class="contacts-wrapper">
+          <div class="contacts-cards-grid">
+            <a href="https://www.instagram.com/dominikphotofficial" target="_blank" rel="noopener noreferrer" class="contact-card">
+              <div class="contact-card-top">
+                <div class="contact-icon-box">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                </div>
+                <span class="contact-badge">Direct DM</span>
+              </div>
+              <div>
+                <h3 class="contact-channel-name">Instagram</h3>
+                <p class="contact-channel-handle">@dominikphotofficial</p>
+              </div>
+              <span class="contact-open-arrow">Atidaryti profilį ↗</span>
+            </a>
 
-        <div class="contact-email-row reveal">
-          <span>Tiesioginis el. paštas:</span>
-          <a href="mailto:info@dominikphotofficial.lt" class="contact-email-link">info@dominikphotofficial.lt</a>
+            <a href="https://t.me/dominikphotofficial" target="_blank" rel="noopener noreferrer" class="contact-card">
+              <div class="contact-card-top">
+                <div class="contact-icon-box">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </div>
+                <span class="contact-badge">Chat</span>
+              </div>
+              <div>
+                <h3 class="contact-channel-name">Telegram</h3>
+                <p class="contact-channel-handle">@dominikphotofficial</p>
+              </div>
+              <span class="contact-open-arrow">Rašyti žinutę ↗</span>
+            </a>
+
+            <a href="https://wa.me/37060000000" target="_blank" rel="noopener noreferrer" class="contact-card">
+              <div class="contact-card-top">
+                <div class="contact-icon-box">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                </div>
+                <span class="contact-badge">WhatsApp</span>
+              </div>
+              <div>
+                <h3 class="contact-channel-name">WhatsApp</h3>
+                <p class="contact-channel-handle">+370 600 00000</p>
+              </div>
+              <span class="contact-open-arrow">Pradėti pokalbį ↗</span>
+            </a>
+
+            <a href="https://m.me/dominikphotofficial" target="_blank" rel="noopener noreferrer" class="contact-card">
+              <div class="contact-card-top">
+                <div class="contact-icon-box">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </div>
+                <span class="contact-badge">Messenger</span>
+              </div>
+              <div>
+                <h3 class="contact-channel-name">Messenger</h3>
+                <p class="contact-channel-handle">dominikphotofficial</p>
+              </div>
+              <span class="contact-open-arrow">Rašyti per Messenger ↗</span>
+            </a>
+          </div>
+
+          <div class="direct-email-banner">
+            <div>
+              <h3>Oficialus el. paštas</h3>
+              <p>Oficialiems kvietimams, kino festivalių bendradarbiavimui ir projektų užklausoms.</p>
+            </div>
+            <a href="mailto:info@dominikphotofficial.lt" class="email-address-chip">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              info@dominikphotofficial.lt
+            </a>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+    </div>
   </main>
+
+  <!-- Video Modal -->
+  <div class="video-modal" id="video-modal" aria-hidden="true" role="dialog">
+    <div class="video-modal-content">
+      <button type="button" class="video-modal-close-btn" id="video-modal-close" aria-label="Uždaryti filmą">✕</button>
+      <div class="video-modal-iframe-wrapper" id="video-modal-frame-holder">
+        <!-- iframe injected on play -->
+      </div>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer class="footer">
-    <div class="container footer-container">
-      <div>
-        <span>© 2026 DP | FILMS · Dominik Šuškevič. Visos teisės saugomos.</span>
-      </div>
-      <div>
-        <a href="https://azuolynasinternationalfilmfestival.github.io/" target="_blank" rel="noopener noreferrer" class="footer-link">
-          Ąžuolynas International Film Festival (AISFF)
-        </a>
+    <div class="footer-container">
+      <p class="footer-motto">ERDVĖ. ŠVIESA. EMOCIJA.</p>
+      <p>© 2026 DP | FILMS · Dominik Šuškevič. Visos teisės saugomos.</p>
+      <div class="footer-links">
+        <a href="https://portfolio.dominikphotofficial.lt" target="_blank" rel="noopener noreferrer" class="footer-link">Fotografija</a>
+        <span>·</span>
+        <a href="https://azuolynasinternationalfilmfestival.github.io/" target="_blank" rel="noopener noreferrer" class="footer-link">AISFF Festivalis</a>
       </div>
     </div>
   </footer>

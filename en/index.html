@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DP | FILMS — Dominik Šuškevič</title>
-  <meta name="description" content="Dominik Šuškevič – cinematographer, filmmaker and photographer. Original cinema projects, 'Frozen Time: What If', winner of Ąžuolynas International Student Film Festival.">
-  <meta name="keywords" content="DP FILMS, Dominik Šuškevič, cinematographer, filmmaker, films, Frozen Time What If, AISFF">
+  <meta name="description" content="Dominik Šuškevič – Cinematographer, Director & Videographer. Original films, 'Frozen Time: What If', 1st Place Winner at Ąžuolynas International Student Film Festival.">
+  <meta name="keywords" content="DP FILMS, Dominik Šuškevič, Cinematographer, Director, Filmmaker, Frozen Time What If, AISFF">
   <meta name="author" content="Dominik Šuškevič">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://films.dominikphotofficial.lt/en/">
@@ -16,51 +16,89 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="DP | FILMS">
   <meta property="og:title" content="DP | FILMS — Dominik Šuškevič">
-  <meta property="og:description" content="Cinematographer, filmmaker and photographer. SPACE. LIGHT. EMOTION.">
+  <meta property="og:description" content="Cinematographer, Director & Videographer. SPACE. LIGHT. EMOTION.">
   <meta property="og:url" content="https://films.dominikphotofficial.lt/en/">
   <meta property="og:image" content="https://i.postimg.cc/GtJB0hqn/Portrait-nuotrauka-1.jpg">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="DP | FILMS — Dominik Šuškevič">
-  <meta name="twitter:description" content="Cinematographer, filmmaker and photographer. SPACE. LIGHT. EMOTION.">
+  <meta name="twitter:description" content="Cinematographer, Director & Videographer. SPACE. LIGHT. EMOTION.">
   <meta name="twitter:image" content="https://i.postimg.cc/GtJB0hqn/Portrait-nuotrauka-1.jpg">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png">
 
-  <!-- Typography: Space Grotesk & Inter -->
+  <!-- Typography: Jost & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="/style.css">
+
+  <!-- Structured Data: Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://films.dominikphotofficial.lt/#dominik",
+        "name": "Dominik Šuškevič",
+        "alternateName": ["Dominik Suskevic", "DP"],
+        "jobTitle": "Cinematographer, Director & Videographer",
+        "description": "Dominik Šuškevič – Lithuanian cinematographer, director and videographer. 1st Place Winner at the Ąžuolynas International Student Film Festival (AISFF 2026) with 'Frozen Time: What If'.",
+        "url": "https://films.dominikphotofficial.lt/en/",
+        "image": "https://i.postimg.cc/GtJB0hqn/Portrait-nuotrauka-1.jpg",
+        "sameAs": [
+          "https://www.instagram.com/dominikphotofficial",
+          "https://portfolio.dominikphotofficial.lt",
+          "https://azuolynasinternationalfilmfestival.github.io/"
+        ],
+        "worksFor": {
+          "@type": "Brand",
+          "name": "DP | FILMS",
+          "url": "https://films.dominikphotofficial.lt/",
+          "logo": "https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png",
+          "slogan": "SPACE. LIGHT. EMOTION."
+        },
+        "award": "1 PLACE FESTIVAL — Ąžuolynas International Student Film Festival (AISFF 2026)"
+      },
+      {
+        "@type": "Movie",
+        "@id": "https://films.dominikphotofficial.lt/#frozen-time-what-if",
+        "name": "FROZEN TIME: WHAT IF",
+        "datePublished": "2026",
+        "inLanguage": "en",
+        "director": { "@id": "https://films.dominikphotofficial.lt/#dominik" },
+        "award": "1 PLACE FESTIVAL — Ąžuolynas International Student Film Festival (AISFF 2026)",
+        "description": "Winner of the Ąžuolynas International Student Film Festival. A cinematic exploration of time, stillness, and human choices."
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
-  <div class="film-grain" aria-hidden="true"></div>
-  <div class="cinema-glow" aria-hidden="true"></div>
+  <div class="ambient-pattern" aria-hidden="true"></div>
 
-  <!-- Header / Top Bar (3-zone contract) -->
+  <!-- Header -->
   <header class="header">
     <div class="header-container">
-      <!-- Zone 1: Wordmark -->
       <a href="#hero" class="brand" aria-label="DP FILMS Home">
         <span class="brand-dp">DP</span>
         <span class="brand-divider">|</span>
         <span class="brand-films">FILMS</span>
       </a>
 
-      <!-- Zone 2: Navigation Links -->
-      <nav class="nav" aria-label="Main navigation">
-        <a href="#films" class="nav-link">Films</a>
-        <a href="#about" class="nav-link">About</a>
-        <a href="#idea" class="nav-link">Send Idea</a>
-        <a href="#contacts" class="nav-link">Contacts</a>
+      <nav class="nav" aria-label="Main Navigation">
+        <button type="button" class="nav-tab-link active" data-tab-target="films">Films</button>
+        <button type="button" class="nav-tab-link" data-tab-target="about">About</button>
+        <button type="button" class="nav-tab-link" data-tab-target="idea">Submit Idea</button>
+        <button type="button" class="nav-tab-link" data-tab-target="contacts">Contacts</button>
       </nav>
 
-      <!-- Zone 3: Language Switcher -->
       <div class="nav-actions">
-        <div class="lang-switcher" aria-label="Language selector">
+        <div class="lang-switcher" aria-label="Language Selector">
           <a href="/" class="lang-btn">LT</a>
           <span class="lang-sep">/</span>
           <span class="lang-btn active">EN</span>
@@ -69,199 +107,393 @@
     </div>
   </header>
 
-  <main>
-    <!-- 1. HERO SECTION -->
-    <section id="hero" class="hero container">
-      <div class="reveal">
-        <h1 class="hero-wordmark">
-          <span class="hero-dp">DP</span>
-          <span class="hero-divider">|</span>
-          <span class="hero-films">FILMS</span>
-        </h1>
-        <div class="hero-motto">
-          <span>SPACE</span>
-          <span class="motto-dot" aria-hidden="true">·</span>
-          <span>LIGHT</span>
-          <span class="motto-dot" aria-hidden="true">·</span>
-          <span>EMOTION</span>
-        </div>
-        <p class="hero-sub">
-          <span>Dominik Šuškevič</span> — videography, cinematography and directing.
-        </p>
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <span class="hero-pretitle">Dominik Šuškevič · Portfolio</span>
+      <h1 class="hero-wordmark">
+        <span>DP</span><span class="divider">|</span><span class="films">FILMS</span>
+      </h1>
+      <p class="hero-motto">SPACE. LIGHT. EMOTION.</p>
+      <p class="hero-bio-short">
+        Cinematography, directing, and visual storytelling. Crafting films driven by organic light, architectural stillness, and deeply resonant human emotion.
+      </p>
+      <div class="hero-jump-links">
+        <button type="button" class="jump-chip" data-jump-tab="films">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          Watch Films (11)
+        </button>
+        <button type="button" class="jump-chip" data-jump-tab="idea">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          Submit an Idea / Script
+        </button>
+        <a href="https://portfolio.dominikphotofficial.lt" target="_blank" rel="noopener noreferrer" class="jump-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Photography Portfolio ↗
+        </a>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- 2. FILMS SECTION -->
-    <section id="films" class="section">
-      <div class="container">
-        <div class="section-header reveal">
-          <span class="section-tag">Catalog</span>
-          <h2 class="section-title">Films & Visual Works</h2>
+  <!-- Main Tabs Content -->
+  <main class="tab-content-area">
+    <div class="container">
+
+      <!-- ==================================================================
+           TAB 1: FILMS
+           ================================================================== -->
+      <section id="tab-films" class="tab-pane active" aria-label="Films Gallery">
+        <div class="section-header">
+          <span class="section-tag">Showcase</span>
+          <h2 class="section-title">Selected Films & Cinematography</h2>
+          <p class="section-description">
+            Complete collection of narrative shorts, winter atmospheric series, and award-winning festival productions.
+          </p>
         </div>
 
-        <!-- Stacked Cinematic List filled by script.js from config.js -->
-        <div class="films-stack" id="films-stack"></div>
-
-        <!-- Photography Portfolio Link -->
-        <div class="photo-banner reveal">
-          <div class="photo-banner-text">
-            <h4>Photography Portfolio</h4>
-            <p>Portraits, landscapes and documentary series are showcased on my dedicated photography website.</p>
+        <!-- Filter Bar -->
+        <div class="films-filter-bar">
+          <div class="films-filter-chips">
+            <button type="button" class="filter-chip active" data-filter="all">All (11)</button>
+            <button type="button" class="filter-chip" data-filter="awards">Awards (AISFF)</button>
+            <button type="button" class="filter-chip" data-filter="2026">2026</button>
+            <button type="button" class="filter-chip" data-filter="2025">2025 (Winter Series)</button>
+            <button type="button" class="filter-chip" data-filter="2024">2024</button>
           </div>
-          <a href="https://portfolio.dominikphotofficial.lt" target="_blank" rel="noopener noreferrer" class="photo-banner-link">
-            <span>portfolio.dominikphotofficial.lt</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3. ABOUT SECTION -->
-    <section id="about" class="section">
-      <div class="container">
-        <div class="section-header reveal">
-          <span class="section-tag">Filmmaker</span>
-          <h2 class="section-title">About Me</h2>
+          <span class="films-count-badge" id="films-count-display">Showing: 11 films</span>
         </div>
 
-        <div class="about-grid reveal">
-          <p class="about-lead">
-            I am Dominik Šuškevič — cinematographer, videographer, and filmmaker. My creative focus centers on visual storytelling where technical precision serves raw human emotion.
-          </p>
-          <p class="about-body">
-            I direct short films, cinematic visual projects, and atmospheric nature studies. I prioritize natural light, organic motion, and disciplined pacing that invites viewers to inhabit the space. I continually explore new visual languages, refine my directing voice, and investigate the interplay of illumination and shadow.
-          </p>
-          <div class="about-quote">
-            <p>“Cinema begins where coincidence ends — every ray of light and every second holds deliberate meaning.”</p>
-            <cite>— Dominik Šuškevič</cite>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4. SEND AN IDEA / SCRIPT SECTION -->
-    <section id="idea" class="section">
-      <div class="container">
-        <div class="section-header reveal">
-          <span class="section-tag">Collaboration</span>
-          <h2 class="section-title">Send an Idea or Script</h2>
-        </div>
-
-        <div class="form-card reveal">
-          <p class="form-lead">
-            Have an idea for a short film, a completed screenplay, or want to apply to take part in the film festival? Submit your proposal below. You can attach any file (up to 25 MB).
-          </p>
-
-          <div id="form-alert" class="form-alert" role="alert"></div>
-
-          <!-- Submission Form -->
-          <form id="idea-form" class="submission-form" novalidate>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="form-name" class="form-label">Your Name <span class="required">*</span></label>
-                <input type="text" id="form-name" name="name" class="form-input" placeholder="First Last" required maxlength="100">
-              </div>
-
-              <div class="form-group">
-                <label for="form-contact-type" class="form-label">Preferred Contact <span class="required">*</span></label>
-                <select id="form-contact-type" name="contactType" class="form-select" required>
-                  <option value="instagram">Instagram</option>
-                  <option value="telegram">Telegram</option>
-                  <option value="whatsapp">WhatsApp</option>
-                  <option value="messenger">Messenger</option>
-                  <option value="email">Email</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label for="form-handle" class="form-label">Handle / Contact Details <span class="required">*</span></label>
-                <input type="text" id="form-handle" name="handle" class="form-input" placeholder="@handle or email address" required maxlength="120">
-              </div>
-
-              <div class="form-group">
-                <label for="form-type" class="form-label">Submission Type <span class="required">*</span></label>
-                <select id="form-type" name="type" class="form-select" required>
-                  <option value="idea">Film Idea</option>
-                  <option value="script">Screenplay / Script</option>
-                  <option value="festival">Festival Participation</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="form-message" class="form-label">Message / Synopsis <span class="required">*</span></label>
-              <textarea id="form-message" name="message" class="form-textarea" placeholder="Describe your concept, screenplay storyline, or festival proposal..." required maxlength="4000"></textarea>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Attach File (Optional)</label>
-              <div class="file-upload-box">
-                <input type="file" id="form-file" class="file-upload-input" accept="*/*">
-                <div class="file-upload-content">
-                  <svg class="file-upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                  <span class="file-upload-text">Click or drag a file here (PDF, DOCX, TXT, etc.)</span>
-                  <span class="file-upload-limit">Maximum file size: 25 MB</span>
+        <!-- Featured Film Card (FROZEN TIME: WHAT IF) -->
+        <div class="featured-film-card" id="featured-film-banner">
+          <div class="featured-film-grid">
+            <div class="featured-video-preview" data-youtube-id="bcLq-VXBpzI" title="Play FROZEN TIME: WHAT IF">
+              <img src="https://img.youtube.com/vi/bcLq-VXBpzI/maxresdefault.jpg" alt="FROZEN TIME: WHAT IF movie still" loading="eager" onerror="this.src='https://img.youtube.com/vi/bcLq-VXBpzI/hqdefault.jpg'">
+              <div class="video-play-overlay">
+                <div class="play-circle-btn" aria-label="Play film">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
                 </div>
               </div>
-              <div id="file-selected-info" class="file-selected-info">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                <span id="file-name-display"></span>
+            </div>
+            <div class="featured-film-body">
+              <div class="award-ribbon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                1st Place — Ąžuolynas International Student Film Festival (AISFF)
               </div>
-              <div id="upload-progress-container" class="upload-progress-container">
-                <div id="upload-progress-bar" class="upload-progress-bar"></div>
+              <h3 class="featured-film-title">FROZEN TIME: WHAT IF</h3>
+              <p class="featured-film-specs">2026 · Shot on iPhone 15 · Cinematic Study</p>
+              <p class="featured-film-desc">
+                Winner of the Ąžuolynas International Student Film Festival. A cinematic exploration of time, stillness, and human choices.
+              </p>
+              <div class="featured-film-actions">
+                <button type="button" class="btn-primary open-video-btn" data-youtube-id="bcLq-VXBpzI">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  Watch Film
+                </button>
+                <a href="https://youtu.be/bcLq-VXBpzI" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+                  Open on YouTube ↗
+                </a>
               </div>
             </div>
-
-            <button type="submit" id="form-submit-btn" class="btn-submit">
-              <span>Submit Proposal</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </button>
-          </form>
-
-          <!-- Success Card -->
-          <div id="form-success-card" class="form-success-card" role="status">
-            <svg class="form-success-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 12 15 16 10"/></svg>
-            <h3 class="form-success-title">Proposal Received</h3>
-            <p class="form-success-desc">
-              Thank you for sharing your concept! Your submission has been saved. Dominik will review the materials and get in touch with you shortly.
-            </p>
-            <button type="button" id="btn-submit-another" class="btn-reset">Submit another proposal</button>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- 5. CONTACTS SECTION -->
-    <section id="contacts" class="section">
-      <div class="container">
-        <div class="section-header reveal">
-          <span class="section-tag">Direct</span>
-          <h2 class="section-title">Contacts</h2>
+        <!-- Films Dynamic Grid -->
+        <div class="films-grid" id="films-grid-container">
+          <!-- Populated by script.js -->
         </div>
 
-        <div class="contacts-grid" id="contacts-grid"></div>
-
-        <div class="contact-email-row reveal">
-          <span>Direct Email:</span>
-          <a href="mailto:info@dominikphotofficial.lt" class="contact-email-link">info@dominikphotofficial.lt</a>
+        <!-- Photography callout -->
+        <div class="photo-portfolio-callout">
+          <div class="photo-callout-text">
+            <h3>Looking for photography work?</h3>
+            <p>My commercial stills and portrait photography portfolio is hosted on a dedicated platform.</p>
+          </div>
+          <a href="https://portfolio.dominikphotofficial.lt" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+            portfolio.dominikphotofficial.lt ↗
+          </a>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <!-- ==================================================================
+           TAB 2: ABOUT
+           ================================================================== -->
+      <section id="tab-about" class="tab-pane" aria-label="About the Artist">
+        <div class="section-header">
+          <span class="section-tag">Filmmaker</span>
+          <h2 class="section-title">Dominik Šuškevič</h2>
+          <p class="section-description">
+            Cinematographer, videographer, and director pursuing visual authenticity in every frame.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-photo-card">
+            <img src="https://i.postimg.cc/GtJB0hqn/Portrait-nuotrauka-1.jpg" alt="Portrait of Dominik Šuškevič" class="about-portrait-img">
+            <div class="about-photo-caption">
+              <h3 class="about-name">Dominik Šuškevič</h3>
+              <p class="about-title">Cinematographer / Director</p>
+            </div>
+          </div>
+
+          <div class="about-content-body">
+            <div class="about-manifesto-box">
+              <p class="about-motto-quote">SPACE. LIGHT. EMOTION.</p>
+              <p class="about-manifesto-text">
+                For me, cinema is never merely camera movement — it is the power to freeze time, uncover the atmosphere of space, and let the audience experience what often remains unseen to the naked eye.
+              </p>
+            </div>
+
+            <p class="about-prose">
+              I create independent short films, atmospheric winter landscape studies, and narrative video projects. Winner of 1st Place at the Ąžuolynas International Student Film Festival (AISFF 2026) with <em>"FROZEN TIME: WHAT IF"</em>.
+            </p>
+
+            <p class="about-prose">
+              My core philosophy is the continuous pursuit of mastery. Whether shooting on high-end production cameras or an agile mobile device, the essence remains composition, genuine light texture, and narrative depth.
+            </p>
+
+            <div class="about-pillars">
+              <div class="pillar-card">
+                <div class="pillar-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                </div>
+                <h4 class="pillar-title">Space</h4>
+                <p class="pillar-desc">Spatial architecture, geometric balance, and physical scale in every composition.</p>
+              </div>
+
+              <div class="pillar-card">
+                <div class="pillar-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                </div>
+                <h4 class="pillar-title">Light</h4>
+                <p class="pillar-desc">Reverence for ambient light, organic transitions, and nuanced color grading.</p>
+              </div>
+
+              <div class="pillar-card">
+                <div class="pillar-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                </div>
+                <h4 class="pillar-title">Emotion</h4>
+                <p class="pillar-desc">Authentic character beats and lasting emotional impact that lingers after the credits roll.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           TAB 3: SUBMIT IDEA / SCRIPT
+           ================================================================== -->
+      <section id="tab-idea" class="tab-pane" aria-label="Submit an Idea or Script">
+        <div class="section-header">
+          <span class="section-tag">Collaboration</span>
+          <h2 class="section-title">Send an Idea or Script</h2>
+          <p class="section-description">
+            Have a film concept, written screenplay, or festival inquiry? Fill in the form below.
+          </p>
+        </div>
+
+        <div class="submit-section-wrapper">
+          <div class="submit-intro-card">
+            <h3 class="submit-intro-title">Open to Cinematic Collaborations</h3>
+            <p class="submit-intro-p">
+              Feel free to send a concept outline, treatment, or complete screenplay. You can attach any document format (PDF, DOCX, TXT, up to 25 MB).
+            </p>
+          </div>
+
+          <div class="form-card">
+            <form id="submission-form" class="form-grid" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="input-name" class="form-label">Your Name <span class="required">*</span></label>
+                  <input type="text" id="input-name" name="name" class="form-input" placeholder="e.g. Alex Morgan" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="select-type" class="form-label">Submission Type <span class="required">*</span></label>
+                  <select id="select-type" name="type" class="form-select" required>
+                    <option value="" disabled selected>Select submission type...</option>
+                    <option value="Idea">Film Concept / Pitch</option>
+                    <option value="Script">Full Screenplay</option>
+                    <option value="Festival application">Festival Application (AISFF)</option>
+                    <option value="Other">Other Collaboration</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="select-contact-type" class="form-label">Preferred Contact Channel <span class="required">*</span></label>
+                  <select id="select-contact-type" name="contactType" class="form-select" required>
+                    <option value="Instagram">Instagram</option>
+                    <option value="Telegram">Telegram</option>
+                    <option value="WhatsApp">WhatsApp</option>
+                    <option value="Messenger">Messenger</option>
+                    <option value="Email">Email</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="input-handle" class="form-label">Handle or Email Address <span class="required">*</span></label>
+                  <input type="text" id="input-handle" name="handle" class="form-input" placeholder="e.g. @username or name@gmail.com" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="textarea-message" class="form-label">Message / Concept Synopsis <span class="required">*</span></label>
+                <textarea id="textarea-message" name="message" class="form-textarea" placeholder="Detail your storyline, visual premise, or proposed project..." required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Attach File (Screenplay, PDF, DOCX, etc.)</label>
+                <div class="file-upload-zone" id="file-drop-zone">
+                  <input type="file" id="input-file" class="file-input-hidden" accept=".pdf,.doc,.docx,.txt,.rtf,.odt">
+                  <div class="file-upload-icon">
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  </div>
+                  <p class="file-upload-text">Click or drag & drop file here</p>
+                  <p class="file-upload-hint">Accepts PDF, DOCX, TXT files up to 25 MB</p>
+                </div>
+
+                <div class="file-selected-badge" id="file-info-badge">
+                  <span class="file-name-span" id="file-name-display">file.pdf</span>
+                  <button type="button" class="file-remove-btn" id="file-remove-btn">Remove ✕</button>
+                </div>
+
+                <div class="upload-progress-box" id="upload-progress-box">
+                  <div class="progress-track">
+                    <div class="progress-fill" id="upload-progress-bar"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-alert" id="form-alert-box"></div>
+
+              <button type="submit" class="btn-primary" id="form-submit-btn" style="justify-content: center; padding: 14px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Send Proposal
+              </button>
+            </form>
+
+            <div class="form-success-card" id="form-success-card">
+              <div class="success-check-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <h3 class="success-card-title">Proposal Received Successfully!</h3>
+              <p class="success-card-desc" id="form-success-desc">
+                Thank you for sharing your concept. Dominik will review your materials and contact you shortly.
+              </p>
+              <button type="button" class="btn-secondary" id="form-reset-btn">Submit Another Idea</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           TAB 4: CONTACTS
+           ================================================================== -->
+      <section id="tab-contacts" class="tab-pane" aria-label="Contacts">
+        <div class="section-header">
+          <span class="section-tag">Direct Lines</span>
+          <h2 class="section-title">Connect Directly</h2>
+          <p class="section-description">
+            Available across preferred direct channels. Select your favorite medium to start a conversation.
+          </p>
+        </div>
+
+        <div class="contacts-wrapper">
+          <div class="contacts-cards-grid">
+            <a href="https://www.instagram.com/dominikphotofficial" target="_blank" rel="noopener noreferrer" class="contact-card">
+              <div class="contact-card-top">
+                <div class="contact-icon-box">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                </div>
+                <span class="contact-badge">Direct DM</span>
+              </div>
+              <div>
+                <h3 class="contact-channel-name">Instagram</h3>
+                <p class="contact-channel-handle">@dominikphotofficial</p>
+              </div>
+              <span class="contact-open-arrow">Open profile ↗</span>
+            </a>
+
+            <a href="https://t.me/dominikphotofficial" target="_blank" rel="noopener noreferrer" class="contact-card">
+              <div class="contact-card-top">
+                <div class="contact-icon-box">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </div>
+                <span class="contact-badge">Chat</span>
+              </div>
+              <div>
+                <h3 class="contact-channel-name">Telegram</h3>
+                <p class="contact-channel-handle">@dominikphotofficial</p>
+              </div>
+              <span class="contact-open-arrow">Send message ↗</span>
+            </a>
+
+            <a href="https://wa.me/37060000000" target="_blank" rel="noopener noreferrer" class="contact-card">
+              <div class="contact-card-top">
+                <div class="contact-icon-box">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                </div>
+                <span class="contact-badge">WhatsApp</span>
+              </div>
+              <div>
+                <h3 class="contact-channel-name">WhatsApp</h3>
+                <p class="contact-channel-handle">+370 600 00000</p>
+              </div>
+              <span class="contact-open-arrow">Start chat ↗</span>
+            </a>
+
+            <a href="https://m.me/dominikphotofficial" target="_blank" rel="noopener noreferrer" class="contact-card">
+              <div class="contact-card-top">
+                <div class="contact-icon-box">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </div>
+                <span class="contact-badge">Messenger</span>
+              </div>
+              <div>
+                <h3 class="contact-channel-name">Messenger</h3>
+                <p class="contact-channel-handle">dominikphotofficial</p>
+              </div>
+              <span class="contact-open-arrow">Message on Messenger ↗</span>
+            </a>
+          </div>
+
+          <div class="direct-email-banner">
+            <div>
+              <h3>Official Inquiries</h3>
+              <p>For festival programs, film commissions, and commercial cinematography inquiries.</p>
+            </div>
+            <a href="mailto:info@dominikphotofficial.lt" class="email-address-chip">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              info@dominikphotofficial.lt
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </div>
   </main>
+
+  <!-- Video Modal -->
+  <div class="video-modal" id="video-modal" aria-hidden="true" role="dialog">
+    <div class="video-modal-content">
+      <button type="button" class="video-modal-close-btn" id="video-modal-close" aria-label="Close video">✕</button>
+      <div class="video-modal-iframe-wrapper" id="video-modal-frame-holder">
+        <!-- iframe injected on play -->
+      </div>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer class="footer">
-    <div class="container footer-container">
-      <div>
-        <span>© 2026 DP | FILMS · Dominik Šuškevič. All rights reserved.</span>
-      </div>
-      <div>
-        <a href="https://azuolynasinternationalfilmfestival.github.io/" target="_blank" rel="noopener noreferrer" class="footer-link">
-          Ąžuolynas International Film Festival (AISFF)
-        </a>
+    <div class="footer-container">
+      <p class="footer-motto">SPACE. LIGHT. EMOTION.</p>
+      <p>© 2026 DP | FILMS · Dominik Šuškevič. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="https://portfolio.dominikphotofficial.lt" target="_blank" rel="noopener noreferrer" class="footer-link">Photography</a>
+        <span>·</span>
+        <a href="https://azuolynasinternationalfilmfestival.github.io/" target="_blank" rel="noopener noreferrer" class="footer-link">AISFF Festival</a>
       </div>
     </div>
   </footer>

@@ -1,0 +1,26 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Helper: Verify if the authenticated user is the designated portfolio admin
+    function isAdmin() {
+      return request.auth != null 
+          && request.auth.token.email == 'dominikphotofficial.lt@gmail.com';
+    }
+
+    // Dedicated Film Portfolio uploads directory
+    match /film_uploads/{fileName} {
+      // Public visitors can ONLY upload files up to 25 MB
+      allow create: if request.resource.size < 25 * 1024 * 1024;
+
+      // Only the portfolio owner can read, download, or delete uploaded documents & scripts
+      allow read, delete, update: if isAdmin();
+    }
+
+    // Legacy submissions folder compatibility
+    match /submissions/{fileName} {
+      allow create: if request.resource.size < 25 * 1024 * 1024;
+      allow read, delete, update: if isAdmin();
+    }
+  }
+}
