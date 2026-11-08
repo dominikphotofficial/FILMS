@@ -35,6 +35,48 @@
   <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="/style.css">
+
+  <!-- Structured Data: Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://films.dominikphotofficial.lt/#dominik",
+        "name": "Dominik Šuškevič",
+        "alternateName": ["Dominik Suskevic", "DP"],
+        "jobTitle": ["Videografas", "Kino operatorius", "Kino kūrėjas", "Montuotojas"],
+        "description": "Dominik Šuškevič yra patvirtintos kvalifikacijos videografas, kino operatorius ir režisierius. Filmo „Frozen Time: What If“ režisierius, laimėjęs 1-ąją vietą Ąžuolyno tarptautiniame studentų filmų festivalyje 2026.",
+        "url": "https://films.dominikphotofficial.lt/lt/index.html",
+        "image": "https://i.postimg.cc/GtJB0hqn/Portrait-nuotrauka-1.jpg",
+        "sameAs": [
+          "https://www.instagram.com/dominikphotofficial",
+          "https://portfolio.dominikphotofficial.lt",
+          "https://t.me/dominikphotofficial"
+        ],
+        "worksFor": {
+          "@type": "Brand",
+          "name": "DP | FILMS",
+          "url": "https://films.dominikphotofficial.lt/lt/index.html",
+          "logo": "https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png",
+          "slogan": "ERDVĖ. ŠVIESA. EMOCIJA."
+        },
+        "award": "1 vietos laimėtojas — Ąžuolyno tarptautinis studentų filmų festivalis (AISFF 2026)"
+      },
+      {
+        "@type": "Movie",
+        "@id": "https://films.dominikphotofficial.lt/#frozen-time-what-if",
+        "name": "FROZEN TIME: WHAT IF",
+        "datePublished": "2026",
+        "inLanguage": "en",
+        "director": { "@id": "https://films.dominikphotofficial.lt/#dominik" },
+        "award": "1 vietos laimėtojas — Ąžuolyno tarptautinis studentų filmų festivalis (AISFF 2026)",
+        "description": "Trumpametražis filmas, režisuotas ir nufilmuotas Dominiko Šuškevičiaus. AISFF 2026 nugalėtojas."
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <div class="ambient-pattern" aria-hidden="true"></div>
@@ -50,9 +92,10 @@
 
       <nav class="nav" id="main-nav" aria-label="Navigacija">
         <a href="#about" class="nav-link">Apie mane</a>
+        <a href="#services" class="nav-link">Paslaugos ir kvalifikacija</a>
         <a href="#roles" class="nav-link">Komandos rolės</a>
         <a href="#how-it-works" class="nav-link">Kaip tai veikia</a>
-        <a href="#films" class="nav-link">Filmai</a>
+        <a href="#films" class="nav-link">Filmai (11)</a>
         <a href="#festival" class="nav-link">AISFF</a>
         <a href="#contacts" class="nav-link">Kontaktai</a>
       </nav>
@@ -148,12 +191,45 @@
           </div>
 
           <p class="about-prose">
-            Esu kino kūrėjas ir fotografas. Kaip režisierius esu sukūręs vieną filmą: trumpametražį darbą <em>„FROZEN TIME: WHAT IF“</em> (2026), kuris laimėjo <strong>1-ąją vietą Ąžuolyno tarptautiniame studentų kino festivalyje (AISFF)</strong>.
+            Esu jaunas kino kūrėjas ir fotografas, turintis patvirtintą profesinę kvalifikaciją <strong>videografijos, kameros valdymo ir vaizdo postprodukcijos</strong> srityse. Kaip režisierius esu sukūręs vieną filmą: trumpametražį vaidybinį darbą <em>„FROZEN TIME: WHAT IF“</em> (2026), kuris laimėjo <strong>1-ąją vietą Ąžuolyno tarptautiniame studentų kino festivalyje (AISFF)</strong>.
           </p>
 
           <p class="about-prose">
-            Taip pat filmuoju atmosferinius vizualinius etiudus ir gamtos kiną bei fotografuoju. Mano fotografijos portfolio pasiekiamas adresu <a href="https://portfolio.dominikphotofficial.lt" target="_blank" rel="noopener noreferrer" style="color: var(--primary-bright); font-weight: 600;">portfolio.dominikphotofficial.lt ↗</a>.
+            Tikiu, kad stiprus kinas gimsta iš geros idėjos ir nuoširdžios komandos sinergijos, o ne iš didžiulių Holivudo biudžetų. Dirbdamas tiek nuotoliniu būdu su scenaristais, tiek filmavimo aikštelėje, atnešu techninį preciziškumą, vizualinę discipliną ir kūrybinį atsidavimą.
           </p>
+
+          <!-- Confirmed Qualifications & Skills -->
+          <div class="credentials-bar">
+            <div class="credential-item">
+              <div class="credential-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+              </div>
+              <div>
+                <div class="credential-title">Patvirtinta videografija</div>
+                <div class="credential-desc">Profesionalus filmavimas, kompozicija ir natūralus apšvietimas</div>
+              </div>
+            </div>
+
+            <div class="credential-item">
+              <div class="credential-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </div>
+              <div>
+                <div class="credential-title">Apdovanotas režisierius</div>
+                <div class="credential-desc">1 vieta AISFF tarptautiniame studentų filmų festivalyje</div>
+              </div>
+            </div>
+
+            <div class="credential-item">
+              <div class="credential-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              </div>
+              <div>
+                <div class="credential-title">Meninė fotografija</div>
+                <div class="credential-desc"><a href="https://portfolio.dominikphotofficial.lt" target="_blank" rel="noopener noreferrer" style="color: var(--primary-accent); text-decoration: underline;">portfolio.dominikphotofficial.lt ↗</a></div>
+              </div>
+            </div>
+          </div>
 
           <div class="about-pillars">
             <div class="pillar-card">
@@ -180,6 +256,49 @@
               <p class="pillar-desc">Tikrumas, vidinė įtampa ir žmogaus buvimas, kuris lieka atmintyje pasibaigus filmui.</p>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services & Creative Collaboration -->
+  <section class="section-block" id="services">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Ką atsinešu į projektą</span>
+        <h2 class="section-title">Videografijos paslaugos ir bendra gamyba</h2>
+        <p class="section-description">
+          Aiški, profesionali partnerystė nepriklausomam kinui, trumpametražiams filmams ir vizualiniam pasakojimui.
+        </p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <h3 class="service-card-title">Kinematografija ir kameros darbas</h3>
+          <p class="service-card-text">
+            Patvirtinta patirtis valdant kameros judesį, anamorfinį kadrą, natūralų apšvietimą bei vizualinę nuotaiką pagal jūsų istoriją.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <h3 class="service-card-title">Režisūra ir vizualinė priežiūra</h3>
+          <p class="service-card-text">
+            Apdovanoto režisieriaus požiūris: kadrų planavimas, mizanscenos, tempas ir natūralus aktorių vedimas link gilių, įtikinamų personažų.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <h3 class="service-card-title">Montažas ir organinis spalvų koregavimas</h3>
+          <p class="service-card-text">
+            Preciziškas pasakojimo ritmas, atmosferinis spalvų rūšiavimas (color grading) su natūraliais odos tonais bei techninis paruošimas didiesiems festivalių ekranams.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <h3 class="service-card-title">Tarptautinė nuotolinė koprodukcija</h3>
+          <p class="service-card-text">
+            Struktūrizuotas bendradarbiavimas su scenaristais, režisieriais ir garso kompozitoriais iš bet kurios pasaulio šalies – aiškūs terminai ir kūrybinė pagarba.
+          </p>
         </div>
       </div>
     </div>
@@ -581,6 +700,17 @@
           </div>
           <span class="contact-badge">Peržiūrėti</span>
         </a>
+      </div>
+
+      <!-- Privacy & Data Protection Statement -->
+      <div class="policy-card">
+        <div class="policy-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Privatumo politika ir autorinių teisių apsauga
+        </div>
+        <p>
+          Jūsų privatumas ir autorinė kūrybinė nuosavybė yra 100% apsaugoti. Visi atsiųsti scenarijai, koncepcijos, portfolio ir kontaktiniai duomenys naudojami išskirtinai tik tiesioginiam bendravimui su Dominiku Šuškevičiumi dėl bendradarbiavimo kine. Jokia medžiaga nėra perduodama tretiesiems asmenims ir niekada nepublikuojama be jūsų asmeninio sutikimo. Jūs išlaikote pilnas autorines teises į visus savo atsiųstus kūrinius.
+        </p>
       </div>
     </div>
   </section>

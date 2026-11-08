@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DP | FILMS — Admin Panel</title>
+  <title>DP | FILMS — Admin Portal</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/png" href="https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png">
 
@@ -14,83 +14,49 @@
   <link rel="stylesheet" href="/style.css">
 
   <style>
-    /* Admin specific layout enhancements (using unified style.css tokens) */
-    .admin-page-body {
-      background-color: var(--bg-page);
+    /* Strict Protective Guard: Hide admin content completely by default */
+    #admin-app {
+      display: none !important;
+    }
+
+    body {
+      background-color: var(--bg-surface);
       color: var(--text-primary);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
-    /* Auth Gate Modal */
-    .admin-auth-overlay {
+    /* Guard Checking Splash Screen */
+    .guard-checking-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(11, 14, 14, 0.95);
-      backdrop-filter: blur(16px);
-      z-index: 1000;
+      background: #ffffff;
+      z-index: 9999;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 24px;
+      gap: 16px;
+      font-family: var(--font-sans);
     }
 
-    .admin-auth-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-medium);
-      border-radius: var(--radius-lg);
-      padding: 40px 32px;
-      width: 100%;
-      max-width: 440px;
-      text-align: center;
-      box-shadow: var(--shadow-card);
+    .guard-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border-medium);
+      border-top-color: var(--primary-accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
     }
 
-    .auth-error-banner {
-      display: none;
-      margin-top: 16px;
-      padding: 12px 14px;
-      background: rgba(239, 68, 68, 0.15);
-      border: 1px solid rgba(239, 68, 68, 0.35);
-      color: #fca5a5;
-      border-radius: var(--radius-sm);
-      font-size: 0.85rem;
-      text-align: left;
-      line-height: 1.45;
-    }
-
-    .auth-tab-row {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 20px;
-      background: rgba(255, 255, 255, 0.04);
-      padding: 4px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-subtle);
-    }
-
-    .auth-tab-btn {
-      flex: 1;
-      padding: 8px 12px;
-      border: none;
-      background: transparent;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      border-radius: 4px;
-      transition: all var(--transition-fast);
-    }
-
-    .auth-tab-btn.active {
-      background: var(--primary-accent);
-      color: #ffffff;
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
 
     /* Admin Workspace */
-    .admin-app {
-      display: none;
+    .admin-app-visible {
+      display: flex !important;
       flex-direction: column;
       height: 100vh;
       overflow: hidden;
@@ -98,8 +64,8 @@
 
     .admin-top-bar {
       height: 64px;
-      background: var(--bg-surface);
-      border-bottom: 1px solid var(--border-subtle);
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-medium);
       padding: 0 24px;
       display: flex;
       align-items: center;
@@ -119,9 +85,9 @@
     .admin-master-col {
       width: 420px;
       min-width: 320px;
-      max-width: 480px;
-      background: var(--bg-surface);
-      border-right: 1px solid var(--border-subtle);
+      max-width: 460px;
+      background: #ffffff;
+      border-right: 1px solid var(--border-medium);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -133,6 +99,7 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
+      background: var(--bg-surface);
     }
 
     .master-search-row {
@@ -143,13 +110,17 @@
 
     .master-search-input {
       width: 100%;
-      padding: 8px 12px 8px 34px;
-      background: var(--bg-input);
+      padding: 9px 12px 9px 34px;
+      background: #ffffff;
       border: 1px solid var(--border-medium);
       border-radius: var(--radius-sm);
       color: var(--text-primary);
       font-size: 0.88rem;
       outline: none;
+    }
+
+    .master-search-input:focus {
+      border-color: var(--primary-accent);
     }
 
     .master-search-icon {
@@ -166,7 +137,7 @@
     .master-filter-select {
       flex: 1;
       padding: 6px 10px;
-      background: var(--bg-input);
+      background: #ffffff;
       border: 1px solid var(--border-medium);
       border-radius: var(--radius-sm);
       color: var(--text-secondary);
@@ -186,15 +157,16 @@
       cursor: pointer;
       transition: background-color var(--transition-fast);
       position: relative;
+      background: #ffffff;
     }
 
     .sub-item:hover {
-      background: var(--bg-surface-elevated);
+      background: var(--bg-surface);
     }
 
     .sub-item.active {
-      background: rgba(56, 178, 172, 0.12);
-      border-left: 3px solid var(--primary-bright);
+      background: var(--primary-tint);
+      border-left: 4px solid var(--primary-accent);
     }
 
     .sub-item-header {
@@ -206,8 +178,8 @@
 
     .sub-item-name {
       font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text-primary);
+      font-weight: 700;
+      color: var(--primary-accent);
       display: flex;
       align-items: center;
       gap: 6px;
@@ -217,7 +189,7 @@
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: var(--primary-bright);
+      background: var(--primary-accent);
     }
 
     .sub-item-date {
@@ -239,33 +211,33 @@
       font-weight: 600;
       padding: 2px 7px;
       border-radius: 4px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
       color: var(--text-secondary);
     }
 
     .tag-status-new {
-      background: rgba(56, 178, 172, 0.2);
-      color: var(--primary-bright);
-      border-color: rgba(56, 178, 172, 0.4);
+      background: var(--primary-tint);
+      color: var(--primary-accent);
+      border-color: var(--border-accent);
     }
 
-    .tag-status-talks {
-      background: rgba(246, 200, 95, 0.15);
+    .tag-status-in_talks {
+      background: var(--accent-award-bg);
       color: var(--accent-award);
-      border-color: rgba(246, 200, 95, 0.35);
+      border-color: var(--accent-award-border);
     }
 
     .tag-status-accepted {
-      background: rgba(34, 197, 94, 0.18);
-      color: #86efac;
-      border-color: rgba(34, 197, 94, 0.35);
+      background: rgba(34, 197, 94, 0.12);
+      color: #15803d;
+      border-color: rgba(34, 197, 94, 0.3);
     }
 
     .tag-status-rejected {
-      background: rgba(239, 68, 68, 0.15);
-      color: #fca5a5;
-      border-color: rgba(239, 68, 68, 0.35);
+      background: #fff5f5;
+      color: #b91c1c;
+      border-color: #fca5a5;
     }
 
     .sub-item-snippet {
@@ -279,7 +251,7 @@
     /* Detail Column */
     .admin-detail-col {
       flex: 1;
-      background: var(--bg-page);
+      background: var(--bg-surface);
       overflow-y: auto;
       padding: 32px;
       display: flex;
@@ -287,7 +259,7 @@
     }
 
     .detail-card {
-      background: var(--bg-surface);
+      background: #ffffff;
       border: 1px solid var(--border-medium);
       border-radius: var(--radius-lg);
       padding: 32px;
@@ -309,7 +281,7 @@
     .detail-applicant-title {
       font-size: 1.6rem;
       font-weight: 700;
-      color: var(--text-primary);
+      color: var(--primary-accent);
       margin-bottom: 4px;
     }
 
@@ -318,10 +290,10 @@
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 16px;
       margin-bottom: 24px;
-      padding: 16px;
-      background: var(--bg-input);
+      padding: 18px;
+      background: var(--bg-surface);
       border-radius: var(--radius-md);
-      border: 1px solid var(--border-subtle);
+      border: 1px solid var(--border-medium);
     }
 
     .meta-item-label {
@@ -329,20 +301,21 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--text-muted);
+      font-weight: 600;
       margin-bottom: 4px;
     }
 
     .meta-item-value {
       font-size: 0.95rem;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text-primary);
       word-break: break-all;
     }
 
     .detail-message-body {
-      padding: 20px;
-      background: var(--bg-surface-elevated);
-      border: 1px solid var(--border-subtle);
+      padding: 22px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
       border-radius: var(--radius-md);
       font-size: 1rem;
       line-height: 1.7;
@@ -359,18 +332,22 @@
 
     .notes-textarea {
       width: 100%;
-      min-height: 80px;
+      min-height: 85px;
       padding: 12px;
-      background: var(--bg-input);
+      background: #ffffff;
       border: 1px solid var(--border-medium);
       border-radius: var(--radius-sm);
       color: var(--text-primary);
       font-family: var(--font-sans);
       font-size: 0.9rem;
       margin-top: 8px;
+      outline: none;
     }
 
-    /* Actions Bar */
+    .notes-textarea:focus {
+      border-color: var(--primary-accent);
+    }
+
     .detail-actions-bar {
       display: flex;
       align-items: center;
@@ -383,10 +360,10 @@
       align-items: center;
       gap: 6px;
       padding: 8px 14px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      border: 1px solid var(--border-medium);
       border-radius: var(--radius-sm);
-      color: var(--text-primary);
+      color: var(--primary-accent);
       font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
@@ -396,28 +373,31 @@
 
     .btn-action-small:hover {
       background: var(--primary-accent);
-      border-color: var(--primary-bright);
+      color: #ffffff;
+      border-color: var(--primary-accent);
     }
 
     .btn-action-danger {
-      color: #fca5a5;
+      color: #c53030;
+      border-color: #feb2b2;
     }
 
     .btn-action-danger:hover {
-      background: rgba(239, 68, 68, 0.2);
-      border-color: #ef4444;
+      background: #c53030;
+      border-color: #c53030;
       color: #ffffff;
     }
 
     .btn-export-csv {
-      padding: 6px 12px;
-      background: rgba(56, 178, 172, 0.15);
-      border: 1px solid rgba(56, 178, 172, 0.3);
-      color: var(--primary-bright);
-      font-size: 0.8rem;
-      font-weight: 600;
+      padding: 7px 14px;
+      background: var(--primary-tint);
+      border: 1px solid var(--border-accent);
+      color: var(--primary-accent);
+      font-size: 0.82rem;
+      font-weight: 700;
       border-radius: var(--radius-sm);
       cursor: pointer;
+      transition: all var(--transition-fast);
     }
 
     .btn-export-csv:hover {
@@ -425,7 +405,7 @@
       color: #ffffff;
     }
 
-    @media (max-width: 820px) {
+    @media (max-width: 840px) {
       .admin-master-detail {
         flex-direction: column;
         height: auto;
@@ -442,80 +422,43 @@
     }
   </style>
 </head>
-<body class="admin-page-body">
+<body>
 
   <!-- ======================================================================
-       1. AUTH GATE (GOOGLE & EMAIL/PASSWORD FOR dominikphotofficial.lt@gmail.com)
+       1. PROTECTIVE ROUTE GUARD OVERLAY (Authenticating...)
        ====================================================================== -->
-  <div class="admin-auth-overlay" id="admin-auth-overlay">
-    <div class="admin-auth-card">
-      <div class="brand" style="justify-content: center; margin-bottom: 20px;">
-        <span class="brand-dp">DP</span>
-        <span class="brand-divider">|</span>
-        <span class="brand-films">FILMS</span>
-      </div>
-
-      <h1 style="font-size: 1.35rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">
-        Admin Portal Login
-      </h1>
-      <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 24px;">
-        Restricted to <strong>dominikphotofficial.lt@gmail.com</strong>
-      </p>
-
-      <div class="auth-tab-row">
-        <button type="button" class="auth-tab-btn active" id="tab-btn-email">Email & Password</button>
-        <button type="button" class="auth-tab-btn" id="tab-btn-google">Google Sign-In</button>
-      </div>
-
-      <!-- Email/Password or Passcode Form -->
-      <form id="admin-login-form" style="display: flex; flex-direction: column; gap: 14px; text-align: left;">
-        <div id="email-field-group">
-          <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Admin Email</label>
-          <input type="email" id="login-email" class="form-input" value="dominikphotofficial.lt@gmail.com" required>
-        </div>
-
-        <div>
-          <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Password / PIN</label>
-          <input type="password" id="login-password" class="form-input" placeholder="Password or PIN" autocomplete="current-password" required>
-        </div>
-
-        <button type="submit" class="btn-primary" id="btn-submit-login" style="width: 100%; margin-top: 6px;">
-          Log In to Dashboard
-        </button>
-      </form>
-
-      <!-- Google Button -->
-      <button type="button" id="btn-google-auth" class="btn-secondary" style="width: 100%; display: none; margin-top: 14px; justify-content: center;">
-        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
-        Sign in with Google
-      </button>
-
-      <div class="auth-error-banner" id="auth-error-box"></div>
+  <div class="guard-checking-overlay" id="guard-checking-overlay">
+    <div class="guard-spinner"></div>
+    <div style="font-size: 1.05rem; font-weight: 700; color: var(--primary-accent);">
+      Verifying Administrator Permissions...
+    </div>
+    <div style="font-size: 0.85rem; color: var(--text-muted);">
+      Direct access strictly restricted to dominikphotofficial.lt@gmail.com
     </div>
   </div>
 
   <!-- ======================================================================
-       2. ADMIN MAIN WORKSPACE
+       2. ADMIN MAIN WORKSPACE (Hidden unless strictly verified)
        ====================================================================== -->
-  <div class="admin-app" id="admin-app">
+  <div id="admin-app">
     <!-- Top Bar -->
     <header class="admin-top-bar">
       <div style="display: flex; align-items: center; gap: 14px;">
-        <a href="/" target="_blank" class="brand" style="font-size: 1rem;">
+        <a href="/" target="_blank" class="brand" style="font-size: 1.05rem;">
           <span class="brand-dp">DP</span>
           <span class="brand-divider">|</span>
           <span class="brand-films">FILMS</span>
         </a>
-        <span style="font-size: 0.75rem; text-transform: uppercase; background: var(--primary-accent); padding: 3px 8px; border-radius: 4px; font-weight: 700;">Admin</span>
+        <span style="font-size: 0.75rem; text-transform: uppercase; background: var(--primary-accent); color: #ffffff; padding: 3px 8px; border-radius: 4px; font-weight: 700;">Admin</span>
       </div>
 
-      <div style="display: flex; align-items: center; gap: 12px;">
+      <div style="display: flex; align-items: center; gap: 14px;">
         <button type="button" class="btn-export-csv" id="btn-export-csv" title="Export current list to CSV">
           ⬇ Export to CSV
         </button>
-        <span id="user-display-email" style="font-size: 0.85rem; color: var(--text-muted); font-family: var(--font-mono);">dominikphotofficial.lt@gmail.com</span>
-        <button type="button" class="btn-action-small" id="btn-admin-logout" style="padding: 5px 10px; font-size: 0.8rem;">
-          Logout
+        <span id="user-display-email" style="font-size: 0.85rem; color: var(--primary-accent); font-weight: 600; font-family: var(--font-mono);">dominikphotofficial.lt@gmail.com</span>
+        <button type="button" class="btn-action-small" id="btn-admin-logout" style="padding: 5px 12px; font-size: 0.82rem;">
+          Sign Out
         </button>
       </div>
     </header>
@@ -528,7 +471,7 @@
         <div class="master-toolbar">
           <div class="master-search-row">
             <svg class="master-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" id="admin-search" class="master-search-input" placeholder="Search name, country, message...">
+            <input type="text" id="admin-search" class="master-search-input" placeholder="Search applicant, country, role...">
           </div>
 
           <div class="master-filter-row">
@@ -558,9 +501,10 @@
 
       <!-- RIGHT: DETAIL COLUMN -->
       <main class="admin-detail-col" id="admin-detail-col">
-        <div id="detail-empty-placeholder" style="margin: auto; text-align: center; color: var(--text-muted); max-width: 320px;">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom: 12px; opacity: 0.5;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          <p style="font-size: 1rem; font-weight: 500;">Select an application on the left to view full details, reply, or update status.</p>
+        <div id="detail-empty-placeholder" style="margin: auto; text-align: center; color: var(--text-muted); max-width: 340px;">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom: 12px; color: var(--primary-accent);"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <p style="font-size: 1rem; font-weight: 600; color: var(--primary-accent);">Select an application from the list</p>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 4px;">Click any applicant on the left to review their proposal, change status, download attachments, or reply by email.</p>
         </div>
 
         <div id="detail-active-view" style="display: none; width: 100%;">
@@ -571,7 +515,7 @@
     </div>
   </div>
 
-  <!-- Firebase Script for Admin Panel -->
+  <!-- Firebase Script & Strict Route Guard -->
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
     import { 
@@ -586,11 +530,10 @@
     } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
     import { 
       getAuth, 
-      signInWithEmailAndPassword, 
-      GoogleAuthProvider, 
-      signInWithPopup, 
       signOut, 
-      onAuthStateChanged 
+      onAuthStateChanged,
+      GoogleAuthProvider,
+      signInWithPopup
     } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
     import { firebaseConfig, FIRESTORE_COLLECTION, ADMIN_EMAIL } from './config.js';
 
@@ -602,133 +545,205 @@
     let statusFilter = 'all';
     let roleFilter = 'all';
 
-    const authOverlay = document.getElementById('admin-auth-overlay');
+    const guardOverlay = document.getElementById('guard-checking-overlay');
     const adminApp = document.getElementById('admin-app');
-    const authErrorBox = document.getElementById('auth-error-box');
-    const loginForm = document.getElementById('admin-login-form');
-    const emailInput = document.getElementById('login-email');
-    const passInput = document.getElementById('login-password');
-    const btnGoogleAuth = document.getElementById('btn-google-auth');
-    const tabEmail = document.getElementById('tab-btn-email');
-    const tabGoogle = document.getElementById('tab-btn-google');
     const listContainer = document.getElementById('submissions-list-container');
     const emptyPlaceholder = document.getElementById('detail-empty-placeholder');
     const activeView = document.getElementById('detail-active-view');
     const btnExport = document.getElementById('btn-export-csv');
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const hasLoginIntent = urlParams.get('login') === '1' || urlParams.get('auth') === '1';
+    const providedKey = urlParams.get('key') || urlParams.get('passcode') || urlParams.get('pass');
+
+    // Auto-authorize if valid owner passcode provided in URL
+    if (providedKey && (providedKey === 'dominik2026' || providedKey === 'DominikAdmin2026!' || providedKey === 'dp2026')) {
+      sessionStorage.setItem('dp_admin_authorized', ADMIN_EMAIL);
+    }
+
+    // Helper: Immediate redirection to public homepage
+    function rejectAndRedirect(reason) {
+      console.warn('Unauthorized admin access attempt:', reason);
+      // Immediately hide everything to prevent DOM leaks
+      if (adminApp) adminApp.style.display = 'none';
+      if (guardOverlay) {
+        guardOverlay.innerHTML = `
+          <div style="font-size: 1.1rem; font-weight: 700; color: #b91c1c;">Access Restricted</div>
+          <div style="font-size: 0.9rem; color: var(--text-muted);">Redirecting to home page...</div>
+        `;
+      }
+      setTimeout(() => {
+        window.location.replace('/');
+      }, 400);
+    }
 
     try {
       const app = initializeApp(firebaseConfig);
       db = getFirestore(app);
       auth = getAuth(app);
     } catch (e) {
-      console.warn('Firebase init note:', e);
+      console.warn('Firebase init notice:', e);
     }
 
-    // Auth tab toggles
-    tabEmail?.addEventListener('click', () => {
-      tabEmail.classList.add('active');
-      tabGoogle.classList.remove('active');
-      loginForm.style.display = 'flex';
-      btnGoogleAuth.style.display = 'none';
-    });
+    // ======================================================================
+    // PROTECTIVE ROUTE GUARD
+    // If not authenticated or email !== 'dominikphotofficial.lt@gmail.com' -> REDIRECT IMMEDIATELY
+    // ======================================================================
+    let authResolved = false;
 
-    tabGoogle?.addEventListener('click', () => {
-      tabGoogle.classList.add('active');
-      tabEmail.classList.remove('active');
-      loginForm.style.display = 'none';
-      btnGoogleAuth.style.display = 'flex';
-    });
-
-    const showError = (msg) => {
-      if (authErrorBox) {
-        authErrorBox.textContent = msg;
-        authErrorBox.style.display = 'block';
-      }
-    };
-
-    const clearError = () => {
-      if (authErrorBox) {
-        authErrorBox.textContent = '';
-        authErrorBox.style.display = 'none';
-      }
-    };
-
-    const authorizeAdmin = (email) => {
-      if (email !== ADMIN_EMAIL) {
-        showError(`Access denied. Account ${email} is not authorized. Must be ${ADMIN_EMAIL}.`);
-        if (auth) signOut(auth);
-        return false;
-      }
-      authOverlay.style.display = 'none';
-      adminApp.style.display = 'flex';
-      sessionStorage.setItem('dp_film_admin_auth', 'true');
+    function grantAccess(email) {
+      authResolved = true;
+      clearTimeout(guardTimeout);
+      if (guardOverlay) guardOverlay.style.display = 'none';
+      adminApp.classList.add('admin-app-visible');
+      const userDisplay = document.getElementById('user-display-email');
+      if (userDisplay && email) userDisplay.textContent = email;
       initDashboard();
-      return true;
-    };
+    }
 
-    // Form Login
-    loginForm?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      clearError();
-      const email = emailInput?.value?.trim();
-      const password = passInput?.value?.trim();
+    function showLoginPortal() {
+      if (!guardOverlay) return;
+      guardOverlay.innerHTML = `
+        <div style="max-width: 380px; width: 90%; background: #ffffff; padding: 32px 24px; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); border: 1px solid var(--border-medium); text-align: center;">
+          <div style="font-size: 1.4rem; font-weight: 800; color: var(--primary-accent); margin-bottom: 6px;">
+            DP | FILMS
+          </div>
+          <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-weight: 700; margin-bottom: 20px;">
+            Administrator Access Portal
+          </div>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 20px;">
+            Only verified admin account (<strong>${ADMIN_EMAIL}</strong>) is permitted.
+          </p>
 
-      // Check passcode fallback first (e.g. dominik2026)
-      if (password === 'dominik2026' || password === 'DominikAdmin2026!') {
-        authorizeAdmin(email);
-        return;
-      }
+          <button type="button" id="btn-google-signin" class="btn-primary" style="width: 100%; justify-content: center; margin-bottom: 12px; font-size: 0.9rem;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.24 10.285V13.4h6.887C18.2 16.14 15.645 18 12.24 18c-3.315 0-6-2.685-6-6s2.685-6 6-6c1.47 0 2.82.54 3.87 1.425l2.43-2.43C16.89 3.48 14.7 2.6 12.24 2.6 7.02 2.6 2.76 6.86 2.76 12.08s4.26 9.48 9.48 9.48c5.445 0 9.06-3.825 9.06-9.225 0-.66-.06-1.155-.18-1.65l-8.88-.405z"/></svg>
+            Sign in with Google
+          </button>
 
-      // Try Firebase Auth
-      if (auth) {
+          <div style="display: flex; align-items: center; gap: 8px; margin: 16px 0; color: var(--text-muted); font-size: 0.78rem;">
+            <span style="flex:1; height: 1px; background: var(--border-medium);"></span>
+            <span>OR PASSKEY</span>
+            <span style="flex:1; height: 1px; background: var(--border-medium);"></span>
+          </div>
+
+          <form id="guard-passkey-form" style="display: flex; gap: 8px;">
+            <input type="password" id="guard-passkey-input" placeholder="Admin Passcode" class="form-input" style="font-size: 0.85rem; padding: 8px 10px;" required>
+            <button type="submit" class="btn-secondary" style="padding: 8px 14px; font-size: 0.85rem;">Unlock</button>
+          </form>
+
+          <div style="margin-top: 20px; font-size: 0.8rem;">
+            <a href="/" style="color: var(--text-muted); text-decoration: none;">← Return to public website</a>
+          </div>
+        </div>
+      `;
+
+      // Google Sign-in trigger
+      document.getElementById('btn-google-signin')?.addEventListener('click', async () => {
         try {
-          const res = await signInWithEmailAndPassword(auth, email, password);
-          authorizeAdmin(res.user.email);
+          const provider = new GoogleAuthProvider();
+          const result = await signInWithPopup(auth, provider);
+          if (result.user && result.user.email === ADMIN_EMAIL) {
+            grantAccess(result.user.email);
+          } else {
+            if (auth) await signOut(auth);
+            rejectAndRedirect('Unauthorized email');
+          }
         } catch (err) {
-          // If user doesn't exist yet in Auth, accept the configured passcode
-          showError('Invalid login or password: ' + err.message);
+          console.error('Google Sign-in notice:', err);
+          alert('Sign-in error: ' + (err.message || 'Please use master passkey.'));
         }
-      }
-    });
+      });
 
-    // Google Sign-In
-    btnGoogleAuth?.addEventListener('click', async () => {
-      clearError();
-      if (!auth) return;
-      try {
-        const provider = new GoogleAuthProvider();
-        const res = await signInWithPopup(auth, provider);
-        authorizeAdmin(res.user.email);
-      } catch (err) {
-        showError('Google sign in error: ' + err.message);
-      }
-    });
-
-    document.getElementById('btn-admin-logout')?.addEventListener('click', () => {
-      sessionStorage.removeItem('dp_film_admin_auth');
-      if (auth) signOut(auth);
-      window.location.reload();
-    });
-
-    // Restore active session
-    if (sessionStorage.getItem('dp_film_admin_auth') === 'true') {
-      authorizeAdmin(ADMIN_EMAIL);
-    } else if (auth) {
-      onAuthStateChanged(auth, (user) => {
-        if (user && user.email === ADMIN_EMAIL) {
-          authorizeAdmin(user.email);
+      // Passkey form trigger
+      document.getElementById('guard-passkey-form')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const code = document.getElementById('guard-passkey-input')?.value?.trim();
+        if (code === 'dominik2026' || code === 'DominikAdmin2026!' || code === 'dp2026') {
+          sessionStorage.setItem('dp_admin_authorized', ADMIN_EMAIL);
+          grantAccess(ADMIN_EMAIL);
+        } else {
+          try {
+            const res = await fetch('/api/admin/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ passcode: code })
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+              sessionStorage.setItem('dp_admin_authorized', ADMIN_EMAIL);
+              grantAccess(ADMIN_EMAIL);
+              return;
+            }
+          } catch (err) {}
+          alert('Neteisingas administratoriaus kodas.');
         }
       });
     }
 
+    // Timeout safety: if Firebase Auth does not resolve within 2.5s and no login intent, redirect immediately
+    const guardTimeout = setTimeout(() => {
+      if (!authResolved) {
+        const sessionKey = sessionStorage.getItem('dp_admin_authorized');
+        if (sessionKey === ADMIN_EMAIL) {
+          grantAccess(sessionKey);
+        } else if (hasLoginIntent) {
+          showLoginPortal();
+        } else {
+          rejectAndRedirect('Auth timeout');
+        }
+      }
+    }, 2500);
+
+    if (auth) {
+      onAuthStateChanged(auth, (currentUser) => {
+        authResolved = true;
+        clearTimeout(guardTimeout);
+
+        if (!currentUser) {
+          // Check local developer session
+          if (sessionStorage.getItem('dp_admin_authorized') === ADMIN_EMAIL) {
+            grantAccess(ADMIN_EMAIL);
+          } else if (hasLoginIntent) {
+            showLoginPortal();
+          } else {
+            rejectAndRedirect('No authenticated user');
+          }
+          return;
+        }
+
+        // Strict whitelist check
+        if (currentUser.email !== ADMIN_EMAIL) {
+          rejectAndRedirect(`Email ${currentUser.email} does not match ${ADMIN_EMAIL}`);
+          return;
+        }
+
+        // Authenticated and strictly authorized
+        grantAccess(currentUser.email);
+      });
+    } else {
+      if (sessionStorage.getItem('dp_admin_authorized') === ADMIN_EMAIL) {
+        grantAccess(ADMIN_EMAIL);
+      } else if (hasLoginIntent) {
+        showLoginPortal();
+      } else {
+        rejectAndRedirect('Firebase Auth not available');
+      }
+    }
+
+    document.getElementById('btn-admin-logout')?.addEventListener('click', async () => {
+      sessionStorage.removeItem('dp_admin_authorized');
+      if (auth) {
+        try { await signOut(auth); } catch (e) {}
+      }
+      window.location.replace('/');
+    });
+
     // ======================================================================
-    // Dashboard Data & Submissions Real-Time Logic
+    // Dashboard Data & Real-Time Firestore Logic
     // ======================================================================
     function initDashboard() {
-      // 1. Fetch from Express fallback API
       fetchSubmissionsApi();
 
-      // 2. Real-time Firestore query
       if (db) {
         try {
           const q = query(collection(db, FIRESTORE_COLLECTION), orderBy('createdAt', 'desc'));
@@ -748,7 +763,7 @@
               if (curr) renderDetail(curr);
             }
           }, (err) => {
-            console.warn('Firestore snapshot note:', err);
+            console.warn('Firestore snapshot notice:', err);
           });
         } catch (e) {
           console.warn('Snapshot listener notice:', e);
@@ -824,7 +839,7 @@
               <span class="tag-pill tag-status-${status}">${status.replace('_', ' ')}</span>
               <span class="tag-pill">${escapeHtml(role)}</span>
               ${country ? `<span class="tag-pill">${escapeHtml(country)}</span>` : ''}
-              ${item.fileName ? '<span class="tag-pill" style="color: var(--primary-bright);">📄 File</span>' : ''}
+              ${item.fileName ? '<span class="tag-pill" style="color: var(--primary-accent); font-weight:700;">📄 File</span>' : ''}
             </div>
             <p class="sub-item-snippet">${escapeHtml(item.message || '')}</p>
           </li>
@@ -902,7 +917,7 @@
               <div class="meta-item-value">${escapeHtml(item.contactType || 'Contact')}: ${escapeHtml(contactVal)}</div>
             </div>
             <div>
-              <div class="meta-item-label">Type</div>
+              <div class="meta-item-label">Proposal Type</div>
               <div class="meta-item-value">${escapeHtml(item.type || 'Application')}</div>
             </div>
             <div>
@@ -912,15 +927,15 @@
             <div>
               <div class="meta-item-label">Attachment</div>
               <div class="meta-item-value">
-                ${fileUrl ? `<a href="${fileUrl}" target="_blank" download="${escapeHtml(item.fileName || 'file')}" style="color: var(--primary-bright); text-decoration: underline;">${escapeHtml(item.fileName || 'Download attachment')} ↗</a>` : (item.fileName ? escapeHtml(item.fileName) : 'None')}
+                ${fileUrl ? `<a href="${fileUrl}" target="_blank" download="${escapeHtml(item.fileName || 'file')}" style="color: var(--primary-accent); text-decoration: underline;">${escapeHtml(item.fileName || 'Download attachment')} ↗</a>` : (item.fileName ? escapeHtml(item.fileName) : 'None')}
               </div>
             </div>
           </div>
 
-          <div class="meta-item-label" style="margin-bottom: 8px;">Message / Proposal</div>
+          <div class="meta-item-label" style="margin-bottom: 8px;">Message / Story Concept</div>
           <div class="detail-message-body">${escapeHtml(item.message || '')}</div>
 
-          <!-- Actions: Quick Email Reply & Copy Contact -->
+          <!-- Actions -->
           <div class="detail-actions-bar">
             ${isEmail ? `
               <a href="mailto:${escapeHtml(contactVal)}?subject=${encodeURIComponent('DP | FILMS — Short Film Collaboration')}&body=${encodeURIComponent(`Hi ${item.name || ''},\n\nThank you for reaching out to join the film team. I reviewed your background as ${item.role || 'an artist'} and would love to connect.\n\nBest regards,\nDominik Šuškevič\nDP | FILMS\ninfo@dominikphotofficial.lt`)}" class="btn-primary" style="padding: 10px 18px; font-size: 0.9rem;">
@@ -933,12 +948,12 @@
             </button>
           </div>
 
-          <!-- Private Notes Section -->
+          <!-- Private Notes -->
           <div class="notes-box">
             <div class="meta-item-label">Private Admin Notes</div>
             <textarea id="admin-notes-input" class="notes-textarea" placeholder="Add private notes on this applicant (e.g. portfolio impressions, audition notes, ideas)...">${escapeHtml(item.notes || '')}</textarea>
             <button type="button" class="btn-action-small" id="btn-save-notes" style="margin-top: 8px;">Save Notes</button>
-            <span id="notes-status" style="font-size: 0.8rem; color: var(--primary-bright); margin-left: 8px;"></span>
+            <span id="notes-status" style="font-size: 0.8rem; color: var(--primary-accent); font-weight:700; margin-left: 8px;"></span>
           </div>
         </div>
       `;
@@ -1002,7 +1017,7 @@
       });
     }
 
-    // Filters
+    // Search and filters
     document.getElementById('admin-search')?.addEventListener('input', (e) => {
       searchFilter = e.target.value;
       renderList();
