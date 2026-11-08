@@ -4,7 +4,13 @@
 // ==========================================================================
 
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { 
+  getFirestore, 
+  collection, 
+  doc, 
+  writeBatch, 
+  serverTimestamp 
+} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js';
 import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import { firebaseConfig, filmsList, FIRESTORE_COLLECTION, STORAGE_FOLDER } from './config.js';
@@ -507,22 +513,125 @@ const initSubmissionForm = () => {
 
       let saved = false;
 
-      // 1. Direct Firestore write
+      // Escape helper for safe HTML generation in the Trigger Email payload
+      const escapeHtml = (str) => {
+        return String(str || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      };
+
+      // 1. Direct Firestore Atomic Batched Write (submissions + mail for Trigger Email Extension)
       if (db) {
         try {
+          const batch = writeBatch(db);
+
+          // Submissions collection reference and new document
+          const submissionRef = doc(collection(db, FIRESTORE_COLLECTION));
           const firestoreDoc = {
             ...submissionDoc,
             createdAt: serverTimestamp()
           };
-          await addDoc(collection(db, FIRESTORE_COLLECTION), firestoreDoc);
+          batch.set(submissionRef, firestoreDoc);
+
+          // Build plain text message containing all form fields
+          const attachmentLine = fileName 
+            ? `Attachment: ${fileName} (${fileSizeBytes ? Math.round(fileSizeBytes / 1024) + ' KB' : 'Uploaded'})\nFile URL: ${fileUrl || '(Uploaded to Firebase Storage)'}` 
+            : 'Attachment: None';
+
+          const plainTextMessage = [
+            `NEW FILM TEAM APPLICATION & PITCH — DP | FILMS`,
+            `==================================================`,
+            `Name:         ${name}`,
+            `Country:      ${country}`,
+            `Role:         ${role}`,
+            `Project Type: ${type}`,
+            `Contact Type: ${contactType}`,
+            `Handle/Email: ${handle}`,
+            `Language:     ${currentLang.toUpperCase()}`,
+            `Submitted At: ${new Date().toUTCString()}`,
+            attachmentLine,
+            `--------------------------------------------------`,
+            `APPLICATION / PITCH MESSAGE:`,
+            message,
+            `==================================================`
+          ].join('\n');
+
+          // Build clean, professional HTML message
+          const htmlMessage = `
+            <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; padding: 24px; color: #111827; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px;">
+              <div style="border-bottom: 2px solid #113939; padding-bottom: 14px; margin-bottom: 20px;">
+                <span style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #113939; font-weight: 700;">DP | FILMS — New Team Application</span>
+                <h2 style="margin: 6px 0 0 0; font-size: 20px; color: #113939;">${escapeHtml(name)} — ${escapeHtml(role)} (${escapeHtml(country)})</h2>
+              </div>
+
+              <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px;">
+                <tr>
+                  <td style="padding: 7px 0; color: #6b7280; width: 140px; font-weight: 600;">Applicant Name:</td>
+                  <td style="padding: 7px 0; color: #111827; font-weight: 600;">${escapeHtml(name)}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 7px 0; color: #6b7280; font-weight: 600;">Role:</td>
+                  <td style="padding: 7px 0; color: #113939; font-weight: 700;">${escapeHtml(role)}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 7px 0; color: #6b7280; font-weight: 600;">Country / Location:</td>
+                  <td style="padding: 7px 0; color: #111827;">${escapeHtml(country)}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 7px 0; color: #6b7280; font-weight: 600;">Type:</td>
+                  <td style="padding: 7px 0; color: #111827;">${escapeHtml(type)}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 7px 0; color: #6b7280; font-weight: 600;">Contact Channel:</td>
+                  <td style="padding: 7px 0; color: #111827;"><strong>${escapeHtml(contactType)}:</strong> ${escapeHtml(handle)}</td>
+                </tr>
+                ${fileName ? `
+                <tr>
+                  <td style="padding: 7px 0; color: #6b7280; font-weight: 600;">Attachment:</td>
+                  <td style="padding: 7px 0; color: #113939;">
+                    📄 ${escapeHtml(fileName)} ${fileUrl ? `(<a href="${escapeHtml(fileUrl)}" target="_blank" style="color: #113939; text-decoration: underline;">Open File</a>)` : ''}
+                  </td>
+                </tr>` : ''}
+              </table>
+
+              <div style="background-color: #f9fafb; border-left: 3px solid #113939; padding: 16px; border-radius: 4px; margin-bottom: 24px;">
+                <div style="font-size: 12px; font-weight: 700; color: #6b7280; text-transform: uppercase; margin-bottom: 8px;">Message / Pitch:</div>
+                <div style="font-size: 14px; line-height: 1.6; color: #1f2937; white-space: pre-wrap;">${escapeHtml(message)}</div>
+              </div>
+
+              <div style="font-size: 12px; color: #9ca3af; border-top: 1px solid #f3f4f6; padding-top: 12px;">
+                Triggered automatically via Firebase Extension <code>firestore-send-email</code> &middot; Recipient: info@dominikphotofficial.lt
+              </div>
+            </div>
+          `;
+
+          // Mail collection reference for the "Trigger Email from Firestore" extension
+          const mailRef = doc(collection(db, 'mail'));
+          const mailDoc = {
+            to: ["info@dominikphotofficial.lt"],
+            message: {
+              subject: `New film team application: ${name} (${role}, ${country})`,
+              text: plainTextMessage,
+              html: htmlMessage
+            },
+            submissionId: submissionRef.id,
+            createdAt: serverTimestamp()
+          };
+          batch.set(mailRef, mailDoc);
+
+          // Commit both operations in one single atomic transaction
+          await batch.commit();
           saved = true;
-          console.log('[DP FILMS] Submission successfully written to Firestore.');
+          console.log('[DP FILMS] Atomic batch written successfully to submissions and mail collections.');
         } catch (fsErr) {
-          console.warn('[DP FILMS] Firestore direct write notice:', fsErr?.message || fsErr);
+          console.warn('[DP FILMS] Firestore atomic batch write notice:', fsErr?.message || fsErr);
         }
       }
 
-      // 2. Local Express server backup & sync
+      // 2. Local Express server backup & sync (local persistent copy)
       try {
         const apiRes = await fetch('/api/submit-proposal', {
           method: 'POST',
@@ -537,27 +646,6 @@ const initSubmissionForm = () => {
         }
       } catch (apiErr) {
         console.warn('[DP FILMS] Server API notice:', apiErr);
-      }
-
-      // 3. Optional Direct FormSubmit notification if configured (Free email notification without backend)
-      try {
-        const notifyPayload = {
-          name,
-          country,
-          role,
-          proposal_type: type,
-          contact: `${contactType}: ${handle}`,
-          message,
-          _subject: `[DP FILMS Team Application] ${name} (${role} - ${country})`
-        };
-        // Non-blocking notification ping
-        fetch('https://formsubmit.co/ajax/info@dominikphotofficial.lt', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(notifyPayload)
-        }).catch(() => {});
-      } catch (notifyErr) {
-        // Notification is non-fatal
       }
 
       if (!saved) {

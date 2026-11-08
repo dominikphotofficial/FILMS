@@ -1,0 +1,163 @@
+{
+  "entities": {
+    "Submission": {
+      "title": "Film Team Submission",
+      "description": "Incoming applications from filmmakers, screenwriters, actors, sound designers, and crew wanting to collaborate with DP | FILMS.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "Applicant full name"
+        },
+        "country": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Applicant country or location"
+        },
+        "role": {
+          "type": "string",
+          "maxLength": 60,
+          "description": "Desired filmmaking role (Screenwriter, Actor, Director, Sound/Music, Crew, etc.)"
+        },
+        "type": {
+          "type": "string",
+          "maxLength": 60,
+          "description": "Type of proposal or collaboration"
+        },
+        "contactType": {
+          "type": "string",
+          "maxLength": 40,
+          "description": "Contact channel type (Email, Telegram, Instagram, Phone)"
+        },
+        "handle": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "description": "Contact handle or email address provided by applicant"
+        },
+        "contact": {
+          "type": "string",
+          "maxLength": 250,
+          "description": "Formatted contact identifier"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 8000,
+          "description": "Application statement, pitch, or screenplay synopsis"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["new", "read", "replied", "accepted", "archived"],
+          "description": "Processing status"
+        },
+        "unread": {
+          "type": "boolean",
+          "description": "Unread indicator"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 5000,
+          "description": "Admin internal notes"
+        },
+        "lang": {
+          "type": "string",
+          "enum": ["en", "lt"],
+          "description": "Source language"
+        },
+        "fileName": {
+          "type": "string",
+          "maxLength": 255,
+          "description": "Uploaded PDF or document file name"
+        },
+        "fileSizeBytes": {
+          "type": "number",
+          "description": "Size of uploaded file in bytes"
+        },
+        "fileMimeType": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "MIME type of uploaded document"
+        },
+        "fileUrl": {
+          "type": "string",
+          "maxLength": 2000,
+          "description": "Firebase Storage download URL"
+        },
+        "storagePath": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Firebase Storage object path"
+        },
+        "storageMethod": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Storage method indicator"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Server timestamp of creation"
+        }
+      },
+      "required": ["name", "handle", "message", "contact"]
+    },
+    "MailTrigger": {
+      "title": "Trigger Email Message",
+      "description": "Email queue document consumed by the Firebase Extension firebase/firestore-send-email.",
+      "type": "object",
+      "properties": {
+        "to": {
+          "type": "array",
+          "description": "List of recipient email addresses. Must strictly be ['info@dominikphotofficial.lt'].",
+          "items": {
+            "type": "string",
+            "maxLength": 100
+          }
+        },
+        "message": {
+          "type": "object",
+          "properties": {
+            "subject": {
+              "type": "string",
+              "maxLength": 250,
+              "description": "Email subject line"
+            },
+            "text": {
+              "type": "string",
+              "maxLength": 15000,
+              "description": "Plain-text email body containing all form fields"
+            },
+            "html": {
+              "type": "string",
+              "maxLength": 30000,
+              "description": "Simple styled HTML email body"
+            }
+          },
+          "required": ["subject", "text", "html"]
+        },
+        "submissionId": {
+          "type": "string",
+          "maxLength": 128,
+          "description": "Optional reference to the corresponding submission document"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Server timestamp of creation"
+        }
+      },
+      "required": ["to", "message"]
+    }
+  },
+  "firestore": {
+    "/submissions/{submissionId}": {
+      "schema": "Submission",
+      "description": "Collection of team recruitment applications and film pitch submissions."
+    },
+    "/mail/{mailId}": {
+      "schema": "MailTrigger",
+      "description": "Queue collection consumed by the Firebase Extension Trigger Email from Firestore."
+    }
+  }
+}

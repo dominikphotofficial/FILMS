@@ -2,10 +2,29 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Helper function: verify if request is authenticated as the portfolio admin
+    // Global helper: verify if request is authenticated as the portfolio administrator
     function isAdmin() {
       return request.auth != null 
           && request.auth.token.email == 'dominikphotofficial.lt@gmail.com';
+    }
+
+    // Helper: validate incoming mail payload for Firebase Trigger Email Extension (firebase/firestore-send-email)
+    function isValidMailTrigger(data) {
+      return data.keys().hasAll(['to', 'message'])
+          && data.to is list
+          && data.to.size() == 1
+          && data.to[0] == 'info@dominikphotofficial.lt'
+          && data.message is map
+          && data.message.keys().hasAll(['subject', 'text', 'html'])
+          && data.message.subject is string
+          && data.message.subject.size() > 0
+          && data.message.subject.size() <= 250
+          && data.message.text is string
+          && data.message.text.size() > 0
+          && data.message.text.size() <= 15000
+          && data.message.html is string
+          && data.message.html.size() > 0
+          && data.message.html.size() <= 30000;
     }
 
     // =========================================================================
@@ -31,9 +50,20 @@ service cloud.firestore {
       allow read, update, delete: if isAdmin();
     }
 
-    // Email queue / notification collection
+    // =========================================================================
+    // Trigger Email Collection (firebase/firestore-send-email Extension)
+    // =========================================================================
     match /mail/{mailId} {
-      allow read, write: if isAdmin();
+      // Public create only: recipient must strictly equal ['info@dominikphotofficial.lt'],
+      // with bounded message subject, text, and html payload.
+      // Cannot be updated or deleted by public users.
+      allow create: if isValidMailTrigger(request.resource.data);
+
+      // Only the authenticated admin can read mail documents to monitor delivery status
+      allow read: if isAdmin();
+
+      // Only admin or extension service can update (e.g. extension delivery logs) or delete
+      allow update, delete: if isAdmin();
     }
   }
 }
