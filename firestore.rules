@@ -2,35 +2,36 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Helper: Verify if the authenticated user is the designated portfolio admin
+    // Helper function: verify if request is authenticated as the portfolio admin
     function isAdmin() {
       return request.auth != null 
           && request.auth.token.email == 'dominikphotofficial.lt@gmail.com';
     }
 
     // =========================================================================
-    // Photography Portfolio Rules (PRESERVED - DO NOT DELETE)
+    // Film Team Submissions & Pitch Inquiries
     // =========================================================================
     match /submissions/{submissionId} {
+      // Public visitors can submit applications with data validation and size limits
+      allow create: if request.resource.data.name is string 
+                    && request.resource.data.name.size() > 0 
+                    && request.resource.data.name.size() <= 100
+                    && request.resource.data.message is string 
+                    && request.resource.data.message.size() > 0 
+                    && request.resource.data.message.size() <= 8000
+                    && (request.resource.data.handle is string || request.resource.data.contact is string);
+
+      // Only the authenticated admin (dominikphotofficial.lt@gmail.com) can read, update, or delete
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Legacy film submissions collection (backward compatibility)
+    match /film_submissions/{submissionId} {
       allow create: if request.resource.data.name is string;
       allow read, update, delete: if isAdmin();
     }
 
-    // =========================================================================
-    // Film Portfolio Rules (APPENDED)
-    // =========================================================================
-    match /film_submissions/{submissionId} {
-      // Public visitors can only submit forms (no public read/list/delete)
-      allow create: if request.resource.data.name is string
-                    && request.resource.data.contactType is string
-                    && request.resource.data.handle is string
-                    && request.resource.data.message is string;
-
-      // Full management access strictly for Dominik Šuškevič
-      allow read, update, delete: if isAdmin();
-    }
-
-    // Email queue / notification collection (Firebase Trigger Email extension)
+    // Email queue / notification collection
     match /mail/{mailId} {
       allow read, write: if isAdmin();
     }

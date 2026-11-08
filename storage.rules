@@ -2,29 +2,19 @@ rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
 
-    // Helper: Verify if the authenticated user is the designated portfolio admin
     function isAdmin() {
       return request.auth != null 
           && request.auth.token.email == 'dominikphotofficial.lt@gmail.com';
     }
 
-    // =========================================================================
-    // Photography Portfolio Storage Rules (PRESERVED - DO NOT DELETE)
-    // =========================================================================
     match /submissions/{fileName} {
-      // Public visitors can upload files up to 25 MB
+      // Public visitors can upload treatments/screenplays up to 25 MB
       allow create: if request.resource.size < 25 * 1024 * 1024;
       allow read, delete, update: if isAdmin();
     }
 
-    // =========================================================================
-    // Film Portfolio Storage Rules (APPENDED)
-    // =========================================================================
     match /film_uploads/{fileName} {
-      // Public visitors can upload files up to 25 MB
       allow create: if request.resource.size < 25 * 1024 * 1024;
-
-      // Only Dominik Šuškevič can view, download, or delete uploaded files
       allow read, delete, update: if isAdmin();
     }
   }

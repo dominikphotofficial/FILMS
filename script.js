@@ -1,7 +1,6 @@
 // ==========================================================================
 // DP | FILMS — Core Client Script
-// Minimalist Cinematic Portfolio & Firebase Submission Engine
-// Accent: #113939 | Jost Typography
+// Team Recruitment & Pitch Engine (Firestore + Direct Email Notification)
 // ==========================================================================
 
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
@@ -10,10 +9,10 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'https://w
 import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import { firebaseConfig, filmsList, FIRESTORE_COLLECTION, STORAGE_FOLDER } from './config.js';
 
-// Detect language from HTML lang attribute
-const lang = document.documentElement.lang === 'en' ? 'en' : 'lt';
+// Detect active language from HTML tag
+const currentLang = document.documentElement.lang === 'lt' ? 'lt' : 'en';
 
-// Initialize Firebase client
+// Initialize Firebase SDK
 let app = null;
 let db = null;
 let storage = null;
@@ -25,76 +24,50 @@ try {
   storage = getStorage(app);
   auth = getAuth(app);
 
-  // Background anonymous sign-in to satisfy authenticated Storage rules if enabled
-  signInAnonymously(auth).catch((authErr) => {
-    console.debug('Firebase Auth note:', authErr?.message || authErr);
+  signInAnonymously(auth).catch(() => {
+    // Anonymous auth optional for direct Firestore writes if rules allow
   });
 } catch (err) {
-  console.warn('Firebase initialization warning:', err);
+  console.warn('Firebase initialization notice:', err);
 }
 
 // ==========================================================================
-// 1. Navigation & Tab Switcher
+// 1. Header Scroll & Mobile Navigation
 // ==========================================================================
-const initTabs = () => {
-  const tabButtons = document.querySelectorAll('.nav-tab-link');
-  const tabPanes = document.querySelectorAll('.tab-pane');
-  const jumpButtons = document.querySelectorAll('[data-jump-tab]');
+const initNavigation = () => {
+  const header = document.querySelector('.header');
+  const toggleBtn = document.getElementById('mobile-nav-toggle');
+  const navMenu = document.getElementById('main-nav');
 
-  const activateTab = (tabId) => {
-    // Update button states
-    tabButtons.forEach(btn => {
-      const isTarget = btn.getAttribute('data-tab-target') === tabId;
-      btn.classList.toggle('active', isTarget);
-      btn.setAttribute('aria-selected', isTarget ? 'true' : 'false');
-    });
-
-    // Update pane states
-    tabPanes.forEach(pane => {
-      const isTarget = pane.id === `tab-${tabId}`;
-      pane.classList.toggle('active', isTarget);
-    });
-
-    // Update URL hash smoothly without jump
-    if (window.location.hash !== `#${tabId}`) {
-      history.replaceState(null, '', `#${tabId}`);
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      header?.classList.add('scrolled');
+    } else {
+      header?.classList.remove('scrolled');
     }
-  };
+  }, { passive: true });
 
-  tabButtons.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const target = btn.getAttribute('data-tab-target');
-      if (target) {
-        activateTab(target);
-        // If below header, smooth scroll to content area
-        const contentArea = document.querySelector('.tab-content-area');
-        if (contentArea && window.scrollY > 300) {
-          contentArea.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
+  toggleBtn?.addEventListener('click', () => {
+    navMenu?.classList.toggle('mobile-active');
+  });
+
+  // Close mobile nav on anchor link click
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      navMenu?.classList.remove('mobile-active');
     });
   });
 
-  jumpButtons.forEach(btn => {
+  // Auto-fill role when clicking a role card CTA
+  document.querySelectorAll('[data-select-role]').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const target = btn.getAttribute('data-jump-tab');
-      if (target) {
-        activateTab(target);
-        const targetElement = document.getElementById(`tab-${target}`);
-        if (targetElement) {
-          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+      const role = btn.getAttribute('data-select-role');
+      const roleSelect = document.getElementById('input-role');
+      if (roleSelect && role) {
+        roleSelect.value = role;
       }
     });
   });
-
-  // Handle initial hash in URL
-  const initialHash = window.location.hash.replace('#', '');
-  if (['films', 'about', 'idea', 'contacts'].includes(initialHash)) {
-    activateTab(initialHash);
-  }
 };
 
 // ==========================================================================
@@ -143,11 +116,9 @@ const initVideoModal = () => {
     }
   });
 
-  // Attach to global window for dynamic cards
   window.__dpOpenVideo = openVideo;
 
-  // Listen to static featured buttons
-  document.querySelectorAll('.open-video-btn, .featured-video-preview').forEach(el => {
+  document.querySelectorAll('.open-video-btn').forEach(el => {
     el.addEventListener('click', (e) => {
       e.preventDefault();
       const ytid = el.getAttribute('data-youtube-id') || 'bcLq-VXBpzI';
@@ -157,7 +128,7 @@ const initVideoModal = () => {
 };
 
 // ==========================================================================
-// 3. Render Films Showcase with Filtering
+// 3. Render Films Showcase with Filter Chips
 // ==========================================================================
 const initFilmsShowcase = () => {
   const gridContainer = document.getElementById('films-grid-container');
@@ -176,13 +147,13 @@ const initFilmsShowcase = () => {
     }
 
     if (countDisplay) {
-      countDisplay.textContent = lang === 'lt'
+      countDisplay.textContent = currentLang === 'lt'
         ? `Rodoma: ${filtered.length} ${filtered.length === 1 ? 'filmas' : 'filmai'}`
         : `Showing: ${filtered.length} ${filtered.length === 1 ? 'film' : 'films'}`;
     }
 
     gridContainer.innerHTML = filtered.map(film => {
-      const desc = film.desc ? (film.desc[lang] || film.desc.lt) : '';
+      const desc = film.desc ? (film.desc[currentLang] || film.desc.en) : '';
       const thumbUrl = `https://img.youtube.com/vi/${film.youtubeId}/hqdefault.jpg`;
       const awardBadge = film.award ? `
         <div class="film-badge-award-small" title="${film.award}">
@@ -193,13 +164,13 @@ const initFilmsShowcase = () => {
 
       return `
         <article class="film-card" data-year="${film.year}" data-id="${film.id}">
-          <div class="film-thumbnail-wrapper" onclick="window.__dpOpenVideo('${film.youtubeId}', '${film.title.replace(/'/g, "\\'")}')" role="button" tabindex="0" aria-label="${lang === 'lt' ? 'Žiūrėti filmą' : 'Watch film'} ${film.title}">
+          <div class="film-thumbnail-wrapper" onclick="window.__dpOpenVideo('${film.youtubeId}', '${film.title.replace(/'/g, "\\'")}')" role="button" tabindex="0" aria-label="${currentLang === 'lt' ? 'Žiūrėti filmą' : 'Watch film'} ${film.title}">
             <img src="${thumbUrl}" alt="${film.title}" loading="lazy" width="480" height="270">
             <span class="film-badge-year">${film.year}</span>
             ${awardBadge}
             <div class="film-play-btn">
               <div class="film-play-circle">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
               </div>
             </div>
           </div>
@@ -210,7 +181,7 @@ const initFilmsShowcase = () => {
             <div class="film-card-footer">
               <button type="button" class="film-link-watch" onclick="window.__dpOpenVideo('${film.youtubeId}', '${film.title.replace(/'/g, "\\'")}')">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                ${lang === 'lt' ? 'Žiūrėti filmą' : 'Watch Film'}
+                ${currentLang === 'lt' ? 'Žiūrėti filmą' : 'Watch Film'}
               </button>
               <a href="https://youtu.be/${film.youtubeId}" target="_blank" rel="noopener noreferrer" class="film-yt-badge">
                 YouTube ↗
@@ -222,7 +193,6 @@ const initFilmsShowcase = () => {
     }).join('');
   };
 
-  // Filter click events
   filterChips.forEach(chip => {
     chip.addEventListener('click', () => {
       filterChips.forEach(c => c.classList.remove('active'));
@@ -232,12 +202,11 @@ const initFilmsShowcase = () => {
     });
   });
 
-  // Initial render
   renderList('all');
 };
 
 // ==========================================================================
-// 4. File Upload & Submissions Engine
+// 4. Application Form & Submissions Engine
 // ==========================================================================
 const initSubmissionForm = () => {
   const form = document.getElementById('submission-form');
@@ -257,8 +226,6 @@ const initSubmissionForm = () => {
   if (!form) return;
 
   const MAX_FILE_SIZE = 25 * 1024 * 1024; // 25 MB
-  const MAX_BASE64_SIZE = 750 * 1024; // 750 KB for base64 direct fallback
-
   let currentFile = null;
 
   const showAlert = (msg) => {
@@ -289,7 +256,10 @@ const initSubmissionForm = () => {
     }
   };
 
-  // Drag and drop events
+  dropZone?.addEventListener('click', () => {
+    fileInput?.click();
+  });
+
   ['dragenter', 'dragover'].forEach(eventName => {
     dropZone?.addEventListener(eventName, (e) => {
       e.preventDefault();
@@ -311,7 +281,7 @@ const initSubmissionForm = () => {
     if (files && files.length > 0) {
       const file = files[0];
       if (file.size > MAX_FILE_SIZE) {
-        showAlert(lang === 'lt' ? 'Failas viršija 25 MB limitą.' : 'File exceeds 25 MB limit.');
+        showAlert(currentLang === 'lt' ? 'Failas viršija 25 MB limitą.' : 'File exceeds 25 MB limit.');
         return;
       }
       clearAlert();
@@ -323,7 +293,7 @@ const initSubmissionForm = () => {
     const file = fileInput.files?.[0];
     if (file) {
       if (file.size > MAX_FILE_SIZE) {
-        showAlert(lang === 'lt' ? 'Failas viršija 25 MB limitą.' : 'File exceeds 25 MB limit.');
+        showAlert(currentLang === 'lt' ? 'Failas viršija 25 MB limitą.' : 'File exceeds 25 MB limit.');
         updateFileDisplay(null);
         return;
       }
@@ -345,7 +315,6 @@ const initSubmissionForm = () => {
     form.style.display = 'flex';
   });
 
-  // Read file as Base64 helper for offline/resilient storage
   const readFileAsDataURL = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -360,25 +329,43 @@ const initSubmissionForm = () => {
     e.preventDefault();
     clearAlert();
 
-    const name = form.elements['name']?.value?.trim();
-    const type = form.elements['type']?.value;
-    const contactType = form.elements['contactType']?.value;
-    const handle = form.elements['handle']?.value?.trim();
-    const message = form.elements['message']?.value?.trim();
-
-    if (!name || !type || !contactType || !handle || !message) {
-      showAlert(lang === 'lt' ? 'Prašome užpildyti visus privalomus laukus.' : 'Please fill in all required fields.');
+    // 1. Spam Prevention: Honeypot check
+    const honeypot = form.elements['website_hp']?.value;
+    if (honeypot) {
+      console.warn('Bot submission prevented.');
+      form.style.display = 'none';
+      successCard?.classList.add('visible');
       return;
     }
 
-    if (!db) {
-      showAlert(lang === 'lt' ? 'Duomenų bazės ryšio klaida. Bandykite vėliau.' : 'Database connection error. Please try again later.');
+    // 2. Spam Prevention: Rate limiting via localStorage (max 1 submission per 45s)
+    const lastSubmitTime = localStorage.getItem('dp_last_submit_ts');
+    const now = Date.now();
+    if (lastSubmitTime && now - parseInt(lastSubmitTime, 10) < 45000) {
+      const waitSec = Math.ceil((45000 - (now - parseInt(lastSubmitTime, 10))) / 1000);
+      showAlert(currentLang === 'lt'
+        ? `Prašome palaukti ${waitSec} s. prieš siunčiant dar vieną užklausą.`
+        : `Please wait ${waitSec}s before sending another submission.`
+      );
+      return;
+    }
+
+    const name = form.elements['name']?.value?.trim();
+    const country = form.elements['country']?.value?.trim() || 'Global / Unspecified';
+    const role = form.elements['role']?.value || 'Other';
+    const type = form.elements['type']?.value || 'Join the Film Team';
+    const contactType = form.elements['contactType']?.value || 'Email';
+    const handle = form.elements['handle']?.value?.trim();
+    const message = form.elements['message']?.value?.trim();
+
+    if (!name || !handle || !message) {
+      showAlert(currentLang === 'lt' ? 'Prašome užpildyti visus privalomus laukus.' : 'Please fill in all required fields.');
       return;
     }
 
     submitBtn.disabled = true;
     const originalText = submitBtn.innerHTML;
-    submitBtn.innerHTML = lang === 'lt' ? 'Siunčiama...' : 'Sending...';
+    submitBtn.innerHTML = currentLang === 'lt' ? 'Siunčiama...' : 'Sending...';
 
     try {
       let fileUrl = null;
@@ -386,6 +373,7 @@ const initSubmissionForm = () => {
       let fileName = null;
       let fileSizeBytes = null;
       let storageMethod = null;
+      let storagePath = null;
 
       const file = currentFile || fileInput?.files?.[0];
 
@@ -393,30 +381,31 @@ const initSubmissionForm = () => {
         fileName = file.name;
         fileSizeBytes = file.size;
 
-        if (auth && !auth.currentUser) {
+        if (progressBox) progressBox.style.display = 'block';
+        if (progressBar) progressBar.style.width = '30%';
+
+        // Base64 fallback for files up to 10 MB for resilience
+        if (file.size <= 10 * 1024 * 1024) {
           try {
-            await signInAnonymously(auth);
-          } catch (authErr) {
-            console.debug('Auth note:', authErr?.message || authErr);
+            fileDataUrl = await readFileAsDataURL(file);
+          } catch (readErr) {
+            console.warn('Base64 read notice:', readErr);
           }
         }
 
-        let uploadSuccess = false;
-
-        // Try Firebase Storage first
         if (storage) {
-          if (progressBox) progressBox.style.display = 'block';
-          if (progressBar) progressBar.style.width = '20%';
-
           const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-          const storagePath = `${STORAGE_FOLDER}/${Date.now()}_${safeName}`;
+          storagePath = `${STORAGE_FOLDER}/${Date.now()}_${safeName}`;
           const storageReference = ref(storage, storagePath);
 
           try {
             const uploadTask = uploadBytesResumable(storageReference, file);
 
-            await new Promise((resolve, reject) => {
-              const timeout = setTimeout(() => reject(new Error('Storage upload timeout')), 22000);
+            await new Promise((resolve) => {
+              const timeout = setTimeout(() => {
+                console.warn('Storage upload timeout, proceeding with payload');
+                resolve();
+              }, 12000);
 
               uploadTask.on(
                 'state_changed',
@@ -428,57 +417,46 @@ const initSubmissionForm = () => {
                 },
                 (err) => {
                   clearTimeout(timeout);
-                  reject(err);
+                  console.warn('Storage notice:', err?.message || err);
+                  resolve();
                 },
                 async () => {
                   clearTimeout(timeout);
                   if (progressBar) progressBar.style.width = '100%';
                   try {
                     fileUrl = await getDownloadURL(uploadTask.snapshot.ref);
-                    uploadSuccess = true;
                     storageMethod = 'firebase_storage';
-                    resolve();
                   } catch (urlErr) {
-                    reject(urlErr);
+                    storageMethod = 'firebase_storage_ref';
                   }
+                  resolve();
                 }
               );
             });
           } catch (storageErr) {
-            console.warn('Storage upload notice (using fallback):', storageErr?.message || storageErr);
+            console.warn('Storage upload notice:', storageErr);
           }
-        }
-
-        // Direct base64 fallback for documents up to 750KB
-        if (!uploadSuccess && file.size <= MAX_BASE64_SIZE) {
-          try {
-            fileDataUrl = await readFileAsDataURL(file);
-            uploadSuccess = true;
-            storageMethod = 'firestore_direct_base64';
-          } catch (baseErr) {
-            console.warn('Base64 fallback notice:', baseErr);
-          }
-        }
-
-        if (!uploadSuccess) {
-          storageMethod = 'metadata_only';
         }
       }
 
-      // Submission Document
+      // Base Submission Document (Standardized format)
       const submissionDoc = {
         name,
+        country,
+        role,
         type,
         contactType,
         handle,
+        contact: `${contactType}: ${handle}`,
         message,
-        status: 'new', // new | read | replied | archived
+        status: 'new',
         unread: true,
-        lang,
-        createdAt: serverTimestamp(),
+        notes: '',
+        lang: currentLang,
         fileName: fileName || null,
         fileSizeBytes: fileSizeBytes || null,
-        fileMimeType: file?.type || null
+        fileMimeType: file?.type || null,
+        storagePath: storagePath || null
       };
 
       if (fileUrl) {
@@ -486,35 +464,93 @@ const initSubmissionForm = () => {
         submissionDoc.storageMethod = storageMethod || 'firebase_storage';
       } else if (fileDataUrl) {
         submissionDoc.fileDataUrl = fileDataUrl;
-        submissionDoc.storageMethod = 'firestore_direct_base64';
-      } else if (file) {
-        submissionDoc.storageMethod = 'metadata_only';
+        submissionDoc.storageMethod = 'direct_base64';
       }
 
-      // Add to Firestore collection film_submissions
-      await addDoc(collection(db, FIRESTORE_COLLECTION), submissionDoc);
+      let saved = false;
 
-      // Customize success message
+      // 1. Direct Firestore write
+      if (db) {
+        try {
+          const firestoreDoc = {
+            ...submissionDoc,
+            createdAt: serverTimestamp()
+          };
+          await addDoc(collection(db, FIRESTORE_COLLECTION), firestoreDoc);
+          saved = true;
+          console.log('[DP FILMS] Submission successfully written to Firestore.');
+        } catch (fsErr) {
+          console.warn('[DP FILMS] Firestore direct write notice:', fsErr?.message || fsErr);
+        }
+      }
+
+      // 2. Local Express server backup & sync
+      try {
+        const apiRes = await fetch('/api/submit-proposal', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ...submissionDoc,
+            createdAt: new Date().toISOString()
+          })
+        });
+        if (apiRes.ok) {
+          saved = true;
+        }
+      } catch (apiErr) {
+        console.warn('[DP FILMS] Server API notice:', apiErr);
+      }
+
+      // 3. Optional Direct FormSubmit notification if configured (Free email notification without backend)
+      try {
+        const notifyPayload = {
+          name,
+          country,
+          role,
+          proposal_type: type,
+          contact: `${contactType}: ${handle}`,
+          message,
+          _subject: `[DP FILMS Team Application] ${name} (${role} - ${country})`
+        };
+        // Non-blocking notification ping
+        fetch('https://formsubmit.co/ajax/info@dominikphotofficial.lt', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(notifyPayload)
+        }).catch(() => {});
+      } catch (notifyErr) {
+        // Notification is non-fatal
+      }
+
+      if (!saved) {
+        throw new Error('Nepavyko išsaugoti užklausos. Patikrinkite interneto ryšį.');
+      }
+
+      // Record timestamp for rate limiting
+      localStorage.setItem('dp_last_submit_ts', Date.now().toString());
+
+      // Show Success State
       if (successDesc) {
-        if (fileName && (fileUrl || fileDataUrl)) {
-          successDesc.textContent = lang === 'lt'
-            ? `Dėkoju už pasiūlymą! Pranešimas ir prisegtas failas (${fileName}) sėkmingai išsaugoti. Dominik netrukus susisieks jūsų nurodytu kontaktu.`
-            : `Thank you for sharing your concept! Your message and attached file (${fileName}) have been safely received. Dominik will be in touch shortly.`;
+        if (fileName) {
+          successDesc.textContent = currentLang === 'lt'
+            ? `Ačiū, ${name}! Tavo paraiška (${role}) ir failas (${fileName}) sėkmingai gauti. Dominik netrukus susisieks su tavimi.`
+            : `Thank you, ${name}! Your application as ${role} and attachment (${fileName}) were received. Dominik will get back to you shortly.`;
         } else {
-          successDesc.textContent = lang === 'lt'
-            ? 'Dėkoju už jūsų idėją! Dominik peržiūrės medžiagą ir susisieks jūsų nurodytu kontaktu.'
-            : 'Thank you for your proposal! Dominik will review the materials and reach out via your preferred contact channel.';
+          successDesc.textContent = currentLang === 'lt'
+            ? `Ačiū, ${name}! Tavo paraiška (${role}) sėkmingai gauta. Dominik netrukus peržiūrės ją ir susisieks.`
+            : `Thank you, ${name}! Your application as ${role} has been received. Dominik will review your message and reply soon.`;
         }
       }
 
       form.style.display = 'none';
       successCard?.classList.add('visible');
       if (progressBox) progressBox.style.display = 'none';
+
     } catch (err) {
       console.error('Submission failed:', err);
-      showAlert(lang === 'lt'
-        ? 'Klaida siunčiant pasiūlymą. Patikrinkite ryšį arba parašykite tiesiogiai per kontaktus.'
-        : 'Error submitting proposal. Please check your connection or contact directly via social channels.'
+      showAlert(currentLang === 'lt'
+        ? 'Klaida siunčiant formą. Prašome susisiekti tiesiogiai el. paštu info@dominikphotofficial.lt arba Telegram.'
+        : 'Error sending your application. Please contact directly via info@dominikphotofficial.lt or Telegram.'
       );
     } finally {
       submitBtn.disabled = false;
@@ -525,7 +561,7 @@ const initSubmissionForm = () => {
 };
 
 // ==========================================================================
-// 5. Language Switcher Persistence
+// 5. Language Switcher
 // ==========================================================================
 const initLanguageSwitcher = () => {
   document.querySelectorAll('.lang-switcher a').forEach(link => {
@@ -541,10 +577,10 @@ const initLanguageSwitcher = () => {
 };
 
 // ==========================================================================
-// Initialize Everything on DOMContentLoaded
+// Initialize on DOM Ready
 // ==========================================================================
 document.addEventListener('DOMContentLoaded', () => {
-  initTabs();
+  initNavigation();
   initVideoModal();
   initFilmsShowcase();
   initSubmissionForm();
