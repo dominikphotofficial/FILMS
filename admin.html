@@ -129,6 +129,95 @@
       color: var(--text-muted);
     }
 
+    /* Category Chips Bar */
+    .cat-chips-bar {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+    .cat-chips-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .cat-chip {
+      white-space: nowrap;
+      padding: 5px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: #ffffff;
+      border: 1px solid var(--border-medium);
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all var(--transition-fast);
+      flex-shrink: 0;
+    }
+
+    .cat-chip:hover {
+      background: var(--primary-tint);
+      color: var(--primary-accent);
+      border-color: var(--border-accent);
+    }
+
+    .cat-chip.active {
+      background: var(--primary-accent);
+      color: #ffffff;
+      border-color: var(--primary-accent);
+    }
+
+    .cat-chip .chip-count {
+      background: rgba(0, 0, 0, 0.08);
+      padding: 1px 5px;
+      border-radius: 10px;
+      font-size: 0.7rem;
+    }
+
+    .cat-chip.active .chip-count {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+
+    /* Top Bar Navigation Tabs */
+    .admin-nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--bg-surface);
+      padding: 3px;
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-sm);
+    }
+
+    .admin-tab-btn {
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: transparent;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all var(--transition-fast);
+    }
+
+    .admin-tab-btn:hover {
+      color: var(--primary-accent);
+    }
+
+    .admin-tab-btn.active {
+      background: #ffffff;
+      color: var(--primary-accent);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
     .master-filter-row {
       display: flex;
       gap: 8px;
@@ -143,6 +232,101 @@
       color: var(--text-secondary);
       font-size: 0.8rem;
       outline: none;
+    }
+
+    /* Deal Memo / Agreement Modal */
+    .agreement-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(17, 57, 57, 0.65);
+      backdrop-filter: blur(8px);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .agreement-modal.active {
+      display: flex;
+    }
+
+    .agreement-modal-content {
+      background: #ffffff;
+      max-width: 840px;
+      width: 100%;
+      max-height: 90vh;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-modal);
+      border: 1px solid var(--border-medium);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .agreement-modal-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border-medium);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-surface);
+      flex-shrink: 0;
+    }
+
+    .agreement-modal-body {
+      padding: 32px 40px;
+      overflow-y: auto;
+      font-family: 'Times New Roman', Times, serif, 'Jost', sans-serif;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+
+    .agreement-modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border-medium);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-surface);
+      flex-shrink: 0;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* Team & Account Settings View */
+    .team-view-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 32px 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .team-grid-cards {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .team-grid-cards {
+        grid-template-columns: 1fr;
+      }
+      .agreement-modal-body {
+        padding: 20px;
+      }
+    }
+
+    .admin-card-box {
+      background: #ffffff;
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     }
 
     .submissions-list {
@@ -443,13 +627,22 @@
   <div id="admin-app">
     <!-- Top Bar -->
     <header class="admin-top-bar">
-      <div style="display: flex; align-items: center; gap: 14px;">
+      <div style="display: flex; align-items: center; gap: 16px;">
         <a href="/" target="_blank" class="brand" style="font-size: 1.05rem;">
           <span class="brand-dp">DP</span>
           <span class="brand-divider">|</span>
           <span class="brand-films">FILMS</span>
         </a>
         <span style="font-size: 0.75rem; text-transform: uppercase; background: var(--primary-accent); color: #ffffff; padding: 3px 8px; border-radius: 4px; font-weight: 700;">Admin</span>
+
+        <div class="admin-nav-tabs">
+          <button type="button" class="admin-tab-btn active" id="btn-tab-inbox">
+            📥 Submissions & Scripts
+          </button>
+          <button type="button" class="admin-tab-btn" id="btn-tab-team">
+            👥 Team & Accounts
+          </button>
+        </div>
       </div>
 
       <div style="display: flex; align-items: center; gap: 14px;">
@@ -463,8 +656,8 @@
       </div>
     </header>
 
-    <!-- Master-Detail Container -->
-    <div class="admin-master-detail">
+    <!-- VIEW 1: Submissions Master-Detail Container -->
+    <div class="admin-master-detail" id="view-submissions-container">
 
       <!-- LEFT: MASTER COLUMN (Inbox) -->
       <aside class="admin-master-col">
@@ -472,6 +665,28 @@
           <div class="master-search-row">
             <svg class="master-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             <input type="text" id="admin-search" class="master-search-input" placeholder="Search applicant, country, role...">
+          </div>
+
+          <!-- Category Filter Chips -->
+          <div class="cat-chips-bar" id="cat-chips-bar">
+            <button type="button" class="cat-chip active" data-cat="all">
+              All <span class="chip-count" id="count-all">0</span>
+            </button>
+            <button type="button" class="cat-chip" data-cat="Screenwriter">
+              📜 Scripts <span class="chip-count" id="count-script">0</span>
+            </button>
+            <button type="button" class="cat-chip" data-cat="Actor / Actress">
+              🎭 Actors <span class="chip-count" id="count-actor">0</span>
+            </button>
+            <button type="button" class="cat-chip" data-cat="Director / Co-Director">
+              🎬 Directors <span class="chip-count" id="count-director">0</span>
+            </button>
+            <button type="button" class="cat-chip" data-cat="Sound Designer / Composer">
+              🎵 Sound <span class="chip-count" id="count-sound">0</span>
+            </button>
+            <button type="button" class="cat-chip" data-cat="Producer / Other">
+              💼 Crew <span class="chip-count" id="count-crew">0</span>
+            </button>
           </div>
 
           <div class="master-filter-row">
@@ -484,7 +699,7 @@
             </select>
 
             <select id="filter-role" class="master-filter-select">
-              <option value="all">All Roles</option>
+              <option value="all">Filter by Specific Role</option>
               <option value="Screenwriter">Screenwriter</option>
               <option value="Actor / Actress">Actor / Actress</option>
               <option value="Director / Co-Director">Director</option>
@@ -504,7 +719,7 @@
         <div id="detail-empty-placeholder" style="margin: auto; text-align: center; color: var(--text-muted); max-width: 340px;">
           <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom: 12px; color: var(--primary-accent);"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           <p style="font-size: 1rem; font-weight: 600; color: var(--primary-accent);">Select an application from the list</p>
-          <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 4px;">Click any applicant on the left to review their proposal, change status, download attachments, or reply by email.</p>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 4px;">Click any applicant to review their script, generate an official collaboration agreement, change status, or reply.</p>
         </div>
 
         <div id="detail-active-view" style="display: none; width: 100%;">
@@ -512,6 +727,148 @@
         </div>
       </main>
 
+    </div>
+
+    <!-- VIEW 2: Team & Account Settings View -->
+    <div class="team-view-container" id="view-team-container" style="display: none;">
+      <div class="admin-card-box">
+        <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--primary-accent); margin-bottom: 4px;">
+          Super Admin Profile & Access
+        </h2>
+        <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 20px;">
+          Primary owner identity and verified access for DP | FILMS.
+        </p>
+
+        <form id="admin-profile-form" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label class="form-label">Director / Admin Name</label>
+            <input type="text" id="prof-name" class="form-input" value="Dominik Šuškevič" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Authorized Google Account</label>
+            <input type="email" id="prof-email" class="form-input" value="dominikphotofficial.lt@gmail.com" readonly style="background: var(--bg-surface); opacity: 0.85;">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Professional Credentials & Title</label>
+            <input type="text" id="prof-title" class="form-input" value="Certified Videographer, Cinematographer & Director">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Public Contact Email</label>
+            <input type="email" id="prof-contact" class="form-input" value="info@dominikphotofficial.lt">
+          </div>
+          <div style="grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; margin-top: 4px;">
+            <button type="submit" class="btn-primary" style="padding: 9px 20px; font-size: 0.88rem;">
+              Save Profile Details
+            </button>
+            <span id="prof-save-status" style="font-size: 0.85rem; color: var(--primary-accent); font-weight: 700;"></span>
+          </div>
+        </form>
+      </div>
+
+      <div class="admin-card-box" style="margin-top: 24px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--primary-accent); margin-bottom: 4px;">
+              Team Members & Collaborators
+            </h2>
+            <p style="font-size: 0.88rem; color: var(--text-secondary);">
+              Manage invited script readers, co-producers, and production assistants.
+            </p>
+          </div>
+          <button type="button" class="btn-secondary" id="btn-open-add-member" style="padding: 8px 16px; font-size: 0.85rem;">
+            ➕ Add Collaborator
+          </button>
+        </div>
+
+        <!-- Add Member Inline Drawer/Form -->
+        <div id="add-member-form-wrap" style="display: none; background: var(--bg-surface); padding: 18px; border-radius: var(--radius-sm); border: 1px solid var(--border-medium); margin-bottom: 20px;">
+          <h3 style="font-size: 0.95rem; font-weight: 700; color: var(--primary-accent); margin-bottom: 12px;">
+            Invite New Collaborator
+          </h3>
+          <form id="form-new-team-member" style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 12px; align-items: end;">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label">Full Name</label>
+              <input type="text" id="new-member-name" class="form-input" placeholder="e.g. Lukas Kazlauskas" required>
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label">Email Address</label>
+              <input type="email" id="new-member-email" class="form-input" placeholder="e.g. lukas@film.lt" required>
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label">Team Role</label>
+              <select id="new-member-role" class="form-select">
+                <option value="Script Reader / Story Editor">Script Reader / Story Editor</option>
+                <option value="Production Assistant">Production Assistant</option>
+                <option value="Co-Director / Creative Partner">Co-Director / Partner</option>
+                <option value="Sound Consultant">Sound Consultant</option>
+                <option value="Casting Coordinator">Casting Coordinator</option>
+              </select>
+            </div>
+            <div style="display: flex; gap: 6px;">
+              <button type="submit" class="btn-primary" style="padding: 8px 14px; font-size: 0.85rem;">Add</button>
+              <button type="button" class="btn-action-small" id="btn-cancel-add-member" style="padding: 8px 12px;">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem;" id="team-table">
+            <thead>
+              <tr style="border-bottom: 2px solid var(--border-medium); text-align: left; color: var(--text-muted); font-size: 0.78rem; text-transform: uppercase;">
+                <th style="padding: 10px 12px;">Name</th>
+                <th style="padding: 10px 12px;">Email</th>
+                <th style="padding: 10px 12px;">Role</th>
+                <th style="padding: 10px 12px;">Status</th>
+                <th style="padding: 10px 12px; text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="team-table-body">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ======================================================================
+       3. OFFICIAL COLLABORATION DEAL MEMO / AGREEMENT MODAL (PDF / PRINT)
+       ====================================================================== -->
+  <div class="agreement-modal" id="modal-agreement" role="dialog" aria-label="Official Collaboration Deal Memo">
+    <div class="agreement-modal-content">
+      <div class="agreement-modal-header no-print">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 1.15rem; font-weight: 700; color: var(--primary-accent);">
+            🎬 Film Collaboration Agreement & Credits Guarantee
+          </span>
+          <span class="tag-pill" style="background: var(--primary-tint); color: var(--primary-accent); font-weight: 700;">Official Memorandum</span>
+        </div>
+        <button type="button" id="btn-close-agreement" style="background: transparent; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); line-height: 1;">×</button>
+      </div>
+
+      <div class="agreement-modal-body" id="agreement-printable-area">
+        <!-- Rendered dynamically for selected applicant -->
+      </div>
+
+      <div class="agreement-modal-footer no-print">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 0.82rem; color: var(--text-muted);">
+            Ready to print on A4/Letter or save as PDF. Includes signature lines and credits guarantee.
+          </span>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button type="button" class="btn-action-small" id="btn-copy-agreement-text">
+            📋 Copy Agreement Text
+          </button>
+          <button type="button" class="btn-action-small" id="btn-download-agreement-txt">
+            💾 Download .TXT
+          </button>
+          <button type="button" class="btn-primary" id="btn-print-agreement">
+            🖨️ Print / Save as PDF
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -544,6 +901,8 @@
     let searchFilter = '';
     let statusFilter = 'all';
     let roleFilter = 'all';
+    let activeCategory = 'all';
+    let currentAgreementItem = null;
 
     const guardOverlay = document.getElementById('guard-checking-overlay');
     const adminApp = document.getElementById('admin-app');
@@ -551,6 +910,14 @@
     const emptyPlaceholder = document.getElementById('detail-empty-placeholder');
     const activeView = document.getElementById('detail-active-view');
     const btnExport = document.getElementById('btn-export-csv');
+
+    const viewSubmissions = document.getElementById('view-submissions-container');
+    const viewTeam = document.getElementById('view-team-container');
+    const tabInbox = document.getElementById('btn-tab-inbox');
+    const tabTeam = document.getElementById('btn-tab-team');
+
+    const modalAgreement = document.getElementById('modal-agreement');
+    const agreementPrintableArea = document.getElementById('agreement-printable-area');
 
     const urlParams = new URLSearchParams(window.location.search);
     const hasLoginIntent = urlParams.get('login') === '1' || urlParams.get('auth') === '1';
@@ -564,7 +931,6 @@
     // Helper: Immediate redirection to public homepage
     function rejectAndRedirect(reason) {
       console.warn('Unauthorized admin access attempt:', reason);
-      // Immediately hide everything to prevent DOM leaks
       if (adminApp) adminApp.style.display = 'none';
       if (guardOverlay) {
         guardOverlay.innerHTML = `
@@ -587,7 +953,6 @@
 
     // ======================================================================
     // PROTECTIVE ROUTE GUARD
-    // If not authenticated or email !== 'dominikphotofficial.lt@gmail.com' -> REDIRECT IMMEDIATELY
     // ======================================================================
     let authResolved = false;
 
@@ -637,7 +1002,6 @@
         </div>
       `;
 
-      // Google Sign-in trigger
       document.getElementById('btn-google-signin')?.addEventListener('click', async () => {
         try {
           const provider = new GoogleAuthProvider();
@@ -654,7 +1018,6 @@
         }
       });
 
-      // Passkey form trigger
       document.getElementById('guard-passkey-form')?.addEventListener('submit', async (e) => {
         e.preventDefault();
         const code = document.getElementById('guard-passkey-input')?.value?.trim();
@@ -680,7 +1043,6 @@
       });
     }
 
-    // Timeout safety: if Firebase Auth does not resolve within 2.5s and no login intent, redirect immediately
     const guardTimeout = setTimeout(() => {
       if (!authResolved) {
         const sessionKey = sessionStorage.getItem('dp_admin_authorized');
@@ -700,7 +1062,6 @@
         clearTimeout(guardTimeout);
 
         if (!currentUser) {
-          // Check local developer session
           if (sessionStorage.getItem('dp_admin_authorized') === ADMIN_EMAIL) {
             grantAccess(ADMIN_EMAIL);
           } else if (hasLoginIntent) {
@@ -711,13 +1072,11 @@
           return;
         }
 
-        // Strict whitelist check
         if (currentUser.email !== ADMIN_EMAIL) {
           rejectAndRedirect(`Email ${currentUser.email} does not match ${ADMIN_EMAIL}`);
           return;
         }
 
-        // Authenticated and strictly authorized
         grantAccess(currentUser.email);
       });
     } else {
@@ -739,6 +1098,24 @@
     });
 
     // ======================================================================
+    // Tab Navigation: Inbox vs Team
+    // ======================================================================
+    tabInbox?.addEventListener('click', () => {
+      tabInbox.classList.add('active');
+      tabTeam.classList.remove('active');
+      viewSubmissions.style.display = 'flex';
+      viewTeam.style.display = 'none';
+    });
+
+    tabTeam?.addEventListener('click', () => {
+      tabTeam.classList.add('active');
+      tabInbox.classList.remove('active');
+      viewSubmissions.style.display = 'none';
+      viewTeam.style.display = 'block';
+      loadTeamAndProfile();
+    });
+
+    // ======================================================================
     // Dashboard Data & Real-Time Firestore Logic
     // ======================================================================
     function initDashboard() {
@@ -757,6 +1134,7 @@
                 submissions.unshift(data);
               }
             });
+            updateCategoryCounters();
             renderList();
             if (activeSubId) {
               const curr = submissions.find(s => s.id === activeSubId);
@@ -781,11 +1159,45 @@
             submissions.forEach(s => map.set(s.id, s));
             data.submissions.forEach(s => map.set(s.id, s));
             submissions = Array.from(map.values());
+            updateCategoryCounters();
             renderList();
           }
         }
       } catch (e) {}
     }
+
+    // Category Counter & Filter Chips
+    function updateCategoryCounters() {
+      const counts = {
+        all: submissions.length,
+        script: submissions.filter(s => (s.role || '').toLowerCase().includes('screenwriter') || (s.type || '').toLowerCase().includes('script')).length,
+        actor: submissions.filter(s => (s.role || '').toLowerCase().includes('actor')).length,
+        director: submissions.filter(s => (s.role || '').toLowerCase().includes('director')).length,
+        sound: submissions.filter(s => (s.role || '').toLowerCase().includes('sound')).length,
+        crew: submissions.filter(s => (s.role || '').toLowerCase().includes('producer') || (s.role || '').toLowerCase().includes('other')).length
+      };
+
+      const setEl = (id, count) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = count;
+      };
+
+      setEl('count-all', counts.all);
+      setEl('count-script', counts.script);
+      setEl('count-actor', counts.actor);
+      setEl('count-director', counts.director);
+      setEl('count-sound', counts.sound);
+      setEl('count-crew', counts.crew);
+    }
+
+    document.querySelectorAll('.cat-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        activeCategory = chip.getAttribute('data-cat') || 'all';
+        renderList();
+      });
+    });
 
     function renderList() {
       const q = searchFilter.toLowerCase();
@@ -793,6 +1205,23 @@
       let filtered = submissions.filter(item => {
         if (statusFilter !== 'all' && (item.status || 'new') !== statusFilter) return false;
         if (roleFilter !== 'all' && (item.role || '') !== roleFilter) return false;
+
+        // Category filter
+        if (activeCategory !== 'all') {
+          const role = (item.role || '').toLowerCase();
+          const type = (item.type || '').toLowerCase();
+          if (activeCategory === 'Screenwriter') {
+            if (!role.includes('screenwriter') && !type.includes('script')) return false;
+          } else if (activeCategory === 'Actor / Actress') {
+            if (!role.includes('actor')) return false;
+          } else if (activeCategory === 'Director / Co-Director') {
+            if (!role.includes('director')) return false;
+          } else if (activeCategory === 'Sound Designer / Composer') {
+            if (!role.includes('sound')) return false;
+          } else if (activeCategory === 'Producer / Other') {
+            if (!role.includes('producer') && !role.includes('other')) return false;
+          }
+        }
 
         if (q) {
           const name = (item.name || '').toLowerCase();
@@ -818,6 +1247,7 @@
         const status = item.status || 'new';
         const role = item.role || 'Other';
         const country = item.country || '';
+        const isScript = role.toLowerCase().includes('screenwriter') || (item.fileName && item.fileName.toLowerCase().endsWith('.pdf'));
 
         let dateStr = 'Recent';
         if (item.createdAt?.toDate) {
@@ -839,7 +1269,7 @@
               <span class="tag-pill tag-status-${status}">${status.replace('_', ' ')}</span>
               <span class="tag-pill">${escapeHtml(role)}</span>
               ${country ? `<span class="tag-pill">${escapeHtml(country)}</span>` : ''}
-              ${item.fileName ? '<span class="tag-pill" style="color: var(--primary-accent); font-weight:700;">📄 File</span>' : ''}
+              ${item.fileName ? `<span class="tag-pill" style="color: var(--primary-accent); font-weight:700;">${isScript ? '📜 Script' : '📄 File'}</span>` : ''}
             </div>
             <p class="sub-item-snippet">${escapeHtml(item.message || '')}</p>
           </li>
@@ -882,13 +1312,14 @@
       const fileUrl = item.fileUrl || item.fileDataUrl;
       const contactVal = item.handle || '';
       const isEmail = item.contactType === 'Email';
+      const isScript = (item.role || '').toLowerCase().includes('screenwriter') || (item.fileName && item.fileName.toLowerCase().endsWith('.pdf'));
 
       activeView.innerHTML = `
         <div class="detail-card">
           <div class="detail-header-row">
             <div>
               <h2 class="detail-applicant-title">${escapeHtml(item.name || 'Anonymous')}</h2>
-              <div style="display: flex; gap: 8px; align-items: center; margin-top: 6px;">
+              <div style="display: flex; gap: 8px; align-items: center; margin-top: 6px; flex-wrap: wrap;">
                 <span class="tag-pill tag-status-${item.status || 'new'}" style="font-size: 0.85rem; padding: 4px 10px;">
                   ${(item.status || 'new').toUpperCase()}
                 </span>
@@ -897,7 +1328,11 @@
               </div>
             </div>
 
-            <div style="display: flex; gap: 8px; align-items: center;">
+            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+              <button type="button" class="btn-primary" id="btn-open-agreement" style="padding: 8px 14px; font-size: 0.85rem; background: var(--primary-accent);">
+                📄 Generate Official Agreement (PDF)
+              </button>
+
               <select id="update-status-select" class="form-select" style="padding: 8px 12px; font-size: 0.88rem; width: auto;">
                 <option value="new" ${item.status === 'new' ? 'selected' : ''}>Status: New</option>
                 <option value="in_talks" ${item.status === 'in_talks' ? 'selected' : ''}>Status: In Talks</option>
@@ -910,6 +1345,33 @@
               </button>
             </div>
           </div>
+
+          <!-- Screenplay / Material Highlight Card -->
+          ${item.fileName ? `
+            <div style="margin: 16px 0; background: var(--primary-tint); border: 1px solid var(--border-accent); border-radius: var(--radius-sm); padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <span style="font-size: 1.6rem;">${isScript ? '📜' : '📄'}</span>
+                <div>
+                  <div style="font-weight: 700; color: var(--primary-accent); font-size: 0.95rem;">
+                    ${isScript ? 'Submitted Screenplay / Creative Material' : 'Submitted Document'}
+                  </div>
+                  <div style="font-size: 0.82rem; color: var(--text-secondary); font-family: var(--font-mono);">
+                    ${escapeHtml(item.fileName)}
+                  </div>
+                </div>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                ${fileUrl ? `
+                  <a href="${fileUrl}" target="_blank" download="${escapeHtml(item.fileName)}" class="btn-primary" style="padding: 7px 14px; font-size: 0.82rem;">
+                    ⬇ Download File
+                  </a>
+                  <a href="${fileUrl}" target="_blank" class="btn-action-small" style="padding: 7px 12px; font-size: 0.82rem;">
+                    ↗ Open in Tab
+                  </a>
+                ` : `<span style="font-size: 0.85rem; color: var(--text-muted);">Stored on server</span>`}
+              </div>
+            </div>
+          ` : ''}
 
           <div class="detail-meta-grid">
             <div>
@@ -925,20 +1387,20 @@
               <div class="meta-item-value">${escapeHtml(item.country || 'Not specified')}</div>
             </div>
             <div>
-              <div class="meta-item-label">Attachment</div>
-              <div class="meta-item-value">
-                ${fileUrl ? `<a href="${fileUrl}" target="_blank" download="${escapeHtml(item.fileName || 'file')}" style="color: var(--primary-accent); text-decoration: underline;">${escapeHtml(item.fileName || 'Download attachment')} ↗</a>` : (item.fileName ? escapeHtml(item.fileName) : 'None')}
+              <div class="meta-item-label">Credits Guarantee Status</div>
+              <div class="meta-item-value" style="color: #15803d; font-weight:700;">
+                Eligible for Title Credits
               </div>
             </div>
           </div>
 
-          <div class="meta-item-label" style="margin-bottom: 8px;">Message / Story Concept</div>
+          <div class="meta-item-label" style="margin-bottom: 8px;">Message / Story Concept / Pitch</div>
           <div class="detail-message-body">${escapeHtml(item.message || '')}</div>
 
           <!-- Actions -->
           <div class="detail-actions-bar">
             ${isEmail ? `
-              <a href="mailto:${escapeHtml(contactVal)}?subject=${encodeURIComponent('DP | FILMS — Short Film Collaboration')}&body=${encodeURIComponent(`Hi ${item.name || ''},\n\nThank you for reaching out to join the film team. I reviewed your background as ${item.role || 'an artist'} and would love to connect.\n\nBest regards,\nDominik Šuškevič\nDP | FILMS\ninfo@dominikphotofficial.lt`)}" class="btn-primary" style="padding: 10px 18px; font-size: 0.9rem;">
+              <a href="mailto:${escapeHtml(contactVal)}?subject=${encodeURIComponent('DP | FILMS — Short Film Collaboration')}&body=${encodeURIComponent(`Hi ${item.name || ''},\n\nThank you for reaching out to join the DP | FILMS production team. I reviewed your background as ${item.role || 'an artist'} and would love to move forward with our collaboration agreement.\n\nBest regards,\nDominik Šuškevič\nDP | FILMS\ninfo@dominikphotofficial.lt`)}" class="btn-primary" style="padding: 10px 18px; font-size: 0.9rem;">
                 ✉ Reply by Email (mailto)
               </a>
             ` : ''}
@@ -971,6 +1433,11 @@
           body: JSON.stringify({ status: newStatus })
         }).catch(() => {});
         renderList();
+      });
+
+      // Open Agreement Modal
+      document.getElementById('btn-open-agreement')?.addEventListener('click', () => {
+        openAgreementModal(item);
       });
 
       // Copy contact
@@ -1008,6 +1475,7 @@
         activeSubId = null;
         emptyPlaceholder.style.display = 'block';
         activeView.style.display = 'none';
+        updateCategoryCounters();
         renderList();
 
         if (db) {
@@ -1016,6 +1484,309 @@
         fetch(`/api/admin/submissions/${item.id}`, { method: 'DELETE' }).catch(() => {});
       });
     }
+
+    // ======================================================================
+    // Official Collaboration Deal Memo / Agreement Generator (PDF / Print)
+    // ======================================================================
+    function openAgreementModal(item) {
+      currentAgreementItem = item;
+      const applicantName = item.name || 'Collaborator';
+      const applicantRole = item.role || 'Film Collaborator';
+      const applicantCountry = item.country || 'Global';
+      const applicantContact = item.handle || item.contact || 'N/A';
+      const docDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      const refId = `DP-${item.id.replace('sub_', '').slice(0, 8).toUpperCase()}-2026`;
+
+      agreementPrintableArea.innerHTML = `
+        <div class="printable-agreement-sheet">
+          <!-- Document Header -->
+          <div style="text-align: center; border-bottom: 2px solid #113939; padding-bottom: 14px; margin-bottom: 24px;">
+            <div style="font-size: 20pt; font-weight: 800; letter-spacing: 0.1em; color: #113939; font-family: 'Jost', sans-serif;">
+              DP | FILMS
+            </div>
+            <div style="font-size: 9pt; letter-spacing: 0.25em; text-transform: uppercase; color: #555555; margin-top: 3px; font-family: 'Jost', sans-serif;">
+              SPACE. LIGHT. EMOTION. — INDEPENDENT CINEMA PRODUCTION
+            </div>
+            <div style="font-size: 13pt; font-weight: 700; text-transform: uppercase; margin-top: 14px; color: #113939;">
+              FILM COLLABORATION DEAL MEMO & SCREEN CREDITS AGREEMENT
+            </div>
+            <div style="font-size: 9pt; color: #666666; font-family: var(--font-mono); margin-top: 4px;">
+              Document Ref: ${refId} · Date: ${docDate}
+            </div>
+          </div>
+
+          <!-- Parties Table -->
+          <table class="print-parties-table" style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 10.5pt;">
+            <tr>
+              <td style="width: 50%; border: 1px solid #cccccc; padding: 10px 14px; vertical-align: top;">
+                <strong style="color: #113939; font-size: 9.5pt; text-transform: uppercase;">PRODUCER & DIRECTOR</strong><br>
+                <strong>Dominik Šuškevič</strong> (DP | FILMS)<br>
+                Certified Videographer, Cinematographer & Director<br>
+                Location: Lithuania · Email: dominikphotofficial.lt@gmail.com<br>
+                Web: films.dominikphotofficial.lt
+              </td>
+              <td style="width: 50%; border: 1px solid #cccccc; padding: 10px 14px; vertical-align: top;">
+                <strong style="color: #113939; font-size: 9.5pt; text-transform: uppercase;">ENGAGED COLLABORATOR</strong><br>
+                <strong>${escapeHtml(applicantName)}</strong><br>
+                Production Role: <strong>${escapeHtml(applicantRole)}</strong><br>
+                Location: ${escapeHtml(applicantCountry)}<br>
+                Contact: ${escapeHtml(applicantContact)}
+              </td>
+            </tr>
+          </table>
+
+          <!-- Working Project -->
+          <div style="background: #f8faf9; border-left: 3px solid #113939; padding: 10px 14px; margin-bottom: 20px; font-size: 10pt;">
+            <strong>PRODUCTION PROJECT:</strong> DP | FILMS Short Narrative Film Production (Working Cycle 2026/2027)<br>
+            <strong>DIRECTOR & CINEMATOGRAPHER:</strong> Dominik Šuškevič (Winner 1st Place AISFF 2026)
+          </div>
+
+          <!-- Terms & Conditions -->
+          <div class="print-clause">
+            <div class="print-clause-title">1. ENGAGEMENT & ROLE SCOPE</div>
+            <p>
+              Producer officially engages Collaborator to perform services and provide creative contribution in the capacity of <strong>${escapeHtml(applicantRole)}</strong>. Both parties commit to collaborative communication, respect for narrative craft, and punctual delivery of agreed drafts, performances, or audio elements.
+            </p>
+          </div>
+
+          <div class="print-clause" style="background: #fbfcfc; border: 1px solid #e2e8f0; padding: 12px 14px; border-radius: 4px; margin-bottom: 16px;">
+            <div class="print-clause-title" style="color: #113939; font-size: 11pt;">2. GUARANTEED OFFICIAL SCREEN CREDIT (CREDITS COVENANT)</div>
+            <p style="margin-bottom: 6px;">
+              Producer explicitly guarantees that Collaborator shall receive prominent and formal screen credit in both the main opening title sequence and/or closing title roll of the completed Film as:
+            </p>
+            <div style="text-align: center; font-size: 12pt; font-weight: bold; color: #113939; padding: 8px; background: #ffffff; border: 1px dashed #113939; margin: 8px 0;">
+              “${escapeHtml(applicantName)} — ${escapeHtml(applicantRole)}”
+            </div>
+            <p style="font-size: 9.5pt; color: #444444; margin-top: 6px;">
+              This credit guarantee applies to all international film festival screenings (including the Ąžuolynas International Film Festival and global festivals), official theatrical and university screenings, streaming presentations, and official digital releases.
+            </p>
+          </div>
+
+          <div class="print-clause">
+            <div class="print-clause-title">3. INTELLECTUAL PROPERTY & CREATIVE OWNERSHIP</div>
+            <p>
+              Collaborator retains authorship and full moral copyright over all original treatments, drafts, screenplays, and compositions independently authored. Collaborator grants Producer the non-exclusive license to adapt, film, record, and edit said materials for the Film. No commercial sale or third-party transfer shall occur without mutual written agreement.
+            </p>
+          </div>
+
+          <div class="print-clause">
+            <div class="print-clause-title">4. FESTIVAL ATTRIBUTION & PRESS</div>
+            <p>
+              Collaborator is officially authorized to list the Film and their credited title on their professional CV, portfolio, IMDb profile, and personal website. Both parties agree to coordinate public promotional announcements respectfully.
+            </p>
+          </div>
+
+          <div class="print-clause">
+            <div class="print-clause-title">5. MUTUAL CONFIDENTIALITY</div>
+            <p>
+              Unreleased drafts, footage, and internal production communications remain confidential between Producer and Collaborator until official public festival distribution or teaser release.
+            </p>
+          </div>
+
+          <!-- Signature Blocks -->
+          <table class="print-signatures-table" style="width: 100%; margin-top: 35px; border-collapse: collapse;">
+            <tr>
+              <td style="width: 50%; padding-right: 25px; vertical-align: bottom;">
+                <div style="font-size: 9.5pt; text-transform: uppercase; color: #555555; margin-bottom: 4px;">PRODUCER & DIRECTOR</div>
+                <div style="font-size: 11pt; font-weight: bold; color: #113939;">Dominik Šuškevič</div>
+                <div class="signature-line-box">
+                  Signature / Date: ________________________
+                </div>
+              </td>
+              <td style="width: 50%; padding-left: 25px; vertical-align: bottom;">
+                <div style="font-size: 9.5pt; text-transform: uppercase; color: #555555; margin-bottom: 4px;">ENGAGED COLLABORATOR</div>
+                <div style="font-size: 11pt; font-weight: bold; color: #113939;">${escapeHtml(applicantName)}</div>
+                <div class="signature-line-box">
+                  Signature / Date: ________________________
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      `;
+
+      modalAgreement.classList.add('active');
+    }
+
+    // Modal controls
+    document.getElementById('btn-close-agreement')?.addEventListener('click', () => {
+      modalAgreement.classList.remove('active');
+    });
+
+    document.getElementById('btn-print-agreement')?.addEventListener('click', () => {
+      window.print();
+    });
+
+    document.getElementById('btn-copy-agreement-text')?.addEventListener('click', () => {
+      if (!currentAgreementItem) return;
+      const text = agreementPrintableArea.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Collaboration Agreement text copied to clipboard!');
+      }).catch(() => {
+        alert('Could not copy automatically. Please select and copy manually.');
+      });
+    });
+
+    document.getElementById('btn-download-agreement-txt')?.addEventListener('click', () => {
+      if (!currentAgreementItem) return;
+      const text = agreementPrintableArea.innerText;
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `DP_FILMS_Agreement_${(currentAgreementItem.name || 'Collaborator').replace(/\s+/g, '_')}.txt`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    });
+
+    // ======================================================================
+    // Team & Profile Management Logic
+    // ======================================================================
+    let teamMembers = [];
+
+    async function loadTeamAndProfile() {
+      // Load Profile
+      try {
+        const resProf = await fetch('/api/admin/profile');
+        if (resProf.ok) {
+          const data = await resProf.json();
+          if (data.profile) {
+            document.getElementById('prof-name').value = data.profile.name || 'Dominik Šuškevič';
+            document.getElementById('prof-title').value = data.profile.title || 'Certified Videographer, Cinematographer & Director';
+            document.getElementById('prof-contact').value = data.profile.publicContactEmail || 'info@dominikphotofficial.lt';
+          }
+        }
+      } catch(e) {}
+
+      // Load Team Members
+      try {
+        const resTeam = await fetch('/api/admin/team');
+        if (resTeam.ok) {
+          const data = await resTeam.json();
+          teamMembers = data.team || [];
+          renderTeamTable();
+        }
+      } catch(e) {}
+    }
+
+    function renderTeamTable() {
+      const tbody = document.getElementById('team-table-body');
+      if (!tbody) return;
+
+      if (teamMembers.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="padding: 20px; text-align: center; color: var(--text-muted);">No collaborators added yet.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = teamMembers.map(m => {
+        const isOwner = m.id === 'team_owner';
+        return `
+          <tr style="border-bottom: 1px solid var(--border-subtle);">
+            <td style="padding: 12px; font-weight: 600; color: var(--text-primary);">
+              ${escapeHtml(m.name)} ${isOwner ? '<span class="tag-pill" style="margin-left: 6px; background: var(--primary-accent); color: #fff;">Owner</span>' : ''}
+            </td>
+            <td style="padding: 12px; color: var(--text-secondary); font-family: var(--font-mono); font-size: 0.82rem;">
+              ${escapeHtml(m.email)}
+            </td>
+            <td style="padding: 12px; color: var(--text-primary);">
+              ${escapeHtml(m.role || 'Collaborator')}
+            </td>
+            <td style="padding: 12px;">
+              <span class="tag-pill tag-status-accepted">${escapeHtml(m.status || 'Active')}</span>
+            </td>
+            <td style="padding: 12px; text-align: right;">
+              ${!isOwner ? `
+                <button type="button" class="btn-action-small btn-action-danger btn-del-member" data-id="${m.id}" style="padding: 4px 10px; font-size: 0.78rem;">
+                  Remove
+                </button>
+              ` : '<span style="color: var(--text-muted); font-size: 0.8rem;">Primary</span>'}
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      tbody.querySelectorAll('.btn-del-member').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const id = btn.getAttribute('data-id');
+          if (!confirm('Remove this collaborator from team access?')) return;
+          try {
+            const res = await fetch(`/api/admin/team/${id}`, { method: 'DELETE' });
+            if (res.ok) {
+              teamMembers = teamMembers.filter(m => m.id !== id);
+              renderTeamTable();
+            }
+          } catch(e) {}
+        });
+      });
+    }
+
+    // Toggle Add Member form
+    document.getElementById('btn-open-add-member')?.addEventListener('click', () => {
+      const wrap = document.getElementById('add-member-form-wrap');
+      if (wrap) wrap.style.display = wrap.style.display === 'none' ? 'block' : 'none';
+    });
+
+    document.getElementById('btn-cancel-add-member')?.addEventListener('click', () => {
+      const wrap = document.getElementById('add-member-form-wrap');
+      if (wrap) wrap.style.display = 'none';
+    });
+
+    // Add member submit
+    document.getElementById('form-new-team-member')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('new-member-name')?.value?.trim();
+      const email = document.getElementById('new-member-email')?.value?.trim();
+      const role = document.getElementById('new-member-role')?.value;
+
+      if (!name || !email) return;
+
+      try {
+        const res = await fetch('/api/admin/team', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, role })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.member) {
+            teamMembers.push(data.member);
+            renderTeamTable();
+            document.getElementById('form-new-team-member').reset();
+            document.getElementById('add-member-form-wrap').style.display = 'none';
+          }
+        }
+      } catch(err) {
+        alert('Error adding team member.');
+      }
+    });
+
+    // Admin profile form submit
+    document.getElementById('admin-profile-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('prof-name')?.value?.trim();
+      const title = document.getElementById('prof-title')?.value?.trim();
+      const contact = document.getElementById('prof-contact')?.value?.trim();
+
+      const statusSpan = document.getElementById('prof-save-status');
+
+      try {
+        const res = await fetch('/api/admin/profile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, title, publicContactEmail: contact })
+        });
+        if (res.ok) {
+          if (statusSpan) {
+            statusSpan.textContent = '✓ Profile details updated successfully';
+            setTimeout(() => { statusSpan.textContent = ''; }, 3000);
+          }
+        }
+      } catch(err) {
+        alert('Error updating profile.');
+      }
+    });
 
     // Search and filters
     document.getElementById('admin-search')?.addEventListener('input', (e) => {

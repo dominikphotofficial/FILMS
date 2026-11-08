@@ -17,6 +17,8 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 // File storage directory for persistent submissions
 const DATA_DIR = path.join(__dirname, 'data');
 const SUBMISSIONS_FILE = path.join(DATA_DIR, 'submissions.json');
+const TEAM_FILE = path.join(DATA_DIR, 'team.json');
+const PROFILE_FILE = path.join(DATA_DIR, 'profile.json');
 
 // Ensure data directory exists
 if (!fs.existsSync(DATA_DIR)) {
@@ -26,6 +28,70 @@ if (!fs.existsSync(DATA_DIR)) {
 // Ensure submissions file exists with valid JSON array
 if (!fs.existsSync(SUBMISSIONS_FILE)) {
   fs.writeFileSync(SUBMISSIONS_FILE, JSON.stringify([], null, 2), 'utf-8');
+}
+
+const DEFAULT_TEAM = [
+  {
+    id: 'team_owner',
+    name: 'Dominik Šuškevič',
+    email: 'dominikphotofficial.lt@gmail.com',
+    role: 'Director & Cinematographer',
+    permission: 'Owner / Full Admin',
+    status: 'Active',
+    addedAt: new Date().toISOString()
+  }
+];
+
+if (!fs.existsSync(TEAM_FILE)) {
+  fs.writeFileSync(TEAM_FILE, JSON.stringify(DEFAULT_TEAM, null, 2), 'utf-8');
+}
+
+function getTeam() {
+  try {
+    const raw = fs.readFileSync(TEAM_FILE, 'utf-8');
+    return JSON.parse(raw);
+  } catch (e) {
+    return DEFAULT_TEAM;
+  }
+}
+
+function saveTeam(list) {
+  try {
+    fs.writeFileSync(TEAM_FILE, JSON.stringify(list, null, 2), 'utf-8');
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+const DEFAULT_PROFILE = {
+  name: 'Dominik Šuškevič',
+  email: 'dominikphotofficial.lt@gmail.com',
+  title: 'Certified Videographer, Cinematographer & Director',
+  publicContactEmail: 'info@dominikphotofficial.lt',
+  updatedAt: new Date().toISOString()
+};
+
+if (!fs.existsSync(PROFILE_FILE)) {
+  fs.writeFileSync(PROFILE_FILE, JSON.stringify(DEFAULT_PROFILE, null, 2), 'utf-8');
+}
+
+function getProfile() {
+  try {
+    const raw = fs.readFileSync(PROFILE_FILE, 'utf-8');
+    return JSON.parse(raw);
+  } catch (e) {
+    return DEFAULT_PROFILE;
+  }
+}
+
+function saveProfile(prof) {
+  try {
+    fs.writeFileSync(PROFILE_FILE, JSON.stringify(prof, null, 2), 'utf-8');
+    return true;
+  } catch (e) {
+    return false;
+  }
 }
 
 // Helper to safely read submissions
@@ -232,6 +298,104 @@ app.delete('/api/admin/submissions/:id', (req, res) => {
     return res.status(200).json({ success: true, message: 'Submission deleted' });
   } catch (err) {
     return res.status(500).json({ success: false, error: 'Error deleting submission' });
+  }
+});
+
+// 6. Admin Get Team Members
+app.get('/api/admin/team', (req, res) => {
+  try {
+    const team = getTeam();
+    return res.status(200).json({ success: true, team });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: 'Failed to fetch team' });
+  }
+});
+
+// 7. Admin Add/Update Team Member
+app.post('/api/admin/team', (req, res) => {
+  try {
+    const { id, name, email, role, permission, status } = req.body || {};
+    if (!email || !name) {
+      return res.status(400).json({ success: false, error: 'Name and email are required' });
+    }
+
+    const team = getTeam();
+    if (id) {
+      const idx = team.findIndex(m => m.id === id);
+      if (idx !== -1) {
+        team[idx] = {
+          ...team[idx],
+          name: String(name).trim(),
+          email: String(email).trim().toLowerCase(),
+          role: role || 'Collaborator',
+          permission: permission || 'Read & Review',
+          status: status || 'Active',
+          updatedAt: new Date().toISOString()
+        };
+        saveTeam(team);
+        return res.status(200).json({ success: true, member: team[idx] });
+      }
+    }
+
+    // New member
+    const newMember = {
+      id: `member_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      name: String(name).trim(),
+      email: String(email).trim().toLowerCase(),
+      role: role || 'Collaborator',
+      permission: permission || 'Read & Review',
+      status: status || 'Active',
+      addedAt: new Date().toISOString()
+    };
+
+    team.push(newMember);
+    saveTeam(team);
+    return res.status(201).json({ success: true, member: newMember });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: 'Error adding team member' });
+  }
+});
+
+// 8. Admin Delete Team Member
+app.delete('/api/admin/team/:id', (req, res) => {
+  try {
+    const { id } = req.params;
+    if (id === 'team_owner') {
+      return res.status(400).json({ success: false, error: 'Cannot remove primary owner' });
+    }
+    let team = getTeam();
+    team = team.filter(m => m.id !== id);
+    saveTeam(team);
+    return res.status(200).json({ success: true, message: 'Member removed' });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: 'Error removing team member' });
+  }
+});
+
+// 9. Admin Get Profile
+app.get('/api/admin/profile', (req, res) => {
+  try {
+    const profile = getProfile();
+    return res.status(200).json({ success: true, profile });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: 'Failed to fetch profile' });
+  }
+});
+
+// 10. Admin Update Profile
+app.post('/api/admin/profile', (req, res) => {
+  try {
+    const current = getProfile();
+    const updates = req.body || {};
+    const updated = {
+      ...current,
+      ...updates,
+      updatedAt: new Date().toISOString()
+    };
+    saveProfile(updated);
+    return res.status(200).json({ success: true, profile: updated });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: 'Failed to update profile' });
   }
 });
 

@@ -39,22 +39,60 @@ const initNavigation = () => {
   const toggleBtn = document.getElementById('mobile-nav-toggle');
   const navMenu = document.getElementById('main-nav');
 
+  // Create or attach mobile backdrop
+  let backdrop = document.querySelector('.mobile-nav-backdrop');
+  if (!backdrop) {
+    backdrop = document.createElement('div');
+    backdrop.className = 'mobile-nav-backdrop';
+    backdrop.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(backdrop);
+  }
+
+  const openMobileNav = () => {
+    navMenu?.classList.add('mobile-active');
+    backdrop.classList.add('active');
+    toggleBtn?.classList.add('is-active');
+    toggleBtn?.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('mobile-nav-open');
+  };
+
+  const closeMobileNav = () => {
+    navMenu?.classList.remove('mobile-active');
+    backdrop.classList.remove('active');
+    toggleBtn?.classList.remove('is-active');
+    toggleBtn?.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('mobile-nav-open');
+  };
+
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 20) {
+    if (window.scrollY > 15) {
       header?.classList.add('scrolled');
     } else {
       header?.classList.remove('scrolled');
     }
   }, { passive: true });
 
-  toggleBtn?.addEventListener('click', () => {
-    navMenu?.classList.toggle('mobile-active');
+  toggleBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = navMenu?.classList.contains('mobile-active');
+    if (isOpen) {
+      closeMobileNav();
+    } else {
+      openMobileNav();
+    }
+  });
+
+  backdrop.addEventListener('click', closeMobileNav);
+
+  // Close on Escape key
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMobileNav();
   });
 
   // Close mobile nav on anchor link click
   document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', () => {
-      navMenu?.classList.remove('mobile-active');
+      closeMobileNav();
     });
   });
 

@@ -268,12 +268,51 @@ body {
 
 .mobile-nav-toggle {
   display: none;
-  background: transparent;
+  background: var(--bg-surface);
   border: 1px solid var(--border-medium);
   color: var(--primary-accent);
-  padding: 8px;
+  padding: 8px 12px;
   border-radius: var(--radius-sm);
   cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: all var(--transition-fast);
+}
+
+.mobile-nav-toggle:hover {
+  background: var(--primary-tint);
+  border-color: var(--border-accent);
+}
+
+.mobile-nav-toggle.is-active {
+  background: var(--primary-accent);
+  color: #ffffff;
+  border-color: var(--primary-accent);
+}
+
+.mobile-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 57, 57, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 95;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-nav-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+body.mobile-nav-open {
+  overflow: hidden;
 }
 
 /* ==========================================================================
@@ -1614,50 +1653,241 @@ body {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 860px) {
   .nav {
-    display: none;
-  }
-  .nav.mobile-active {
     display: flex;
     flex-direction: column;
-    position: absolute;
+    position: fixed;
     top: var(--header-height);
     left: 0;
     right: 0;
+    width: 100%;
+    max-height: calc(100vh - var(--header-height));
     background: #ffffff;
-    border-bottom: 1px solid var(--border-medium);
-    padding: 16px 24px;
+    border-bottom: 2px solid var(--primary-accent);
+    padding: 20px 20px 30px;
     gap: 8px;
-    box-shadow: var(--shadow-card);
+    box-shadow: 0 16px 40px rgba(17, 57, 57, 0.14);
+    z-index: 99;
+    transform: translateY(-110%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
+
+  .nav.mobile-active {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav-link {
+    width: 100%;
+    padding: 13px 18px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+
+  .nav-link::after {
+    content: "→";
+    color: var(--text-muted);
+    font-weight: 400;
+    transition: transform var(--transition-fast), color var(--transition-fast);
+  }
+
+  .nav-link:hover, .nav-link:active {
+    background: var(--primary-tint);
+    border-color: var(--border-accent);
+    color: var(--primary-accent);
+  }
+
+  .nav-link:hover::after, .nav-link:active::after {
+    color: var(--primary-accent);
+    transform: translateX(4px);
+  }
+
+  .nav-mobile-cta {
+    display: flex !important;
+    background: var(--primary-accent) !important;
+    color: #ffffff !important;
+    border-color: var(--primary-accent) !important;
+    font-weight: 700 !important;
+    justify-content: center !important;
+    margin-top: 6px;
+    padding: 14px 18px !important;
+    box-shadow: 0 4px 14px rgba(17, 57, 57, 0.2);
+  }
+
+  .nav-mobile-cta::after {
+    display: none !important;
+  }
+
   .mobile-nav-toggle {
     display: inline-flex;
   }
+
+  .btn-header-cta {
+    display: none;
+  }
+
   .hero {
     padding-top: calc(var(--header-height) + 25px);
     padding-bottom: 50px;
   }
+
   .form-row {
     grid-template-columns: 1fr;
   }
+
   .proposal-card {
     padding: 24px 18px;
   }
+
   .steps-grid {
     grid-template-columns: 1fr;
   }
+
   .films-filter-bar {
     flex-direction: column;
     align-items: stretch;
   }
+
   .footer-content {
     flex-direction: column;
     text-align: center;
     gap: 16px;
   }
+
   .footer-links {
     justify-content: center;
     flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-wordmark {
+    font-size: 2.5rem;
+  }
+  .hero-motto {
+    letter-spacing: 0.18em;
+    font-size: 0.85rem;
+  }
+  .hero-pitch-statement {
+    font-size: 1.45rem;
+  }
+  .hero-actions-row {
+    flex-direction: column;
+    width: 100%;
+  }
+  .hero-actions-row a {
+    width: 100%;
+    justify-content: center;
+  }
+  .header-container {
+    padding: 0 16px;
+  }
+  .brand {
+    font-size: 1.05rem;
+  }
+}
+
+/* ==========================================================================
+   Print Styles for Official Collaboration Deal Memo / Agreement
+   ========================================================================== */
+@media print {
+  /* Hide standard page elements */
+  header, footer, nav, button, .no-print, .admin-top-bar, .admin-master-col, #guard-checking-overlay {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-family: 'Times New Roman', Times, serif, 'Jost', sans-serif !important;
+    font-size: 11pt !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .printable-agreement-sheet {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 15mm 20mm !important;
+    border: none !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+  }
+
+  .printable-agreement-sheet h1 {
+    font-size: 16pt !important;
+    color: #113939 !important;
+    text-align: center;
+    margin-bottom: 4pt !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .printable-agreement-sheet h2 {
+    font-size: 11pt !important;
+    text-align: center;
+    color: #333333 !important;
+    font-weight: 600;
+    margin-bottom: 18pt !important;
+  }
+
+  .print-parties-table {
+    width: 100% !important;
+    border-collapse: collapse;
+    margin-bottom: 16pt !important;
+  }
+
+  .print-parties-table td {
+    border: 1px solid #cccccc;
+    padding: 8pt 12pt;
+    vertical-align: top;
+    font-size: 10pt;
+  }
+
+  .print-clause {
+    margin-bottom: 12pt !important;
+    font-size: 10pt;
+  }
+
+  .print-clause-title {
+    font-weight: bold;
+    margin-bottom: 3pt;
+  }
+
+  .print-signatures-table {
+    width: 100% !important;
+    margin-top: 30pt !important;
+    border-collapse: collapse;
+  }
+
+  .print-signatures-table td {
+    width: 50%;
+    vertical-align: top;
+    padding: 10pt;
+  }
+
+  .signature-line-box {
+    border-top: 1px solid #000000;
+    margin-top: 40pt;
+    padding-top: 4pt;
+    font-size: 10pt;
   }
 }
