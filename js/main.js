@@ -377,7 +377,7 @@ export const initSubmissionForm = () => {
   const form = document.getElementById('film-proposal-form');
   if (!form) return;
 
-  const submitBtn = document.getElementById('form-submit-btn');
+  const submitBtn = document.getElementById('form-submit-btn') || document.getElementById('btn-submit-proposal') || form.querySelector('button[type="submit"]');
   const alertBox = document.getElementById('form-alert-box') || document.getElementById('form-alert');
   const successCard = document.getElementById('form-success-card');
   const successDesc = document.getElementById('form-success-desc');
@@ -719,7 +719,10 @@ export const initSubmissionForm = () => {
       }
 
       form.style.display = 'none';
-      successCard?.classList.add('visible');
+      if (successCard) {
+        successCard.style.display = 'flex';
+        successCard.classList.add('visible');
+      }
       if (progressBox) progressBox.style.display = 'none';
 
     } catch (err) {

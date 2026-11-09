@@ -1395,7 +1395,7 @@ body.mobile-nav-open {
 }
 
 .form-success-card.visible {
-  display: flex;
+  display: flex !important;
   flex-direction: column;
   align-items: center;
 }

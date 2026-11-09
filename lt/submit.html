@@ -144,23 +144,50 @@
             </div>
 
             <div class="form-group" style="margin-bottom: 18px;">
-              <label for="input-pitch" class="form-label" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; color: var(--primary-accent);">Pasiūlymas / Aprašymas *</label>
-              <textarea id="input-pitch" name="pitch" class="form-input" rows="5" placeholder="Trumpai aprašykite filmo siužetą, pagrindinį personažą, atmosferą arba savo patirtį..." required style="width: 100%; padding: 10px 14px; border: 1px solid var(--border-medium); border-radius: 6px; font-size: 0.95rem; line-height: 1.5; resize: vertical;"></textarea>
+              <label for="input-message" class="form-label" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; color: var(--primary-accent);">Pasiūlymas / Aprašymas *</label>
+              <textarea id="input-message" name="message" class="form-input" rows="5" placeholder="Trumpai aprašykite filmo siužetą, pagrindinį personažą, atmosferą arba savo patirtį..." required style="width: 100%; padding: 12px 14px; border: 1px solid var(--border-medium); border-radius: 6px; font-size: 0.95rem; line-height: 1.5; resize: vertical;"></textarea>
             </div>
 
-            <div class="form-group" style="margin-bottom: 24px;">
-              <label for="input-file" class="form-label" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; color: var(--primary-accent);">Prisegti scenarijų ar failą (nebūtina, PDF / DOCX / TXT iki 25 MB)</label>
-              <input type="file" id="input-file" name="file" accept=".pdf,.docx,.doc,.txt" class="form-input" style="width: 100%; padding: 8px 12px; border: 1px dashed var(--border-medium); border-radius: 6px; font-size: 0.9rem; background: var(--bg-surface);">
+            <!-- Prisegti failą (PDF / DOCX, iki 25 MB) -->
+            <div class="form-group" style="margin-bottom: 20px;">
+              <label class="form-label" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; color: var(--primary-accent);">Priedas: Scenarijus / Idėjos aprašas (nebūtina, PDF iki 25MB)</label>
+              <input type="file" id="input-file" name="file" accept=".pdf,.doc,.docx,.txt" style="display: none;">
+              <div id="file-drop-zone" style="border: 2px dashed var(--border-medium); border-radius: 6px; padding: 18px; text-align: center; cursor: pointer; transition: all 0.2s ease; background: var(--bg-surface);">
+                <span style="font-size: 0.9rem; color: var(--text-secondary);">Spustelėkite arba įtempkite PDF / scenarijų čia</span>
+              </div>
+              <div id="file-selected-badge" style="display: none; align-items: center; justify-content: space-between; margin-top: 8px; padding: 6px 12px; background: var(--primary-tint); border: 1px solid var(--border-accent); border-radius: 4px; font-size: 0.85rem;">
+                <span id="file-name-display" style="color: var(--primary-accent); font-weight: 500;"></span>
+                <button type="button" id="btn-remove-file" style="background: none; border: none; color: #b91c1c; cursor: pointer; font-weight: bold; font-size: 1.1rem;">&times;</button>
+              </div>
+              <div id="upload-progress-box" style="display: none; margin-top: 8px;">
+                <div style="width: 100%; height: 6px; background: #e5e7eb; border-radius: 3px; overflow: hidden;">
+                  <div id="upload-progress-bar" style="width: 0%; height: 100%; background: var(--primary-accent); transition: width 0.3s ease;"></div>
+                </div>
+              </div>
             </div>
 
-            <button type="submit" id="btn-submit-proposal" class="btn-primary" style="width: 100%; padding: 14px; font-size: 1.05rem; justify-content: center; cursor: pointer;">
-              <span class="btn-text">Pateikti paraišką &rarr;</span>
-              <span class="btn-spinner" style="display: none;">Siunčiama...</span>
+            <!-- Sutikimo žymimasis langelis -->
+            <div style="margin-bottom: 24px; display: flex; align-items: flex-start; gap: 10px;">
+              <input type="checkbox" id="input-consent" name="consent" required style="margin-top: 4px; accent-color: var(--primary-accent); cursor: pointer;">
+              <label for="input-consent" style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; cursor: pointer;">
+                Sutinku su pateiktų duomenų tvarkymu pagal <a href="privacy.html" target="_blank" style="color: var(--primary-accent); text-decoration: underline;">privatumo politiką</a>. Medžiaga bus naudojama tik filmų kūrybiniam bendradarbiavimui su Dominiku Šuškevič.
+              </label>
+            </div>
+
+            <button type="submit" id="form-submit-btn" class="btn-primary" style="width: 100%; padding: 14px; font-size: 1.05rem; justify-content: center; cursor: pointer;">
+              Pateikti paraišką &rarr;
             </button>
-            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 12px; text-align: center;">
-              Pateikdami sutinkate su <a href="privacy.html" style="color: var(--primary-accent); text-decoration: underline;">privatumo politika</a>.
-            </p>
           </form>
+
+          <!-- Pranešimas apie sėkmingą gavimą -->
+          <div id="form-success-card" class="form-success-card" style="display: none; text-align: center; padding: 24px 0;">
+            <div style="width: 56px; height: 56px; background: #f0fdf4; border: 1px solid #bbf7d0; color: #16a34a; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 16px;">✓</div>
+            <h3 style="font-size: 1.4rem; color: var(--primary-accent); margin-bottom: 8px;">Paraiška sėkmingai gauta</h3>
+            <p id="form-success-desc" style="color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; margin-bottom: 20px;">
+              Ačiū! Jūsų paraiška saugiai pristatyta Dominikui Šuškevič.
+            </p>
+            <a href="films.html" class="btn-secondary" style="padding: 10px 20px;">Žiūrėti filmus kol laukiate &nearr;</a>
+          </div>
         </div>
 
         <!-- Sidebar Info -->

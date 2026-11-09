@@ -2015,7 +2015,7 @@
     // Email Templates Manager & Sending Engine (Brevo / Trigger Email Extension)
     // ======================================================================
     let currentSendingItem = null;
-    let mailTemplatesCache = [];
+    let mailTemplatesCache = [...defaultTemplates];
 
     function renderHandlebars(str, data) {
       if (!str) return '';
@@ -2280,6 +2280,32 @@
       document.getElementById('email-modal-html-preview').innerHTML = html;
     }
 
+    // Keep HTML preview in sync if admin customizes plain text
+    document.getElementById('email-modal-text')?.addEventListener('input', (e) => {
+      const currentText = e.target.value;
+      const currentSubject = document.getElementById('email-modal-subject')?.value || 'Message from Dominik';
+      const preview = document.getElementById('email-modal-html-preview');
+      if (preview) {
+        const paragraphs = currentText
+          .split('\n\n')
+          .filter(p => p.trim().length > 0)
+          .map(p => `<p style="font-size: 15px; line-height: 1.6; color: #2f4442; margin-bottom: 12px;">${escapeHtml(p).replace(/\n/g, '<br>')}</p>`)
+          .join('');
+        preview.innerHTML = `
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; color: #0d1e1e; background: #ffffff; border: 1px solid #d1dedc; border-radius: 8px;">
+            <div style="border-bottom: 2px solid #113939; padding-bottom: 12px; margin-bottom: 20px;">
+              <span style="font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #113939; font-weight: 700;">DP | FILMS</span>
+              <h2 style="margin: 6px 0 0; color: #113939; font-size: 18px;">${escapeHtml(currentSubject)}</h2>
+            </div>
+            ${paragraphs}
+            <div style="margin-top: 24px; padding-top: 14px; border-top: 1px solid #e5e7eb; font-size: 13px; color: #5e7673;">
+              <strong>Dominik Šuškevič</strong> &middot; DP | FILMS &middot; <a href="https://films.dominikphotofficial.lt" style="color: #113939; text-decoration: underline;">films.dominikphotofficial.lt</a>
+            </div>
+          </div>
+        `;
+      }
+    });
+
     // Modal close handlers
     document.getElementById('btn-close-send-email')?.addEventListener('click', () => {
       document.getElementById('modal-send-email').style.display = 'none';
@@ -2338,6 +2364,7 @@
       try {
         const mailDoc = {
           to: [toEmail],
+          replyTo: "info@dominikphotofficial.lt",
           message: { subject, text, html },
           submissionId: currentSendingItem.id,
           createdAt: serverTimestamp()
