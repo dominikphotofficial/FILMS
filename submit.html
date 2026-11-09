@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join the Film Team / Submit Proposal — DP | FILMS</title>
+  <meta name="description" content="Submit your screenplay, film idea, or apply to join the DP | FILMS production team as an actor, writer, director, or sound designer.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://films.dominikphotofficial.lt/submit.html">
+  <link rel="alternate" hreflang="en" href="https://films.dominikphotofficial.lt/submit.html">
+  <link rel="alternate" hreflang="lt" href="https://films.dominikphotofficial.lt/lt/submit.html">
+  <link rel="icon" type="image/png" href="https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Submit Proposal / Join Team — DP | FILMS">
+  <meta property="og:description" content="Send your pitch, screenplay, or portfolio directly to filmmaker Dominik Šuškevič. Guaranteed reply within 48h.">
+  <meta property="og:image" content="https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png">
+  <meta property="og:url" content="https://films.dominikphotofficial.lt/submit.html">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="ambient-pattern" aria-hidden="true"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-container">
+      <a href="index.html" class="brand" aria-label="DP Films Home">
+        <img src="https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png" alt="DP FILMS Logo" class="brand-logo" width="36" height="36">
+        <span>DP | FILMS</span>
+      </a>
+
+      <button type="button" class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="films.html" class="nav-link">Films</a></li>
+          <li><a href="awards.html" class="nav-link">Awards</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="services.html" class="nav-link">Services</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+          <li><a href="submit.html" class="nav-cta-btn is-active">Join the Team</a></li>
+        </ul>
+
+        <div class="lang-switcher">
+          <a href="submit.html" class="is-active">EN</a>
+          <span class="lang-sep">/</span>
+          <a href="lt/submit.html">LT</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main style="padding-top: calc(var(--header-height) + 32px); padding-bottom: 80px;">
+    <div class="container" style="max-width: 900px;">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumbs" aria-label="Breadcrumbs">
+        <a href="index.html">Home</a>
+        <span class="crumb-sep">/</span>
+        <span class="crumb-current">Join the Team</span>
+      </nav>
+
+      <div style="margin-bottom: 36px;">
+        <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary-accent); text-transform: uppercase; letter-spacing: 0.1em;">Pitch &amp; Recruitment</span>
+        <h1 style="font-size: 2.6rem; color: var(--primary-accent); margin-top: 6px;">Submit Your Application</h1>
+        <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.6; margin-top: 8px;">
+          Send your short film idea, screenplay, or apply for an open role on the production team. I personally review every submission within 48 hours.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; align-items: flex-start;">
+        
+        <!-- Submission Form -->
+        <div style="background: #ffffff; border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 32px; box-shadow: var(--shadow-card);">
+          
+          <div id="form-alert-box" class="form-alert" style="display: none; padding: 12px 16px; background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; border-radius: 6px; margin-bottom: 20px; font-size: 0.9rem;"></div>
+
+          <form id="film-proposal-form" class="proposal-form">
+            <!-- Anti-spam Honeypot -->
+            <input type="text" name="website_hp" style="display: none !important;" tabindex="-1" autocomplete="off">
+
+            <div class="form-group" style="margin-bottom: 18px;">
+              <label for="input-name" class="form-label" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; color: var(--primary-accent);">Full Name *</label>
+              <input type="text" id="input-name" name="name" class="form-input" placeholder="e.g. Elena Vaitkutė or Alex Morgan" required style="width: 100%; padding: 10px 14px; border: 1px solid var(--border-medium); border-radius: 6px; font-size: 0.95rem;">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px;">
+              <div class="form-group">
+                <label for="input-country" class="form-label" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; color: var(--primary-accent);">Country / Location *</label>
+                <input type="text" id="input-country" name="country" class="form-input" placeholder="e.g. Lithuania, Germany, UK" required style="width: 100%; padding: 10px 14px; border: 1px solid var(--border-medium); border-radius: 6px; font-size: 0.95rem;">
+              </div>
+
+              <div class="form-group">
+                <label for="input-role" class="form-label" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; color: var(--primary-accent);">Your Role *</label>
+                <select id="input-role" name="role" class="form-input" style="width: 100%; padding: 10px 14px; border: 1px solid var(--border-medium); border-radius: 6px; font-size: 0.95rem; background: #fff;">
+                  <option value="Screenwriter">Screenwriter</option>
+                  <option value="Actor">Actor / Performer</option>
+                  <option value="Director">Co-Director / Director</option>
+                  <option value="Sound / Composer">Sound Designer / Composer</option>
+                  <option value="Producer / Crew">Producer / Technical Crew</option>
+                  <option value="Visual Artist">Visual Artist / Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px;">
+              <div class="form-group">
+                <label for="input-type" class="form-label" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; color: var(--primary-accent);">Proposal Type *</label>
+                <select id="input-type" name="type" class="form-input" style="width: 100%; padding: 10px 14px; border: 1px solid var(--border-medium); border-radius: 6px; font-size: 0.95rem; background: #fff;">
+                  <option value="Film Idea">Film Idea</option>
+                  <option value="Screenplay">Screenplay</option>
+                  <option value="Join the Film Team">Join the Film Team</option>
+                  <option value="Commercial Collaboration">Commercial / Videography</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="input-contact-type" class="form-label" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; color: var(--primary-accent);">Preferred Contact *</label>
+                <select id="input-contact-type" name="contactType" class="form-input" style="width: 100%; padding: 10px 14px; border: 1px solid var(--border-medium); border-radius: 6px; font-size: 0.95rem; background: #fff;">
+                  <option value="Email">Email</option>
+                  <option value="Telegram">Telegram</option>
+                  <option value="Instagram">Instagram</option>
+                  <option value="Phone / WhatsApp">Phone / WhatsApp</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 18px;">
+              <label for="input-handle" class="form-label" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; color: var(--primary-accent);">Contact Handle / Email *</label>
+              <input type="text" id="input-handle" name="handle" class="form-input" placeholder="e.g. yourname@gmail.com or @telegram_username" required style="width: 100%; padding: 10px 14px; border: 1px solid var(--border-medium); border-radius: 6px; font-size: 0.95rem;">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 18px;">
+              <label for="input-message" class="form-label" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; color: var(--primary-accent);">Message, Idea Synopsis or Reel Links *</label>
+              <textarea id="input-message" name="message" class="form-input" rows="5" placeholder="Describe your film concept, logline, acting background, or showreel link..." required style="width: 100%; padding: 12px 14px; border: 1px solid var(--border-medium); border-radius: 6px; font-size: 0.95rem; font-family: inherit; line-height: 1.5;"></textarea>
+            </div>
+
+            <!-- Optional File Upload (Script / Treatment PDF, max 25MB) -->
+            <div class="form-group" style="margin-bottom: 20px;">
+              <label class="form-label" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; color: var(--primary-accent);">Attachment: Script / Treatment (Optional, PDF up to 25MB)</label>
+              <input type="file" id="input-file" name="file" accept=".pdf,.doc,.docx,.txt" style="display: none;">
+              <div id="file-drop-zone" style="border: 2px dashed var(--border-medium); border-radius: 6px; padding: 18px; text-align: center; cursor: pointer; transition: all 0.2s ease; background: var(--bg-surface);">
+                <span style="font-size: 0.9rem; color: var(--text-secondary);">Click to attach PDF / screenplay or drag file here</span>
+              </div>
+              <div id="file-selected-badge" style="display: none; align-items: center; justify-content: space-between; margin-top: 8px; padding: 6px 12px; background: var(--primary-tint); border: 1px solid var(--border-accent); border-radius: 4px; font-size: 0.85rem;">
+                <span id="file-name-display" style="color: var(--primary-accent); font-weight: 500;"></span>
+                <button type="button" id="btn-remove-file" style="background: none; border: none; color: #b91c1c; cursor: pointer; font-weight: bold; font-size: 1.1rem;">&times;</button>
+              </div>
+              <div id="upload-progress-box" style="display: none; margin-top: 8px;">
+                <div style="width: 100%; height: 6px; background: #e5e7eb; border-radius: 3px; overflow: hidden;">
+                  <div id="upload-progress-bar" style="width: 0%; height: 100%; background: var(--primary-accent); transition: width 0.3s ease;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Consent Checkbox linking to Privacy Policy -->
+            <div style="margin-bottom: 24px; display: flex; align-items: flex-start; gap: 10px;">
+              <input type="checkbox" id="input-consent" name="consent" required style="margin-top: 4px; accent-color: var(--primary-accent); cursor: pointer;">
+              <label for="input-consent" style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; cursor: pointer;">
+                I agree to the processing of my submitted details in accordance with the <a href="privacy.html" target="_blank" style="color: var(--primary-accent); text-decoration: underline;">Privacy Policy</a>. My materials will be used exclusively for film collaboration communication with Dominik Šuškevič.
+              </label>
+            </div>
+
+            <button type="submit" id="form-submit-btn" class="btn-primary" style="width: 100%; padding: 14px; font-size: 1.05rem; justify-content: center;">
+              Send Application &rarr;
+            </button>
+          </form>
+
+          <!-- Success Card State -->
+          <div id="form-success-card" class="form-success-card" style="display: none; text-align: center; padding: 24px 0;">
+            <div style="width: 56px; height: 56px; background: #f0fdf4; border: 1px solid #bbf7d0; color: #16a34a; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 16px;">✓</div>
+            <h3 style="font-size: 1.4rem; color: var(--primary-accent); margin-bottom: 8px;">Application Received</h3>
+            <p id="form-success-desc" style="color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; margin-bottom: 20px;">
+              Thank you! Your submission has been securely delivered to Dominik Šuškevič.
+            </p>
+            <a href="films.html" class="btn-secondary" style="padding: 10px 20px;">Explore Films While You Wait &nearr;</a>
+          </div>
+
+        </div>
+
+        <!-- What Happens Next Sidebar -->
+        <div>
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 28px; margin-bottom: 24px;">
+            <h3 style="font-size: 1.2rem; color: var(--primary-accent); margin-bottom: 16px;">What Happens Next?</h3>
+            <ol style="padding-left: 20px; display: flex; flex-direction: column; gap: 14px; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
+              <li><strong>Personal Review:</strong> Dominik reads every treatment, script synopsis, and message within 48 hours.</li>
+              <li><strong>Confirmation Email:</strong> You will receive a direct reply to your preferred contact channel.</li>
+              <li><strong>Deal Memo Discussion:</strong> If selected, we agree on mutual creative scope and festival screen credit guarantees.</li>
+              <li><strong>Copyright Protection:</strong> You retain 100% intellectual property ownership of your submitted creative writing and scripts.</li>
+            </ol>
+          </div>
+
+          <div style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 24px;">
+            <h4 style="font-size: 1rem; color: var(--primary-accent); margin-bottom: 8px;">Direct Contact Alternative</h4>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
+              Prefer to reach out directly? Send your proposal via official channels:
+            </p>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.88rem;">
+              <li>✉ <strong>Email:</strong> <a href="mailto:info@dominikphotofficial.lt" style="color: var(--primary-accent); text-decoration: underline;">info@dominikphotofficial.lt</a></li>
+              <li>💬 <strong>Telegram:</strong> <a href="https://t.me/dominikphotofficial" target="_blank" rel="noopener noreferrer" style="color: var(--primary-accent); text-decoration: underline;">@dominikphotofficial</a></li>
+              <li>📸 <strong>Instagram:</strong> <a href="https://www.instagram.com/dominikphotofficial" target="_blank" rel="noopener noreferrer" style="color: var(--primary-accent); text-decoration: underline;">@dominikphotofficial</a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer style="background: #ffffff; border-top: 1px solid var(--border-medium); padding: 48px 0 24px;">
+    <div class="container" style="max-width: 900px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+        <div>&copy; 2026 Dominik Šuškevič (DP | FILMS). All rights reserved.</div>
+        <div style="display: flex; gap: 20px;">
+          <a href="privacy.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">Privacy</a>
+          <a href="terms.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">Terms</a>
+          <a href="contact.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

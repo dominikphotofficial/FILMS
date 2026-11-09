@@ -1,13 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    <url>
-        <loc>https://films.dominikphotofficial.lt/</loc>
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    <url>
-        <loc>https://films.dominikphotofficial.lt/lt/index.html</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.9</priority>
-    </url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- Home -->
+  <url>
+    <loc>https://films.dominikphotofficial.lt/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://films.dominikphotofficial.lt/index.html"/>
+    <xhtml:link rel="alternate" hreflang="lt" href="https://films.dominikphotofficial.lt/lt/index.html"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://films.dominikphotofficial.lt/lt/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://films.dominikphotofficial.lt/index.html"/>
+    <xhtml:link rel="alternate" hreflang="lt" href="https://films.dominikphotofficial.lt/lt/index.html"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Films -->
+  <url>
+    <loc>https://films.dominikphotofficial.lt/films.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://films.dominikphotofficial.lt/films.html"/>
+    <xhtml:link rel="alternate" hreflang="lt" href="https://films.dominikphotofficial.lt/lt/films.html"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://films.dominikphotofficial.lt/lt/films.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Awards -->
+  <url>
+    <loc>https://films.dominikphotofficial.lt/awards.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://films.dominikphotofficial.lt/awards.html"/>
+    <xhtml:link rel="alternate" hreflang="lt" href="https://films.dominikphotofficial.lt/lt/awards.html"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://films.dominikphotofficial.lt/awards/frozen-time.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://films.dominikphotofficial.lt/awards/frozen-time.html"/>
+    <xhtml:link rel="alternate" hreflang="lt" href="https://films.dominikphotofficial.lt/lt/awards/frozen-time.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- About -->
+  <url>
+    <loc>https://films.dominikphotofficial.lt/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://films.dominikphotofficial.lt/about.html"/>
+    <xhtml:link rel="alternate" hreflang="lt" href="https://films.dominikphotofficial.lt/lt/about.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Services -->
+  <url>
+    <loc>https://films.dominikphotofficial.lt/services.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://films.dominikphotofficial.lt/services.html"/>
+    <xhtml:link rel="alternate" hreflang="lt" href="https://films.dominikphotofficial.lt/lt/services.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Submit -->
+  <url>
+    <loc>https://films.dominikphotofficial.lt/submit.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://films.dominikphotofficial.lt/submit.html"/>
+    <xhtml:link rel="alternate" hreflang="lt" href="https://films.dominikphotofficial.lt/lt/submit.html"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Contact -->
+  <url>
+    <loc>https://films.dominikphotofficial.lt/contact.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://films.dominikphotofficial.lt/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="lt" href="https://films.dominikphotofficial.lt/lt/contact.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Legal -->
+  <url>
+    <loc>https://films.dominikphotofficial.lt/privacy.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://films.dominikphotofficial.lt/terms.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
 </urlset>

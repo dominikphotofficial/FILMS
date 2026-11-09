@@ -637,10 +637,13 @@
 
         <div class="admin-nav-tabs">
           <button type="button" class="admin-tab-btn active" id="btn-tab-inbox">
-            📥 Submissions & Scripts
+            📥 Submissions &amp; Scripts
+          </button>
+          <button type="button" class="admin-tab-btn" id="btn-tab-templates">
+            ✉ Email Templates
           </button>
           <button type="button" class="admin-tab-btn" id="btn-tab-team">
-            👥 Team & Accounts
+            👥 Team &amp; Accounts
           </button>
         </div>
       </div>
@@ -827,9 +830,161 @@
             </tbody>
           </table>
         </div>
+    </div>
+
+    <!-- VIEW 3: Email Templates Manager View -->
+    <div class="team-view-container" id="view-templates-container" style="display: none;">
+      <div class="admin-card-box">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 20px;">
+          <div>
+            <h2 style="font-size: 1.3rem; font-weight: 700; color: var(--primary-accent); margin-bottom: 4px;">
+              ✉ Email Templates Manager (Trigger Email from Firestore)
+            </h2>
+            <p style="font-size: 0.88rem; color: var(--text-secondary);">
+              Stored in collection <code>mailTemplates</code>. Sent via Brevo SMTP using Handlebars placeholders: <code>{{name}}</code>, <code>{{role}}</code>, <code>{{country}}</code>, <code>{{proposalType}}</code>, <code>{{message}}</code>.
+            </p>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button type="button" class="btn-primary" id="btn-seed-templates" style="padding: 8px 16px; font-size: 0.85rem;">
+              ⚡ Install Default Templates
+            </button>
+            <button type="button" class="btn-action-small" id="btn-create-template" style="padding: 8px 16px; font-size: 0.85rem;">
+              + New Custom Template
+            </button>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;" id="template-category-filter">
+          <button type="button" class="cat-chip active" data-tmpl-cat="all">All Templates</button>
+          <button type="button" class="cat-chip" data-tmpl-cat="Film Idea">Film Idea</button>
+          <button type="button" class="cat-chip" data-tmpl-cat="Screenplay">Screenplay</button>
+          <button type="button" class="cat-chip" data-tmpl-cat="Commercial Collaboration">Commercial</button>
+        </div>
+
+        <div id="templates-cards-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px;">
+          <!-- Populated by JS -->
+        </div>
       </div>
     </div>
 
+  </div>
+
+  <!-- Send Email Modal (Trigger Email via Brevo Extension) -->
+  <div class="agreement-modal" id="modal-send-email" role="dialog" aria-label="Compose and Send Email">
+    <div class="agreement-modal-content" style="max-width: 720px; max-height: 90vh;">
+      <div class="agreement-modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 1.15rem; font-weight: 700; color: var(--primary-accent);">
+            ✉ Send Email via Brevo Extension
+          </span>
+          <span class="tag-pill" style="background: var(--primary-tint); color: var(--primary-accent); font-weight: 700;">mail collection</span>
+        </div>
+        <button type="button" id="btn-close-send-email" style="background: transparent; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); line-height: 1;">&times;</button>
+      </div>
+
+      <div class="agreement-modal-body" style="padding: 24px;">
+        <form id="form-send-applicant-email">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+            <div class="form-group">
+              <label class="form-label">Recipient (Applicant)</label>
+              <input type="text" id="email-modal-to" class="form-input" readonly style="background: var(--bg-surface);">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Applicant Name &amp; Role</label>
+              <input type="text" id="email-modal-recipient-meta" class="form-input" readonly style="background: var(--bg-surface);">
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 16px;">
+            <label class="form-label">Choose Email Template</label>
+            <select id="email-modal-template-select" class="form-input" style="background: #ffffff;">
+              <!-- Populated by JS -->
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 16px;">
+            <label class="form-label">Subject Line (Editable)</label>
+            <input type="text" id="email-modal-subject" class="form-input" required style="font-weight: 600;">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 16px;">
+            <label class="form-label">Plain Text Message (Customizable before send)</label>
+            <textarea id="email-modal-text" class="form-input" rows="8" style="font-family: var(--font-sans); line-height: 1.5; font-size: 0.9rem;" required></textarea>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 20px;">
+            <label class="form-label">HTML Preview</label>
+            <div id="email-modal-html-preview" style="border: 1px solid var(--border-medium); border-radius: 6px; padding: 14px; max-height: 180px; overflow-y: auto; background: #ffffff;"></div>
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-medium); padding-top: 18px; flex-wrap: wrap; gap: 12px;">
+            <button type="button" class="btn-action-small" id="btn-test-send-self">
+              Test Send to Myself
+            </button>
+            <div style="display: flex; gap: 10px;">
+              <button type="button" class="btn-action-small" id="btn-cancel-send-email">Cancel</button>
+              <button type="submit" class="btn-primary" id="btn-confirm-send-email" style="padding: 10px 22px;">
+                Send Email Now &rarr;
+              </button>
+            </div>
+          </div>
+          <div id="send-email-status-msg" style="margin-top: 12px; font-size: 0.88rem; font-weight: 600; text-align: right;"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Template Editor Modal -->
+  <div class="agreement-modal" id="modal-template-editor" role="dialog" aria-label="Template Editor">
+    <div class="agreement-modal-content" style="max-width: 680px;">
+      <div class="agreement-modal-header">
+        <span style="font-size: 1.15rem; font-weight: 700; color: var(--primary-accent);">
+          📝 Edit / Create Email Template
+        </span>
+        <button type="button" id="btn-close-template-editor" style="background: transparent; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted);">&times;</button>
+      </div>
+      <div class="agreement-modal-body" style="padding: 24px;">
+        <form id="form-edit-template">
+          <input type="hidden" id="tmpl-edit-id">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px;">
+            <div class="form-group">
+              <label class="form-label">Template ID (Slug)</label>
+              <input type="text" id="tmpl-edit-slug" class="form-input" required placeholder="e.g. accepted_screenwriter">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select id="tmpl-edit-category" class="form-input">
+                <option value="all">All Categories</option>
+                <option value="Film Idea">Film Idea</option>
+                <option value="Screenplay">Screenplay</option>
+                <option value="Commercial Collaboration">Commercial / Videography</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label class="form-label">Display Title</label>
+            <input type="text" id="tmpl-edit-title" class="form-input" required placeholder="e.g. Accepted — Screenplay Co-Production">
+          </div>
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label class="form-label">Subject Line (use {{name}}, {{role}})</label>
+            <input type="text" id="tmpl-edit-subject" class="form-input" required>
+          </div>
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label class="form-label">Plain Text Template</label>
+            <textarea id="tmpl-edit-text" class="form-input" rows="6" required></textarea>
+          </div>
+          <div class="form-group" style="margin-bottom: 18px;">
+            <label class="form-label">HTML Template</label>
+            <textarea id="tmpl-edit-html" class="form-input" rows="6" required></textarea>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 10px;">
+            <button type="button" class="btn-action-small" id="btn-cancel-tmpl-edit">Cancel</button>
+            <button type="submit" class="btn-primary" style="padding: 9px 20px;">Save Template</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 
   <!-- ======================================================================
@@ -882,8 +1037,13 @@
       orderBy, 
       onSnapshot, 
       doc, 
+      setDoc,
+      addDoc,
+      getDocs,
+      where,
       updateDoc, 
-      deleteDoc 
+      deleteDoc,
+      serverTimestamp 
     } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
     import { 
       getAuth, 
@@ -893,6 +1053,7 @@
       signInWithPopup
     } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
     import { firebaseConfig, FIRESTORE_COLLECTION, ADMIN_EMAIL } from './config.js';
+    import { defaultTemplates } from './js/email-templates.js';
 
     let db = null;
     let auth = null;
@@ -1097,20 +1258,39 @@
       window.location.replace('/');
     });
 
+    const tabTemplates = document.getElementById('btn-tab-templates');
+    const viewTemplates = document.getElementById('view-templates-container');
+    const modalSendEmail = document.getElementById('modal-send-email');
+    const modalTemplateEditor = document.getElementById('modal-template-editor');
+
     // ======================================================================
-    // Tab Navigation: Inbox vs Team
+    // Tab Navigation: Inbox vs Templates vs Team
     // ======================================================================
     tabInbox?.addEventListener('click', () => {
       tabInbox.classList.add('active');
-      tabTeam.classList.remove('active');
+      tabTemplates?.classList.remove('active');
+      tabTeam?.classList.remove('active');
       viewSubmissions.style.display = 'flex';
+      viewTemplates.style.display = 'none';
       viewTeam.style.display = 'none';
+    });
+
+    tabTemplates?.addEventListener('click', () => {
+      tabTemplates.classList.add('active');
+      tabInbox.classList.remove('active');
+      tabTeam.classList.remove('active');
+      viewSubmissions.style.display = 'none';
+      viewTemplates.style.display = 'block';
+      viewTeam.style.display = 'none';
+      loadMailTemplates();
     });
 
     tabTeam?.addEventListener('click', () => {
       tabTeam.classList.add('active');
       tabInbox.classList.remove('active');
+      tabTemplates?.classList.remove('active');
       viewSubmissions.style.display = 'none';
+      viewTemplates.style.display = 'none';
       viewTeam.style.display = 'block';
       loadTeamAndProfile();
     });
@@ -1398,16 +1578,31 @@
           <div class="detail-message-body">${escapeHtml(item.message || '')}</div>
 
           <!-- Actions -->
-          <div class="detail-actions-bar">
+          <div class="detail-actions-bar" style="margin-bottom: 20px;">
+            <button type="button" class="btn-primary" id="btn-open-send-email" style="padding: 10px 18px; font-size: 0.9rem; background: var(--primary-accent);">
+              ✉ Send Email (Brevo Templates) &rarr;
+            </button>
+
             ${isEmail ? `
-              <a href="mailto:${escapeHtml(contactVal)}?subject=${encodeURIComponent('DP | FILMS — Short Film Collaboration')}&body=${encodeURIComponent(`Hi ${item.name || ''},\n\nThank you for reaching out to join the DP | FILMS production team. I reviewed your background as ${item.role || 'an artist'} and would love to move forward with our collaboration agreement.\n\nBest regards,\nDominik Šuškevič\nDP | FILMS\ninfo@dominikphotofficial.lt`)}" class="btn-primary" style="padding: 10px 18px; font-size: 0.9rem;">
-                ✉ Reply by Email (mailto)
+              <a href="mailto:${escapeHtml(contactVal)}?subject=${encodeURIComponent('DP | FILMS — Short Film Collaboration')}" class="btn-action-small" style="padding: 9px 14px; font-size: 0.85rem;">
+                Client Mail App (mailto)
               </a>
             ` : ''}
 
             <button type="button" class="btn-secondary" id="btn-copy-contact" style="padding: 10px 18px; font-size: 0.9rem;">
               📋 Copy Contact (${escapeHtml(contactVal)})
             </button>
+          </div>
+
+          <!-- Email Delivery History for this applicant -->
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-medium); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 20px;">
+            <div style="font-weight: 700; color: var(--primary-accent); font-size: 0.9rem; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+              <span>📬 Sent Emails &amp; Delivery Status</span>
+              <button type="button" id="btn-refresh-delivery" style="background:none; border:none; font-size:0.78rem; color:var(--primary-accent); cursor:pointer; text-decoration:underline;">Refresh Status</button>
+            </div>
+            <div id="applicant-delivery-history">
+              <span style="font-size: 0.85rem; color: var(--text-muted);">Loading delivery history...</span>
+            </div>
           </div>
 
           <!-- Private Notes -->
@@ -1433,6 +1628,18 @@
           body: JSON.stringify({ status: newStatus })
         }).catch(() => {});
         renderList();
+      });
+
+      // Open Send Email Modal (Trigger Email via Brevo)
+      document.getElementById('btn-open-send-email')?.addEventListener('click', () => {
+        openSendEmailModal(item);
+      });
+
+      // Load applicant email history
+      loadApplicantDeliveryHistory(item);
+
+      document.getElementById('btn-refresh-delivery')?.addEventListener('click', () => {
+        loadApplicantDeliveryHistory(item);
       });
 
       // Open Agreement Modal
@@ -1804,35 +2011,417 @@
       renderList();
     });
 
-    // CSV Export
-    btnExport?.addEventListener('click', () => {
-      if (submissions.length === 0) {
-        alert('No submissions to export.');
+    // ======================================================================
+    // Email Templates Manager & Sending Engine (Brevo / Trigger Email Extension)
+    // ======================================================================
+    let currentSendingItem = null;
+    let mailTemplatesCache = [];
+
+    function renderHandlebars(str, data) {
+      if (!str) return '';
+      return str.replace(/\{\{\s*([a-zA-Z0-9_]+)\s*\}\}/g, (_, key) => {
+        return data[key] !== undefined && data[key] !== null ? String(data[key]) : '';
+      });
+    }
+
+    async function loadMailTemplates(categoryFilter = 'all') {
+      const container = document.getElementById('templates-cards-list');
+      if (!container) return;
+      container.innerHTML = '<div style="padding: 20px; color: var(--text-muted);">Loading email templates...</div>';
+
+      try {
+        mailTemplatesCache = [];
+        if (db) {
+          const q = query(collection(db, 'mailTemplates'));
+          const snap = await getDocs(q);
+          snap.forEach(d => {
+            mailTemplatesCache.push({ id: d.id, ...d.data() });
+          });
+        }
+      } catch (err) {
+        console.warn('Firestore mailTemplates read notice:', err);
+      }
+
+      // If no templates in DB yet, fallback to default seed templates
+      if (mailTemplatesCache.length === 0) {
+        mailTemplatesCache = [...defaultTemplates];
+      }
+
+      const filtered = categoryFilter === 'all'
+        ? mailTemplatesCache
+        : mailTemplatesCache.filter(t => t.category === categoryFilter || t.category === 'all');
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<div style="padding: 20px; color: var(--text-muted); grid-column: 1/-1;">No templates found in this category. Click "+ New Custom Template" to create one.</div>';
         return;
       }
-      const headers = ['ID', 'Date', 'Name', 'Role', 'Country', 'Contact Type', 'Contact', 'Status', 'Notes', 'Message'];
-      const rows = submissions.map(s => [
-        s.id,
-        s.createdAtIso || '',
-        `"${(s.name || '').replace(/"/g, '""')}"`,
-        `"${(s.role || '').replace(/"/g, '""')}"`,
-        `"${(s.country || '').replace(/"/g, '""')}"`,
-        `"${(s.contactType || '').replace(/"/g, '""')}"`,
-        `"${(s.handle || '').replace(/"/g, '""')}"`,
-        s.status || 'new',
-        `"${(s.notes || '').replace(/"/g, '""')}"`,
-        `"${(s.message || '').replace(/"/g, '""')}"`
-      ]);
 
-      const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-      const encodedUri = encodeURI(csvContent);
-      const link = document.createElement('a');
-      link.setAttribute('href', encodedUri);
-      link.setAttribute('download', `dp_films_team_applications_${new Date().toISOString().slice(0, 10)}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      container.innerHTML = filtered.map(t => `
+        <div style="background: #ffffff; border: 1px solid var(--border-medium); border-radius: var(--radius-sm); padding: 18px; display: flex; flex-direction: column; justify-content: space-between; gap: 12px;">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
+              <span class="tag-pill" style="background: var(--primary-tint); color: var(--primary-accent); font-weight: 700; font-size: 0.72rem;">${escapeHtml(t.category || 'General')}</span>
+              <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">${escapeHtml(t.id)}</span>
+            </div>
+            <h3 style="font-size: 1.05rem; color: var(--primary-accent); margin: 8px 0 4px; font-weight: 700;">${escapeHtml(t.title || t.name || t.id)}</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">Subject: ${escapeHtml(t.subject || '')}</p>
+          </div>
+          <div style="display: flex; gap: 8px; justify-content: flex-end; border-top: 1px solid var(--border-subtle); padding-top: 10px;">
+            <button type="button" class="btn-action-small btn-test-tmpl" data-id="${t.id}" style="padding: 4px 10px; font-size: 0.78rem;">
+              Test Send
+            </button>
+            <button type="button" class="btn-action-small btn-edit-tmpl" data-id="${t.id}" style="padding: 4px 10px; font-size: 0.78rem;">
+              Edit
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      // Attach edit listeners
+      container.querySelectorAll('.btn-edit-tmpl').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tmplId = btn.getAttribute('data-id');
+          const tmpl = mailTemplatesCache.find(t => t.id === tmplId);
+          if (tmpl) openTemplateEditor(tmpl);
+        });
+      });
+
+      // Attach test send listeners
+      container.querySelectorAll('.btn-test-tmpl').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const tmplId = btn.getAttribute('data-id');
+          const tmpl = mailTemplatesCache.find(t => t.id === tmplId);
+          if (!tmpl) return;
+          if (!confirm(`Send test email of "${tmpl.title || tmpl.id}" to yourself (${ADMIN_EMAIL})?`)) return;
+          await sendTestEmail(tmpl);
+        });
+      });
+    }
+
+    // Category filter chips for templates
+    document.querySelectorAll('#template-category-filter .cat-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('#template-category-filter .cat-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        const cat = chip.getAttribute('data-tmpl-cat') || 'all';
+        loadMailTemplates(cat);
+      });
     });
+
+    // Install Default Templates Seed Button
+    document.getElementById('btn-seed-templates')?.addEventListener('click', async () => {
+      if (!confirm('This will install or refresh the 9 default seed email templates into Firestore collection "mailTemplates". Continue?')) return;
+      const statusBtn = document.getElementById('btn-seed-templates');
+      statusBtn.textContent = 'Installing...';
+      try {
+        if (db) {
+          for (const tmpl of defaultTemplates) {
+            await setDoc(doc(db, 'mailTemplates', tmpl.id), tmpl);
+          }
+          alert('✓ 9 default templates successfully installed into collection "mailTemplates"!');
+          loadMailTemplates();
+        } else {
+          alert('Database connection not ready.');
+        }
+      } catch (err) {
+        console.error('Seed templates error:', err);
+        alert('Error seeding templates: ' + err.message);
+      } finally {
+        statusBtn.textContent = '⚡ Install Default Templates';
+      }
+    });
+
+    // Template Editor Modal
+    function openTemplateEditor(tmpl = null) {
+      const modal = document.getElementById('modal-template-editor');
+      if (!modal) return;
+      document.getElementById('tmpl-edit-id').value = tmpl ? tmpl.id : '';
+      document.getElementById('tmpl-edit-slug').value = tmpl ? tmpl.id : '';
+      document.getElementById('tmpl-edit-slug').readOnly = !!tmpl;
+      document.getElementById('tmpl-edit-category').value = tmpl?.category || 'all';
+      document.getElementById('tmpl-edit-title').value = tmpl?.title || tmpl?.name || '';
+      document.getElementById('tmpl-edit-subject').value = tmpl?.subject || '';
+      document.getElementById('tmpl-edit-text').value = tmpl?.text || '';
+      document.getElementById('tmpl-edit-html').value = tmpl?.html || '';
+      modal.style.display = 'flex';
+    }
+
+    document.getElementById('btn-create-template')?.addEventListener('click', () => openTemplateEditor(null));
+    document.getElementById('btn-close-template-editor')?.addEventListener('click', () => {
+      document.getElementById('modal-template-editor').style.display = 'none';
+    });
+    document.getElementById('btn-cancel-tmpl-edit')?.addEventListener('click', () => {
+      document.getElementById('modal-template-editor').style.display = 'none';
+    });
+
+    document.getElementById('form-edit-template')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const slug = document.getElementById('tmpl-edit-slug').value.trim();
+      const category = document.getElementById('tmpl-edit-category').value;
+      const title = document.getElementById('tmpl-edit-title').value.trim();
+      const subject = document.getElementById('tmpl-edit-subject').value.trim();
+      const text = document.getElementById('tmpl-edit-text').value;
+      const html = document.getElementById('tmpl-edit-html').value;
+
+      if (!slug || !title || !subject) {
+        alert('Please fill in all required template fields.');
+        return;
+      }
+
+      const templateObj = { id: slug, category, title, subject, text, html, updatedAt: new Date().toISOString() };
+
+      try {
+        if (db) {
+          await setDoc(doc(db, 'mailTemplates', slug), templateObj);
+        }
+        document.getElementById('modal-template-editor').style.display = 'none';
+        alert('✓ Template saved successfully.');
+        loadMailTemplates();
+      } catch (err) {
+        alert('Error saving template: ' + err.message);
+      }
+    });
+
+    // Test send email helper
+    async function sendTestEmail(tmpl) {
+      if (!db) {
+        alert('Firestore not connected.');
+        return;
+      }
+      try {
+        const testData = {
+          name: "Dominik Šuškevič (Test)",
+          role: "Director / Screenwriter",
+          country: "Lithuania",
+          proposalType: tmpl.category !== 'all' ? tmpl.category : "Film Idea",
+          message: "This is a test submission message to verify email layout and SMTP delivery via Brevo extension."
+        };
+
+        const resolvedSubject = renderHandlebars(tmpl.subject, testData);
+        const resolvedText = renderHandlebars(tmpl.text, testData);
+        const resolvedHtml = renderHandlebars(tmpl.html, testData);
+
+        await addDoc(collection(db, 'mail'), {
+          to: [ADMIN_EMAIL],
+          message: {
+            subject: `[TEST] ${resolvedSubject}`,
+            text: resolvedText,
+            html: resolvedHtml
+          },
+          template: {
+            name: tmpl.id,
+            data: testData
+          },
+          createdAt: serverTimestamp(),
+          isTest: true
+        });
+
+        alert(`✓ Test email queued to ${ADMIN_EMAIL}. Brevo extension will deliver it.`);
+      } catch (err) {
+        console.error('Test email error:', err);
+        alert('Error sending test email: ' + err.message);
+      }
+    }
+
+    // Open Send Email Modal for Applicant
+    function openSendEmailModal(item) {
+      currentSendingItem = item;
+      const modal = document.getElementById('modal-send-email');
+      if (!modal) return;
+
+      const recipientContact = item.handle || item.contact || '';
+      document.getElementById('email-modal-to').value = recipientContact;
+      document.getElementById('email-modal-recipient-meta').value = `${item.name || 'Applicant'} · ${item.role || 'Role'} (${item.country || 'Global'})`;
+
+      const select = document.getElementById('email-modal-template-select');
+      select.innerHTML = '<option value="">-- Choose a Template --</option>';
+
+      // Populate templates (show category relevant ones first)
+      mailTemplatesCache.forEach(t => {
+        const isMatch = t.category === item.type || t.category === 'all';
+        const opt = document.createElement('option');
+        opt.value = t.id;
+        opt.textContent = `${isMatch ? '★ ' : ''}${t.title || t.name || t.id} (${t.category})`;
+        select.appendChild(opt);
+      });
+
+      // Default select "received" or "in_talks"
+      if (select.options.length > 1) {
+        select.selectedIndex = 1;
+        applyTemplateToModal(select.value, item);
+      }
+
+      select.onchange = () => {
+        applyTemplateToModal(select.value, item);
+      };
+
+      document.getElementById('send-email-status-msg').textContent = '';
+      modal.style.display = 'flex';
+    }
+
+    function applyTemplateToModal(tmplId, item) {
+      const tmpl = mailTemplatesCache.find(t => t.id === tmplId);
+      if (!tmpl) return;
+
+      const templateData = {
+        name: item.name || 'Collaborator',
+        role: item.role || 'Artist',
+        country: item.country || 'Global',
+        proposalType: item.type || 'Film Proposal',
+        message: item.message || ''
+      };
+
+      const subject = renderHandlebars(tmpl.subject, templateData);
+      const text = renderHandlebars(tmpl.text, templateData);
+      const html = renderHandlebars(tmpl.html, templateData);
+
+      document.getElementById('email-modal-subject').value = subject;
+      document.getElementById('email-modal-text').value = text;
+      document.getElementById('email-modal-html-preview').innerHTML = html;
+    }
+
+    // Modal close handlers
+    document.getElementById('btn-close-send-email')?.addEventListener('click', () => {
+      document.getElementById('modal-send-email').style.display = 'none';
+    });
+    document.getElementById('btn-cancel-send-email')?.addEventListener('click', () => {
+      document.getElementById('modal-send-email').style.display = 'none';
+    });
+
+    // Test send to self from modal
+    document.getElementById('btn-test-send-self')?.addEventListener('click', async () => {
+      if (!currentSendingItem || !db) return;
+      const subject = document.getElementById('email-modal-subject').value;
+      const text = document.getElementById('email-modal-text').value;
+      const html = document.getElementById('email-modal-html-preview').innerHTML;
+      const statusEl = document.getElementById('send-email-status-msg');
+
+      try {
+        statusEl.style.color = 'var(--text-muted)';
+        statusEl.textContent = 'Sending test copy to yourself...';
+        await addDoc(collection(db, 'mail'), {
+          to: [ADMIN_EMAIL],
+          message: { subject: `[TEST COPY] ${subject}`, text, html },
+          createdAt: serverTimestamp(),
+          isTest: true
+        });
+        statusEl.style.color = '#15803d';
+        statusEl.textContent = `✓ Test copy queued to ${ADMIN_EMAIL}`;
+      } catch (err) {
+        statusEl.style.color = '#b91c1c';
+        statusEl.textContent = 'Error: ' + err.message;
+      }
+    });
+
+    // Form Send Email submit
+    document.getElementById('form-send-applicant-email')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!currentSendingItem || !db) return;
+
+      const toEmail = document.getElementById('email-modal-to').value.trim();
+      if (!toEmail || !toEmail.includes('@')) {
+        alert('Applicant does not have a valid email address specified in contact handle.');
+        return;
+      }
+
+      const subject = document.getElementById('email-modal-subject').value.trim();
+      const text = document.getElementById('email-modal-text').value;
+      const html = document.getElementById('email-modal-html-preview').innerHTML;
+      const tmplId = document.getElementById('email-modal-template-select').value;
+      const statusEl = document.getElementById('send-email-status-msg');
+      const submitBtn = document.getElementById('btn-confirm-send-email');
+
+      submitBtn.disabled = true;
+      statusEl.style.color = 'var(--primary-accent)';
+      statusEl.textContent = 'Writing to mail collection for Brevo extension...';
+
+      try {
+        const mailDoc = {
+          to: [toEmail],
+          message: { subject, text, html },
+          submissionId: currentSendingItem.id,
+          createdAt: serverTimestamp()
+        };
+
+        if (tmplId) {
+          mailDoc.template = {
+            name: tmplId,
+            data: {
+              name: currentSendingItem.name || '',
+              role: currentSendingItem.role || '',
+              country: currentSendingItem.country || '',
+              proposalType: currentSendingItem.type || '',
+              message: currentSendingItem.message || ''
+            }
+          };
+        }
+
+        await addDoc(collection(db, 'mail'), mailDoc);
+
+        statusEl.style.color = '#15803d';
+        statusEl.textContent = `✓ Email successfully queued to ${toEmail}`;
+        
+        setTimeout(() => {
+          document.getElementById('modal-send-email').style.display = 'none';
+          submitBtn.disabled = false;
+          loadApplicantDeliveryHistory(currentSendingItem);
+        }, 1200);
+
+      } catch (err) {
+        console.error('Send email error:', err);
+        statusEl.style.color = '#b91c1c';
+        statusEl.textContent = 'Failed to send: ' + err.message;
+        submitBtn.disabled = false;
+      }
+    });
+
+    // Load applicant sent mail delivery status
+    async function loadApplicantDeliveryHistory(item) {
+      const historyBox = document.getElementById('applicant-delivery-history');
+      if (!historyBox || !db) return;
+
+      try {
+        const q = query(
+          collection(db, 'mail'),
+          where('submissionId', '==', item.id)
+        );
+        const snap = await getDocs(q);
+
+        if (snap.empty) {
+          historyBox.innerHTML = '<span style="font-size: 0.82rem; color: var(--text-muted);">No emails sent to this applicant yet. Click "Send Email (Brevo Templates)" above.</span>';
+          return;
+        }
+
+        const list = [];
+        snap.forEach(d => list.push({ id: d.id, ...d.data() }));
+
+        historyBox.innerHTML = list.map(m => {
+          const state = m.delivery?.state || 'PENDING';
+          const error = m.delivery?.error || null;
+          const sentAt = m.delivery?.endTime ? new Date(m.delivery.endTime.seconds * 1000).toLocaleString() : 'Processing';
+          const isSuccess = state === 'SUCCESS';
+          const isError = state === 'ERROR';
+
+          return `
+            <div style="padding: 8px 12px; background: #ffffff; border: 1px solid var(--border-medium); border-radius: 4px; margin-bottom: 6px; font-size: 0.82rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <strong>${escapeHtml(m.message?.subject || 'Email')}</strong> &rarr; <span style="color: var(--text-muted);">${escapeHtml((m.to || []).join(', '))}</span>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Queued ID: <code>${m.id}</code> &middot; ${sentAt}</div>
+              </div>
+              <div>
+                <span class="tag-pill" style="font-size: 0.72rem; font-weight: 700; background: ${isSuccess ? '#f0fdf4' : (isError ? '#fef2f2' : '#fffbeb')}; color: ${isSuccess ? '#15803d' : (isError ? '#b91c1c' : '#b45309')}; border: 1px solid ${isSuccess ? '#bbf7d0' : (isError ? '#fecaca' : '#fef3c7')};">
+                  ${isSuccess ? '✓ DELIVERED' : (isError ? '✕ ERROR' : '⏳ QUEUED / SENDING')}
+                </span>
+                ${error ? `<div style="color: #b91c1c; font-size: 0.75rem; margin-top: 3px;">${escapeHtml(error)}</div>` : ''}
+              </div>
+            </div>
+          `;
+        }).join('');
+
+      } catch (err) {
+        historyBox.innerHTML = '<span style="font-size: 0.82rem; color: var(--text-muted);">Ready to track delivery status upon sending.</span>';
+      }
+    }
 
     function escapeHtml(text) {
       if (!text) return '';

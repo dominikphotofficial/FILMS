@@ -48,9 +48,13 @@
           "maxLength": 8000,
           "description": "Application statement, pitch, or screenplay synopsis"
         },
+        "consent": {
+          "type": "boolean",
+          "description": "Applicant privacy and GDPR consent confirmation"
+        },
         "status": {
           "type": "string",
-          "enum": ["new", "read", "replied", "accepted", "archived"],
+          "enum": ["new", "in_talks", "accepted", "rejected", "read", "archived"],
           "description": "Processing status"
         },
         "unread": {
@@ -110,7 +114,7 @@
       "properties": {
         "to": {
           "type": "array",
-          "description": "List of recipient email addresses. Must strictly be ['info@dominikphotofficial.lt'].",
+          "description": "List of recipient email addresses. Public form is strictly limited to info@dominikphotofficial.lt without templates.",
           "items": {
             "type": "string",
             "maxLength": 100
@@ -127,27 +131,77 @@
             "text": {
               "type": "string",
               "maxLength": 15000,
-              "description": "Plain-text email body containing all form fields"
+              "description": "Plain-text email body"
             },
             "html": {
               "type": "string",
               "maxLength": 30000,
               "description": "Simple styled HTML email body"
             }
-          },
-          "required": ["subject", "text", "html"]
+          }
+        },
+        "template": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "maxLength": 100,
+              "description": "Template name matching a document in mailTemplates"
+            },
+            "data": {
+              "type": "object",
+              "description": "Handlebars replacement variables"
+            }
+          }
         },
         "submissionId": {
           "type": "string",
           "maxLength": 128,
-          "description": "Optional reference to the corresponding submission document"
+          "description": "Reference to the corresponding submission"
         },
         "createdAt": {
           "type": "string",
           "description": "Server timestamp of creation"
         }
       },
-      "required": ["to", "message"]
+      "required": ["to"]
+    },
+    "MailTemplate": {
+      "title": "Email Template",
+      "description": "Reusable email template consumed by the Trigger Email extension with Handlebars variables.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Human readable name of the template"
+        },
+        "category": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Proposal category or general group"
+        },
+        "subject": {
+          "type": "string",
+          "maxLength": 250,
+          "description": "Subject template with {{variables}}"
+        },
+        "text": {
+          "type": "string",
+          "maxLength": 15000,
+          "description": "Plain text body template"
+        },
+        "html": {
+          "type": "string",
+          "maxLength": 30000,
+          "description": "HTML body template"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last updated timestamp"
+        }
+      },
+      "required": ["subject", "html"]
     }
   },
   "firestore": {
@@ -158,6 +212,10 @@
     "/mail/{mailId}": {
       "schema": "MailTrigger",
       "description": "Queue collection consumed by the Firebase Extension Trigger Email from Firestore."
+    },
+    "/mailTemplates/{templateId}": {
+      "schema": "MailTemplate",
+      "description": "Reusable email templates consumed by the Trigger Email extension template feature."
     }
   }
 }

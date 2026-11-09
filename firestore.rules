@@ -8,9 +8,10 @@ service cloud.firestore {
           && request.auth.token.email == 'dominikphotofficial.lt@gmail.com';
     }
 
-    // Helper: validate incoming mail payload for Firebase Trigger Email Extension (firebase/firestore-send-email)
-    function isValidMailTrigger(data) {
+    // Helper: validate incoming public mail notification for the administrator (no template, hardcoded to info@dominikphotofficial.lt)
+    function isValidPublicAdminNotification(data) {
       return data.keys().hasAll(['to', 'message'])
+          && !('template' in data)
           && data.to is list
           && data.to.size() == 1
           && data.to[0] == 'info@dominikphotofficial.lt'
@@ -51,19 +52,26 @@ service cloud.firestore {
     }
 
     // =========================================================================
-    // Trigger Email Collection (firebase/firestore-send-email Extension)
+    // Trigger Email Queue (firebase/firestore-send-email Extension)
     // =========================================================================
     match /mail/{mailId} {
-      // Public create only: recipient must strictly equal ['info@dominikphotofficial.lt'],
-      // with bounded message subject, text, and html payload.
-      // Cannot be updated or deleted by public users.
-      allow create: if isValidMailTrigger(request.resource.data);
+      // Public create: ONLY if 'to' strictly equals ['info@dominikphotofficial.lt'] AND NO template is used.
+      // Admin create: Can send any email (including template emails to applicants).
+      allow create: if isValidPublicAdminNotification(request.resource.data) || isAdmin();
 
       // Only the authenticated admin can read mail documents to monitor delivery status
       allow read: if isAdmin();
 
       // Only admin or extension service can update (e.g. extension delivery logs) or delete
       allow update, delete: if isAdmin();
+    }
+
+    // =========================================================================
+    // Reusable Email Templates (mailTemplates collection)
+    // =========================================================================
+    match /mailTemplates/{templateId} {
+      // Strictly protected: Only the authenticated admin can read, write, create, update, or delete templates
+      allow read, write: if isAdmin();
     }
   }
 }
