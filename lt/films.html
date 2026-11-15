@@ -3,108 +3,102 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Filmai — DP | FILMS | Dominik Šuškevič</title>
-  <meta name="description" content="Visi 11 Dominik Šuškevič režisuotų, filmuotų ir montuotų filmų, įskaitant festivalio nugalėtoją „Frozen Time: What If“.">
-  <meta name="robots" content="index, follow">
+  <title>Filmai (11 darbų) — DP.FILMS | Dominik Šuškevič</title>
+  <meta name="description" content="Visa Dominik Šuškevič filmografija: Frozen Time: What If (I vieta studentų kategorijoje, 2026) ir kinematografijos bei montažo darbai.">
   <link rel="canonical" href="https://films.dominikphotofficial.lt/lt/films.html">
   <link rel="alternate" hreflang="en" href="https://films.dominikphotofficial.lt/films.html">
   <link rel="alternate" hreflang="lt" href="https://films.dominikphotofficial.lt/lt/films.html">
-  <link rel="icon" type="image/png" href="https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png">
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Filmai — DP | FILMS">
-  <meta property="og:description" content="Kinematografiniai Dominik Šuškevič darbai: vaidybiniai filmai, žiemos studijos ir festivalių laureatai.">
-  <meta property="og:image" content="https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png">
-  <meta property="og:url" content="https://films.dominikphotofficial.lt/lt/films.html">
-
+  <link rel="icon" type="image/png" href="https://iili.io/fjNLbs4.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
 </head>
-<body>
-  <div class="ambient-pattern" aria-hidden="true"></div>
-
-  <!-- Header -->
-  <header class="header">
+<body data-root="../">
+  <header id="main-header">
     <div class="header-container">
-      <a href="index.html" class="brand" aria-label="DP Films Pradžia">
-        <img src="https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png" alt="DP FILMS Logotipas" class="brand-logo" width="36" height="36">
-        <span>DP | FILMS</span>
+      <a href="index.html" class="logo" aria-label="DP.FILMS">
+        <span class="logo-mark"><img src="https://iili.io/fjNLbs4.png" alt="DP.FILMS" class="logo-img"></span>
+        <span class="logo-sub">Films</span>
       </a>
-
-      <button type="button" class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Perjungti navigacijos meniu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-
-      <nav class="main-nav" id="main-nav" aria-label="Pagrindinė navigacija">
-        <ul class="nav-list">
-          <li><a href="index.html" class="nav-link">Pradžia</a></li>
-          <li><a href="films.html" class="nav-link is-active">Filmai</a></li>
-          <li><a href="awards.html" class="nav-link">Apdovanojimai</a></li>
-          <li><a href="about.html" class="nav-link">Apie mane</a></li>
-          <li><a href="services.html" class="nav-link">Bendradarbiavimas</a></li>
-          <li><a href="contact.html" class="nav-link">Kontaktai</a></li>
-          <li><a href="submit.html" class="nav-cta-btn">Prisijungti</a></li>
-        </ul>
-
-        <div class="lang-switcher">
-          <a href="../films.html" title="English">EN</a>
-          <span class="lang-sep">/</span>
-          <a href="films.html" class="is-active" title="Lietuvių k.">LT</a>
+      <div class="header-right">
+        <div class="header-langs" aria-label="Kalba">
+          <a href="../films.html">EN</a>
+          <span aria-hidden="true">/</span>
+          <a href="films.html" class="active">LT</a>
         </div>
-      </nav>
+        <button type="button" class="burger" id="burger-menu" aria-label="Atidaryti meniu" aria-expanded="false" aria-controls="nav-overlay">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
   </header>
 
-  <main style="padding-top: calc(var(--header-height) + 32px); padding-bottom: 80px;">
-    <div class="container">
-      <!-- Breadcrumbs -->
-      <nav class="breadcrumbs" aria-label="Kelias">
-        <a href="index.html">Pradžia</a>
-        <span class="crumb-sep">/</span>
-        <span class="crumb-current">Filmai</span>
+  <div class="nav-overlay" id="nav-overlay" aria-hidden="true">
+    <div class="nav-panel" role="dialog" aria-modal="true" aria-label="Navigacija">
+      <div class="nav-panel-top">
+        <span class="nav-panel-label">DP.FILMS</span>
+        <button type="button" class="nav-close" id="nav-close" aria-label="Uždaryti meniu">&times;</button>
+      </div>
+      <nav class="mobile-nav" aria-label="Pagrindinė navigacija">
+        <a href="index.html" class="nav-link"><span class="nav-num">01</span><span class="nav-label-text">Pradžia</span></a>
+        <a href="films.html" class="nav-link active"><span class="nav-num">02</span><span class="nav-label-text">Filmai</span></a>
+        <a href="awards.html" class="nav-link"><span class="nav-num">03</span><span class="nav-label-text">Apdovanojimai</span></a>
+        <a href="about.html" class="nav-link"><span class="nav-num">04</span><span class="nav-label-text">Apie</span></a>
+        <a href="services.html" class="nav-link"><span class="nav-num">05</span><span class="nav-label-text">Bendradarbiavimas</span></a>
+        <a href="submit.html" class="nav-link"><span class="nav-num">06</span><span class="nav-label-text">Prisijunkite</span></a>
+        <a href="contact.html" class="nav-link nav-secondary"><span class="nav-label-text">Kontaktai</span></a>
+        <a href="privacy.html" class="nav-link nav-secondary"><span class="nav-label-text">Privatumo politika</span></a>
+        <a href="terms.html" class="nav-link nav-secondary"><span class="nav-label-text">Naudojimo sąlygos</span></a>
       </nav>
-
-      <div style="margin-bottom: 32px;">
-        <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary-accent); text-transform: uppercase; letter-spacing: 0.1em;">Pilna filmografija</span>
-        <h1 style="font-size: 2.5rem; color: var(--primary-accent); margin-top: 6px;">Filmai ir vizualiniai etiudai</h1>
-        <p style="color: var(--text-secondary); max-width: 680px; margin-top: 8px; font-size: 1.05rem;">
-          Visi 11 filmų, kuriuos režisavo, filmavo arba montavo Dominik Šuškevič. Filtruokite pagal metus ar apdovanojimą ir paspauskite bet kurią kortelę peržiūrai kino grotuve.
-        </p>
-      </div>
-
-      <!-- Filter Tabs -->
-      <div class="filter-tabs-row" role="tablist">
-        <button type="button" class="filter-tab-btn is-active" data-filter="all">Visi filmai (11)</button>
-        <button type="button" class="filter-tab-btn" data-filter="award">★ Festivalio laureatas</button>
-        <button type="button" class="filter-tab-btn" data-filter="2026">2026</button>
-        <button type="button" class="filter-tab-btn" data-filter="2025">2025</button>
-        <button type="button" class="filter-tab-btn" data-filter="2024">2024</button>
-      </div>
-
-      <!-- Films Grid -->
-      <div id="films-grid" class="films-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 32px;">
-        <!-- Injected dynamically by js/main.js -->
+      <div class="nav-panel-footer">
+        <div class="nav-panel-langs">
+          <a href="../films.html">EN</a>
+          <a href="films.html" class="active">LT</a>
+        </div>
+        <a href="mailto:info@dominikphotofficial.lt">info@dominikphotofficial.lt</a>
       </div>
     </div>
+  </div>
+
+  <main class="page-main">
+    <div class="container">
+      <header class="page-header-block">
+        <span class="feature-kicker">Filmografija</span>
+        <h1>Filmai ir vizualinės studijos</h1>
+        <hr class="divider">
+        <p class="page-header-lead">
+          11 nepriklausomų darbų (2024–2026 m.): vienas režisuotas festivalinis filmas (<em>Frozen Time: What If</em>) ir dešimt operatorinių bei montažo studijų. Paspauskite bet kurį kadrą, kad paleistumėte grotuvą.
+        </p>
+      </header>
+      <div class="section-header-editorial">
+        <span class="section-label-caps">Visi darbai</span>
+        <span class="section-count-muted">11 filmų · 2024–2026</span>
+      </div>
+      <div class="film-grid" id="film-grid-all"></div>
+    </div>
+
+    <section class="booking-block fade-in-up">
+      <span class="feature-kicker">Kūryba kartu</span>
+      <h2>Norite sukurti kitą filmą kartu?</h2>
+      <p>Renku scenaristų, aktorių, garso režisierių ir bendrarežisierių komandą naujam trumpo metro projektui.</p>
+      <a href="submit.html" class="btn-primary">Prisijungti</a>
+    </section>
   </main>
 
-  <!-- Footer -->
-  <footer style="background: #ffffff; border-top: 1px solid var(--border-medium); padding: 48px 0 24px;">
+  <footer class="footer-minimal">
     <div class="container">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-        <div>&copy; 2026 Dominik Šuškevič (DP | FILMS). Visos teisės saugomos.</div>
-        <div style="display: flex; gap: 20px;">
-          <a href="privacy.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">Privatumas</a>
-          <a href="terms.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">Sąlygos</a>
-          <a href="contact.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">Kontaktai</a>
+      <div class="footer-min-bottom" style="padding-top: 0;">
+        <div>&copy; 2026 Dominik Šuškevič · DP.FILMS</div>
+        <div class="footer-min-langs">
+          <a href="../films.html">EN</a>
+          <span aria-hidden="true">/</span>
+          <a href="films.html" class="active">LT</a>
         </div>
       </div>
     </div>
   </footer>
 
-  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../script.js"></script>
 </body>
 </html>

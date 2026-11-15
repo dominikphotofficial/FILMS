@@ -2,19 +2,41 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Global helper: verify if request is authenticated as the portfolio administrator
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
     function isAdmin() {
-      return request.auth != null 
+      return request.auth != null
+          && request.auth.token.email_verified == true
           && request.auth.token.email == 'dominikphotofficial.lt@gmail.com';
     }
 
-    // Helper: validate incoming public mail notification for the administrator (no template, hardcoded to info@dominikphotofficial.lt)
+    function isValidSubmission(data) {
+      return data.keys().hasAll(['name', 'handle', 'contact', 'message'])
+          && data.name is string
+          && data.name.size() > 0
+          && data.name.size() <= 120
+          && data.handle is string
+          && data.handle.size() > 0
+          && data.handle.size() <= 200
+          && data.contact is string
+          && data.contact.size() > 0
+          && data.contact.size() <= 250
+          && data.message is string
+          && data.message.size() > 0
+          && data.message.size() <= 8000
+          && (!('status' in data) || data.status == 'new');
+    }
+
     function isValidPublicAdminNotification(data) {
       return data.keys().hasAll(['to', 'message'])
           && !('template' in data)
           && data.to is list
           && data.to.size() == 1
           && data.to[0] == 'info@dominikphotofficial.lt'
+          && (!('from' in data) || data.from == 'DP.FILMS <films@dominikphotofficial.lt>')
+          && (!('replyTo' in data) || data.replyTo == 'info@dominikphotofficial.lt')
           && data.message is map
           && data.message.keys().hasAll(['subject', 'text', 'html'])
           && data.message.subject is string
@@ -28,49 +50,21 @@ service cloud.firestore {
           && data.message.html.size() <= 30000;
     }
 
-    // =========================================================================
     // Film Team Submissions & Pitch Inquiries
-    // =========================================================================
     match /submissions/{submissionId} {
-      // Public visitors can submit applications with data validation and size limits
-      allow create: if request.resource.data.name is string 
-                    && request.resource.data.name.size() > 0 
-                    && request.resource.data.name.size() <= 100
-                    && request.resource.data.message is string 
-                    && request.resource.data.message.size() > 0 
-                    && request.resource.data.message.size() <= 8000
-                    && (request.resource.data.handle is string || request.resource.data.contact is string);
-
-      // Only the authenticated admin (dominikphotofficial.lt@gmail.com) can read, update, or delete
+      allow create: if isValidSubmission(request.resource.data);
       allow read, update, delete: if isAdmin();
     }
 
-    // Legacy film submissions collection (backward compatibility)
-    match /film_submissions/{submissionId} {
-      allow create: if request.resource.data.name is string;
-      allow read, update, delete: if isAdmin();
-    }
-
-    // =========================================================================
-    // Trigger Email Queue (firebase/firestore-send-email Extension)
-    // =========================================================================
+    // Trigger Email Queue (firebase/firestore-send-email)
+    // Automated sender: films@dominikphotofficial.lt · Inbox/Reply-To: info@dominikphotofficial.lt
     match /mail/{mailId} {
-      // Public create: ONLY if 'to' strictly equals ['info@dominikphotofficial.lt'] AND NO template is used.
-      // Admin create: Can send any email (including template emails to applicants).
       allow create: if isValidPublicAdminNotification(request.resource.data) || isAdmin();
-
-      // Only the authenticated admin can read mail documents to monitor delivery status
-      allow read: if isAdmin();
-
-      // Only admin or extension service can update (e.g. extension delivery logs) or delete
-      allow update, delete: if isAdmin();
+      allow read, update, delete: if isAdmin();
     }
 
-    // =========================================================================
-    // Reusable Email Templates (mailTemplates collection)
-    // =========================================================================
+    // Reusable Email Templates
     match /mailTemplates/{templateId} {
-      // Strictly protected: Only the authenticated admin can read, write, create, update, or delete templates
       allow read, write: if isAdmin();
     }
   }

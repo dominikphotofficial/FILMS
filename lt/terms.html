@@ -3,83 +3,107 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Naudojimo sąlygos — DP | FILMS</title>
-  <meta name="description" content="DP | FILMS svetainės naudojimo sąlygos ir intelektinės nuosavybės teisės.">
-  <meta name="robots" content="index, follow">
+  <title>Naudojimo sąlygos — DP.FILMS | Dominik Šuškevič</title>
+  <meta name="description" content="DP.FILMS svetainės naudojimo sąlygos, autorių teisių apsauga ir pastaba dėl festivalio.">
   <link rel="canonical" href="https://films.dominikphotofficial.lt/lt/terms.html">
   <link rel="alternate" hreflang="en" href="https://films.dominikphotofficial.lt/terms.html">
   <link rel="alternate" hreflang="lt" href="https://films.dominikphotofficial.lt/lt/terms.html">
-  <link rel="icon" type="image/png" href="https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png">
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" type="image/png" href="https://iili.io/fjNLbs4.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
 </head>
-<body>
-  <div class="ambient-pattern" aria-hidden="true"></div>
-
-  <!-- Header -->
-  <header class="header">
+<body data-root="../">
+  <header id="main-header">
     <div class="header-container">
-      <a href="index.html" class="brand" aria-label="DP Films Pradžia">
-        <img src="https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png" alt="DP FILMS Logotipas" class="brand-logo" width="36" height="36">
-        <span>DP | FILMS</span>
+      <a href="index.html" class="logo" aria-label="DP.FILMS">
+        <span class="logo-mark"><img src="https://iili.io/fjNLbs4.png" alt="DP.FILMS" class="logo-img"></span>
+        <span class="logo-sub">Films</span>
       </a>
-      <nav class="main-nav" id="main-nav">
-        <ul class="nav-list">
-          <li><a href="index.html" class="nav-link">Pradžia</a></li>
-          <li><a href="films.html" class="nav-link">Filmai</a></li>
-          <li><a href="awards.html" class="nav-link">Apdovanojimai</a></li>
-          <li><a href="about.html" class="nav-link">Apie mane</a></li>
-          <li><a href="services.html" class="nav-link">Bendradarbiavimas</a></li>
-          <li><a href="contact.html" class="nav-link">Kontaktai</a></li>
-          <li><a href="submit.html" class="nav-cta-btn">Prisijungti</a></li>
-        </ul>
-        <div class="lang-switcher">
+      <div class="header-right">
+        <div class="header-langs" aria-label="Kalba">
           <a href="../terms.html">EN</a>
-          <span class="lang-sep">/</span>
-          <a href="terms.html" class="is-active">LT</a>
+          <span aria-hidden="true">/</span>
+          <a href="terms.html" class="active">LT</a>
         </div>
-      </nav>
+        <button type="button" class="burger" id="burger-menu" aria-label="Atidaryti meniu" aria-expanded="false" aria-controls="nav-overlay">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
   </header>
 
-  <main style="padding-top: calc(var(--header-height) + 32px); padding-bottom: 80px;">
-    <div class="container" style="max-width: 800px;">
-      <h1 style="font-size: 2.4rem; color: var(--primary-accent); margin-bottom: 12px;">Naudojimo sąlygos</h1>
-      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 32px;">Paskutinį kartą atnaujinta: 2026 m. kovo mėn.</p>
+  <div class="nav-overlay" id="nav-overlay" aria-hidden="true">
+    <div class="nav-panel" role="dialog" aria-modal="true" aria-label="Navigacija">
+      <div class="nav-panel-top">
+        <span class="nav-panel-label">DP.FILMS</span>
+        <button type="button" class="nav-close" id="nav-close" aria-label="Uždaryti meniu">&times;</button>
+      </div>
+      <nav class="mobile-nav" aria-label="Pagrindinė navigacija">
+        <a href="index.html" class="nav-link"><span class="nav-num">01</span><span class="nav-label-text">Pradžia</span></a>
+        <a href="films.html" class="nav-link"><span class="nav-num">02</span><span class="nav-label-text">Filmai</span></a>
+        <a href="awards.html" class="nav-link"><span class="nav-num">03</span><span class="nav-label-text">Apdovanojimai</span></a>
+        <a href="about.html" class="nav-link"><span class="nav-num">04</span><span class="nav-label-text">Apie</span></a>
+        <a href="services.html" class="nav-link"><span class="nav-num">05</span><span class="nav-label-text">Bendradarbiavimas</span></a>
+        <a href="submit.html" class="nav-link"><span class="nav-num">06</span><span class="nav-label-text">Prisijunkite</span></a>
+        <a href="contact.html" class="nav-link nav-secondary"><span class="nav-label-text">Kontaktai</span></a>
+        <a href="privacy.html" class="nav-link nav-secondary"><span class="nav-label-text">Privatumo politika</span></a>
+        <a href="terms.html" class="nav-link nav-secondary active"><span class="nav-label-text">Naudojimo sąlygos</span></a>
+      </nav>
+      <div class="nav-panel-footer">
+        <div class="nav-panel-langs">
+          <a href="../terms.html">EN</a>
+          <a href="terms.html" class="active">LT</a>
+        </div>
+        <a href="mailto:info@dominikphotofficial.lt">info@dominikphotofficial.lt</a>
+      </div>
+    </div>
+  </div>
 
-      <section style="margin-bottom: 24px;">
-        <h2 style="font-size: 1.3rem; color: var(--primary-accent); margin-bottom: 8px;">1. Bendra informacija</h2>
-        <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6;">
-          Ši interneto svetainė yra oficialus režisieriaus ir kino operatoriaus Dominik Šuškevič portfolio ir trumpametražių filmų komandos paieškos portalas.
-        </p>
-      </section>
+  <main class="page-main">
+    <div class="container-narrow">
+      <header class="page-header-block">
+        <span class="feature-kicker">Naudojimo taisyklės</span>
+        <h1>Naudojimo sąlygos</h1>
+        <hr class="divider">
+        <p class="page-header-lead">Atnaujinta: 2026 m.</p>
+      </header>
 
-      <section style="margin-bottom: 24px;">
-        <h2 style="font-size: 1.3rem; color: var(--primary-accent); margin-bottom: 8px;">2. Intelektinė nuosavybė</h2>
-        <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6;">
-          Visi šioje svetainėje pateikiami filmai, vaizdo įrašai, nuotraukos, logotipas „DP | FILMS“ bei tekstai yra saugomi autorių teisių įstatymų. Bet koks jų kopijavimas ar platinimas be išankstinio raštiško sutikimo yra draudžiamas.
-        </p>
-      </section>
-
-      <section style="margin-bottom: 24px;">
-        <h2 style="font-size: 1.3rem; color: var(--primary-accent); margin-bottom: 8px;">3. Paraiškos ir scenarijai</h2>
-        <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6;">
-          Pateikdami scenarijų ar filmo idėją patvirtinate, kad esate teisėtas kūrinio autorius. Siuntimas nesuteikia teisės neatlygintinai naudoti kūrinio be oficialios autorinės sutarties pasirašymo.
-        </p>
-      </section>
+      <div class="card-surface legal-prose">
+        <section>
+          <h2>1. Autorių teisės</h2>
+          <p>Pateikdami scenarijų, sinopsį ar idėją per DP.FILMS, <strong>išlaikote 100 % autorinių ir turtinių teisių</strong> į savo originalų kūrinį. Joks projektas nepradedamas be abipusio rašytinio susitarimo.</p>
+        </section>
+        <section>
+          <h2>2. Paraiškų vertinimas</h2>
+          <p>Visos paraiškos vertinamos konfidencialiai pagal kūrybinį suderinamumą ir galimybes. Užpildyta anketa nėra automatinis garantas dalyvauti projekte.</p>
+        </section>
+        <section>
+          <h2>3. Pastaba dėl festivalio</h2>
+          <p><em>Frozen Time: What If</em> pelnė I vietą studentų kategorijoje „Ąžuolyno“ tarptautiniame kino festivalyje (2026 m. balandžio 30 d., Kauno tarptautinė gimnazija). Ši svetainė <strong>nėra</strong> festivalio paraiškų priėmimo portalas — dėl dalyvavimo festivalyje kreipkitės tiesiogiai į festivalį.</p>
+        </section>
+        <section>
+          <h2>4. Kontaktas</h2>
+          <p>Klausimai priimami adresu <a href="mailto:info@dominikphotofficial.lt" style="color: var(--accent); text-decoration: underline;">info@dominikphotofficial.lt</a>.</p>
+        </section>
+      </div>
     </div>
   </main>
 
-  <footer style="background: #ffffff; border-top: 1px solid var(--border-medium); padding: 48px 0 24px;">
-    <div class="container" style="max-width: 800px;">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-        <div>&copy; 2026 Dominik Šuškevič (DP | FILMS). Visos teisės saugomos.</div>
-        <div style="display: flex; gap: 20px;">
-          <a href="privacy.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">Privatumas</a>
-          <a href="terms.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">Sąlygos</a>
-          <a href="contact.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">Kontaktai</a>
+  <footer class="footer-minimal">
+    <div class="container">
+      <div class="footer-min-bottom" style="padding-top: 0;">
+        <div>&copy; 2026 Dominik Šuškevič · DP.FILMS</div>
+        <div class="footer-min-langs">
+          <a href="../terms.html">EN</a>
+          <span aria-hidden="true">/</span>
+          <a href="terms.html" class="active">LT</a>
         </div>
       </div>
     </div>
   </footer>
+
+  <script type="module" src="../script.js"></script>
 </body>
 </html>

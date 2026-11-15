@@ -297,7 +297,7 @@ DP | FILMS`,
 
 Thank you for reaching out regarding a videography and production collaboration.
 
-As a certified videographer and editor, I welcome discussions around commercial projects, music videos, and cinematography commissions that celebrate clean aesthetic framing, natural light, and authentic emotion.
+As a filmmaker and photographer, I welcome discussions around commercial projects, music videos, and cinematography commissions that celebrate clean aesthetic framing, natural light, and authentic emotion.
 
 Let's discuss your timeline, project scope, and creative expectations. When would be a good time for a call?
 
@@ -319,7 +319,7 @@ info@dominikphotofficial.lt`,
   <p style="font-size: 14px; color: #2f4442;">
     Warm regards,<br>
     <strong>Dominik Šuškevič</strong><br>
-    <span style="color: #5e7673; font-size: 12px;">Certified Videographer & Editor</span>
+    <span style="color: #5e7673; font-size: 12px;">Filmmaker &amp; Photographer</span>
   </p>
 </div>`
   },

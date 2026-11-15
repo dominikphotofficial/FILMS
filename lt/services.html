@@ -3,163 +3,165 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bendradarbiavimas ir paslaugos — DP | FILMS | Dominik Šuškevič</title>
-  <meta name="description" content="Kaip mes bendradarbiaujame kuriant trumpametražius filmus. Aiški rolė, autorinės teisės, festivalių titrai ir profesionalios paslaugos.">
-  <meta name="robots" content="index, follow">
+  <title>Bendradarbiavimas ir rolės — DP.FILMS | Dominik Šuškevič</title>
+  <meta name="description" content="Kaip vyksta kūrybinis bendradarbiavimas su DP.FILMS: ieškomos rolės, garantuoti titrai, autorinių teisių apsauga.">
   <link rel="canonical" href="https://films.dominikphotofficial.lt/lt/services.html">
   <link rel="alternate" hreflang="en" href="https://films.dominikphotofficial.lt/services.html">
   <link rel="alternate" hreflang="lt" href="https://films.dominikphotofficial.lt/lt/services.html">
-  <link rel="icon" type="image/png" href="https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png">
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Bendradarbiavimas ir paslaugos — DP | FILMS">
-  <meta property="og:description" content="Skaidrus bendradarbiavimo modelis kino komandai ir profesionalios videografijos paslaugos.">
-  <meta property="og:image" content="https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png">
-  <meta property="og:url" content="https://films.dominikphotofficial.lt/lt/services.html">
-
+  <link rel="icon" type="image/png" href="https://iili.io/fjNLbs4.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
 </head>
-<body>
-  <div class="ambient-pattern" aria-hidden="true"></div>
-
-  <!-- Header -->
-  <header class="header">
+<body data-root="../">
+  <header id="main-header">
     <div class="header-container">
-      <a href="index.html" class="brand" aria-label="DP Films Pradžia">
-        <img src="https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png" alt="DP FILMS Logotipas" class="brand-logo" width="36" height="36">
-        <span>DP | FILMS</span>
+      <a href="index.html" class="logo" aria-label="DP.FILMS">
+        <span class="logo-mark"><img src="https://iili.io/fjNLbs4.png" alt="DP.FILMS" class="logo-img"></span>
+        <span class="logo-sub">Films</span>
       </a>
-
-      <button type="button" class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Perjungti navigacijos meniu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-
-      <nav class="main-nav" id="main-nav" aria-label="Pagrindinė navigacija">
-        <ul class="nav-list">
-          <li><a href="index.html" class="nav-link">Pradžia</a></li>
-          <li><a href="films.html" class="nav-link">Filmai</a></li>
-          <li><a href="awards.html" class="nav-link">Apdovanojimai</a></li>
-          <li><a href="about.html" class="nav-link">Apie mane</a></li>
-          <li><a href="services.html" class="nav-link is-active">Bendradarbiavimas</a></li>
-          <li><a href="contact.html" class="nav-link">Kontaktai</a></li>
-          <li><a href="submit.html" class="nav-cta-btn">Prisijungti</a></li>
-        </ul>
-
-        <div class="lang-switcher">
-          <a href="../services.html" title="English">EN</a>
-          <span class="lang-sep">/</span>
-          <a href="services.html" class="is-active" title="Lietuvių k.">LT</a>
+      <div class="header-right">
+        <div class="header-langs" aria-label="Kalba">
+          <a href="../services.html">EN</a>
+          <span aria-hidden="true">/</span>
+          <a href="services.html" class="active">LT</a>
         </div>
-      </nav>
+        <button type="button" class="burger" id="burger-menu" aria-label="Atidaryti meniu" aria-expanded="false" aria-controls="nav-overlay">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
   </header>
 
-  <main style="padding-top: calc(var(--header-height) + 32px); padding-bottom: 80px;">
-    <div class="container" style="max-width: 900px;">
-      <!-- Breadcrumbs -->
-      <nav class="breadcrumbs" aria-label="Kelias">
-        <a href="index.html">Pradžia</a>
-        <span class="crumb-sep">/</span>
-        <span class="crumb-current">Bendradarbiavimas</span>
-      </nav>
-
-      <div style="margin-bottom: 40px;">
-        <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary-accent); text-transform: uppercase; letter-spacing: 0.1em;">Kūrybinis modelis</span>
-        <h1 style="font-size: 2.6rem; color: var(--primary-accent); margin-top: 6px;">Kaip mes dirbame kartu</h1>
-        <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.6; margin-top: 8px;">
-          Aiški atsakomybė, abipusė kūrybinė pagarba ir garantuoti titrai festivaliuose. Skaidrus trumpametražių filmų gamybos procesas.
-        </p>
+  <div class="nav-overlay" id="nav-overlay" aria-hidden="true">
+    <div class="nav-panel" role="dialog" aria-modal="true" aria-label="Navigacija">
+      <div class="nav-panel-top">
+        <span class="nav-panel-label">DP.FILMS</span>
+        <button type="button" class="nav-close" id="nav-close" aria-label="Uždaryti meniu">&times;</button>
       </div>
-
-      <!-- What Collaborators Get -->
-      <section style="background: #ffffff; border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 32px; margin-bottom: 40px; box-shadow: var(--shadow-subtle);">
-        <h2 style="font-size: 1.4rem; color: var(--primary-accent); margin-bottom: 18px;">Ką gauna kiekvienas komandos narys</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px;">
-          <div>
-            <h3 style="font-size: 1.1rem; color: var(--primary-accent); margin-bottom: 8px;">1. Garantuotas įrašas titruose</h3>
-            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6;">
-              Jūsų pavardė pradžios ir pabaigos titruose (pvz., <em>„Jonas Jonaitis — Scenarijaus autorius“</em>) visose festivalių peržiūrose ir interneto platformose.
-            </p>
-          </div>
-          <div>
-            <h3 style="font-size: 1.1rem; color: var(--primary-accent); margin-bottom: 8px;">2. Oficiali bendradarbiavimo sutartis</h3>
-            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6;">
-              Pasirašoma aiški sutartis prieš pradedant filmavimus, apsauganti jūsų autorines neturtines teises ir kūrybinį indėlį.
-            </p>
-          </div>
-          <div>
-            <h3 style="font-size: 1.1rem; color: var(--primary-accent); margin-bottom: 8px;">3. Tarptautinė festivalių sklaida</h3>
-            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6;">
-              Užbaigti filmai siunčiami į Europos ir pasaulio kino festivalius, jaunimo konkursus bei platinami aukšta kokybe.
-            </p>
-          </div>
-          <div>
-            <h3 style="font-size: 1.1rem; color: var(--primary-accent); margin-bottom: 8px;">4. Originalūs gamybos failai</h3>
-            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6;">
-              Aukštos raiškos „ProRes“ vaizdo meistras, kino kadrai ir garso takeliai jūsų asmeniniam portfolio ar aktoriaus vizitinei kortelei.
-            </p>
-          </div>
+      <nav class="mobile-nav" aria-label="Pagrindinė navigacija">
+        <a href="index.html" class="nav-link"><span class="nav-num">01</span><span class="nav-label-text">Pradžia</span></a>
+        <a href="films.html" class="nav-link"><span class="nav-num">02</span><span class="nav-label-text">Filmai</span></a>
+        <a href="awards.html" class="nav-link"><span class="nav-num">03</span><span class="nav-label-text">Apdovanojimai</span></a>
+        <a href="about.html" class="nav-link"><span class="nav-num">04</span><span class="nav-label-text">Apie</span></a>
+        <a href="services.html" class="nav-link active"><span class="nav-num">05</span><span class="nav-label-text">Bendradarbiavimas</span></a>
+        <a href="submit.html" class="nav-link"><span class="nav-num">06</span><span class="nav-label-text">Prisijunkite</span></a>
+        <a href="contact.html" class="nav-link nav-secondary"><span class="nav-label-text">Kontaktai</span></a>
+        <a href="privacy.html" class="nav-link nav-secondary"><span class="nav-label-text">Privatumo politika</span></a>
+        <a href="terms.html" class="nav-link nav-secondary"><span class="nav-label-text">Naudojimo sąlygos</span></a>
+      </nav>
+      <div class="nav-panel-footer">
+        <div class="nav-panel-langs">
+          <a href="../services.html">EN</a>
+          <a href="services.html" class="active">LT</a>
         </div>
-      </section>
+        <a href="mailto:info@dominikphotofficial.lt">info@dominikphotofficial.lt</a>
+      </div>
+    </div>
+  </div>
 
-      <!-- Roles Needed -->
-      <section style="margin-bottom: 40px;">
-        <h2 style="font-size: 1.4rem; color: var(--primary-accent); margin-bottom: 20px;">Šiuo metu ieškomi komandos nariai</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
-          <div style="background: var(--bg-surface); border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 24px;">
-            <div style="font-size: 1.8rem; margin-bottom: 8px;">✍️</div>
-            <h3 style="font-size: 1.15rem; color: var(--primary-accent); margin-bottom: 6px;">Scenaristai</h3>
-            <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
-              Ieškome originalių 5–15 minučių trumpametražių filmų scenarijų arba idėjų su stipria vizualine atmosfera ir giliais dialogais.
-            </p>
-          </div>
-          <div style="background: var(--bg-surface); border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 24px;">
-            <div style="font-size: 1.8rem; margin-bottom: 8px;">🎭</div>
-            <h3 style="font-size: 1.15rem; color: var(--primary-accent); margin-bottom: 6px;">Aktoriai ir atlikėjai</h3>
-            <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
-              Vaidybinė patirtis arba stipri natūrali charizma ekrane. Pagrindiniai ir epizodiniai vaidmenys būsimame filme.
-            </p>
-          </div>
-          <div style="background: var(--bg-surface); border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 24px;">
-            <div style="font-size: 1.8rem; margin-bottom: 8px;">🎧</div>
-            <h3 style="font-size: 1.15rem; color: var(--primary-accent); margin-bottom: 6px;">Garso dizaineriai ir kompozitoriai</h3>
-            <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
-              Atmosferinis garso dizainas, „foley“ efektai ir originalus garso takelis, stiprinantis vizualinį pasakojimą.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- CTA Box -->
-      <section style="background: #113939; color: #ffffff; border-radius: var(--radius-md); padding: 36px; text-align: center;">
-        <h2 style="font-size: 1.8rem; color: #ffffff; margin-bottom: 12px;">Turite idėją ar norite prisijungti?</h2>
-        <p style="font-size: 1.05rem; opacity: 0.9; max-width: 620px; margin: 0 auto 24px; line-height: 1.6;">
-          Užpildykite paraiškos formą ir atsiųskite savo scenarijų, idėjos aprašymą arba portfolio.
+  <main class="page-main">
+    <div class="container">
+      <header class="page-header-block">
+        <span class="feature-kicker">Bendradarbiavimo sąlygos</span>
+        <h1>Kaip kuriame filmus kartu</h1>
+        <hr class="divider">
+        <p class="page-header-lead">
+          Aiškios rolės, pagarba autorystei ir garantuoti titrai visuose festivaliuose bei skaitmeninėse premjerose.
         </p>
-        <a href="submit.html" class="btn-primary" style="background: #ffffff; color: #113939; border-color: #ffffff; padding: 12px 28px;">
-          Pateikti paraišką &rarr;
-        </a>
+      </header>
+
+      <section style="margin-bottom: var(--sp-6);">
+        <div class="section-header-editorial">
+          <span class="section-label-caps">Ieškomos rolės</span>
+          <span class="section-count-muted">Iš bet kurios šalies</span>
+        </div>
+        <div class="two-col-split fade-in-up">
+          <div class="card-surface">
+            <h3 style="margin-bottom: var(--sp-2);">Scenaristai</h3>
+            <p>Trumpametražių filmų scenarijai (5–15 psl.) su stipria vizualine struktūra ir subtiliu dialogu.</p>
+          </div>
+          <div class="card-surface">
+            <h3 style="margin-bottom: var(--sp-2);">Aktoriai</h3>
+            <p>Aktoriai, gebantys jautriai ir natūraliai dirbti prieš kamerą lietuvių, anglų ar tarptautiniuose projektuose.</p>
+          </div>
+          <div class="card-surface">
+            <h3 style="margin-bottom: var(--sp-2);">Režisieriai</h3>
+            <p>Kūrėjai, ieškantys patikimo operatoriaus ir montuotojo bendram trumpametražiam filmui įgyvendinti.</p>
+          </div>
+          <div class="card-surface">
+            <h3 style="margin-bottom: var(--sp-2);">Garso dizaineriai ir komanda</h3>
+            <p>Kompozitoriai ir garso menininkai, kuriantys atmosferinį garso takelį ir tylos dinamiką.</p>
+          </div>
+        </div>
+      </section>
+
+      <section style="margin-bottom: var(--sp-6);">
+        <div class="section-header-editorial">
+          <span class="section-label-caps">Ką gaunate</span>
+          <span class="section-count-muted">Abipusės garantijos</span>
+        </div>
+        <div class="hairline-list">
+          <div class="hairline-row fade-in-up">
+            <span class="hairline-row-year">01</span>
+            <span class="hairline-row-title">Garantuoti titrai</span>
+            <span class="hairline-row-result">Pradžios ir pabaigos titrai</span>
+            <span class="hairline-row-place">Jūsų vardas ir rolė įrašomi visose festivalių ir viešose kopijose.</span>
+          </div>
+          <div class="hairline-row fade-in-up">
+            <span class="hairline-row-year">02</span>
+            <span class="hairline-row-title">100 % autorystė</span>
+            <span class="hairline-row-result">Teisės lieka autoriui</span>
+            <span class="hairline-row-place">Scenaristai ir kompozitoriai išlaiko visas autorines teises.</span>
+          </div>
+          <div class="hairline-row fade-in-up">
+            <span class="hairline-row-year">03</span>
+            <span class="hairline-row-title">Rašytinis susitarimas</span>
+            <span class="hairline-row-result">Sutartis prieš filmavimus</span>
+            <span class="hairline-row-place">Iš anksto suderinti terminai, apimtis ir kreditavimo sąlygos.</span>
+          </div>
+          <div class="hairline-row fade-in-up">
+            <span class="hairline-row-year">04</span>
+            <span class="hairline-row-title">Aukštos raiškos medžiaga</span>
+            <span class="hairline-row-result">Showreel failai</span>
+            <span class="hairline-row-place">Paruošti video failai ir kadrai jūsų asmeniniam portfolio.</span>
+          </div>
+        </div>
+      </section>
+
+      <section style="margin-bottom: var(--sp-6);">
+        <div class="section-header-editorial">
+          <span class="section-label-caps">Komercinis filmavimas</span>
+          <span class="section-count-muted">Individuali veikla · nuo 2026 m.</span>
+        </div>
+        <div class="notice-box">
+          <strong>Oficialios filmavimo paslaugos:</strong> Nuo 2026 m. Dominik Šuškevič vykdo registruotą individualią veiklą ir teikia filmavimo, operatoriaus bei montažo paslaugas užsakomiesiems ir komerciniams projektams. Dėl sąmatos ir užimtumo rašykite <a href="mailto:info@dominikphotofficial.lt" style="color: var(--accent); text-decoration: underline;">info@dominikphotofficial.lt</a>.
+        </div>
+      </section>
+
+      <section class="booking-block fade-in-up" style="padding-top: var(--sp-4);">
+        <span class="feature-kicker">Kitas žingsnis</span>
+        <h2>Atsiųskite paraišką ar scenarijų</h2>
+        <p>Papasakokite apie savo rolę ir pridėkite idėją arba darbų nuorodą.</p>
+        <a href="submit.html" class="btn-primary">Prisijungti prie komandos</a>
       </section>
     </div>
   </main>
 
-  <footer style="background: #ffffff; border-top: 1px solid var(--border-medium); padding: 48px 0 24px;">
-    <div class="container" style="max-width: 900px;">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-        <div>&copy; 2026 Dominik Šuškevič (DP | FILMS). Visos teisės saugomos.</div>
-        <div style="display: flex; gap: 20px;">
-          <a href="privacy.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">Privatumas</a>
-          <a href="terms.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">Sąlygos</a>
-          <a href="contact.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">Kontaktai</a>
+  <footer class="footer-minimal">
+    <div class="container">
+      <div class="footer-min-bottom" style="padding-top: 0;">
+        <div>&copy; 2026 Dominik Šuškevič · DP.FILMS</div>
+        <div class="footer-min-langs">
+          <a href="../services.html">EN</a>
+          <span aria-hidden="true">/</span>
+          <a href="services.html" class="active">LT</a>
         </div>
       </div>
     </div>
   </footer>
 
-  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../script.js"></script>
 </body>
 </html>

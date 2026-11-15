@@ -3,23 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Page Not Found — DP | FILMS</title>
+  <title>Page Not Found — DP.FILMS</title>
   <meta name="robots" content="noindex, follow">
-  <link rel="icon" type="image/png" href="https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/png" href="https://iili.io/fjNLbs4.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body style="min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 24px;">
-  <div class="ambient-pattern" aria-hidden="true"></div>
-  <div style="max-width: 520px; background: #ffffff; border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 48px 32px; box-shadow: var(--shadow-card); position: relative; z-index: 1;">
-    <div style="font-size: 3rem; margin-bottom: 12px; color: var(--primary-accent); font-weight: 700; font-family: var(--font-mono);">404</div>
-    <h1 style="font-size: 1.6rem; color: var(--primary-accent); margin-bottom: 12px;">Scene Not Found</h1>
-    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 28px;">
-      The page you requested doesn't exist or has moved. Return to the homepage or explore our films.
-    </p>
-    <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-      <a href="index.html" class="btn-primary" style="padding: 10px 24px;">Return Home &rarr;</a>
-      <a href="films.html" class="btn-secondary" style="padding: 10px 24px;">Browse Films &nearr;</a>
+<body data-root="">
+  <header id="main-header">
+    <div class="header-container">
+      <a href="index.html" class="logo" aria-label="DP.FILMS">
+        <span class="logo-mark"><img src="https://iili.io/fjNLbs4.png" alt="DP.FILMS" class="logo-img"></span>
+        <span class="logo-sub">Films</span>
+      </a>
+      <div class="header-right">
+        <div class="header-langs" aria-label="Language">
+          <a href="index.html">EN</a>
+          <span aria-hidden="true">/</span>
+          <a href="lt/index.html">LT</a>
+        </div>
+      </div>
     </div>
-  </div>
+  </header>
+
+  <main class="page-main">
+    <section class="booking-block">
+      <span class="feature-kicker">404</span>
+      <h1>Scene Not Found</h1>
+      <p>The page you requested does not exist or has moved. Return to the main portfolio or explore the filmography.</p>
+      <div style="display: flex; justify-content: center; gap: var(--sp-3); flex-wrap: wrap;">
+        <a href="index.html" class="btn-primary">Return Home</a>
+        <a href="films.html" class="btn-secondary">Watch Films</a>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="script.js"></script>
 </body>
 </html>

@@ -3,218 +3,193 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Collaboration &amp; Services — DP | FILMS | Dominik Šuškevič</title>
-  <meta name="description" content="Explore how collaboration works with DP | FILMS: needed roles, screen credits guarantee, cinematography and editing capabilities.">
-  <meta name="robots" content="index, follow">
+  <title>Collaboration &amp; Roles — DP.FILMS | Dominik Šuškevič</title>
+  <meta name="description" content="How international short film collaboration works with DP.FILMS: needed roles, screen credit guarantee, author IP protection, and workflow.">
   <link rel="canonical" href="https://films.dominikphotofficial.lt/services.html">
   <link rel="alternate" hreflang="en" href="https://films.dominikphotofficial.lt/services.html">
   <link rel="alternate" hreflang="lt" href="https://films.dominikphotofficial.lt/lt/services.html">
-  <link rel="icon" type="image/png" href="https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png">
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Collaboration &amp; Services — DP | FILMS">
-  <meta property="og:description" content="What collaborators get, roles needed, and production workflow for our upcoming international short film.">
-  <meta property="og:image" content="https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png">
-  <meta property="og:url" content="https://films.dominikphotofficial.lt/services.html">
-
+  <link rel="icon" type="image/png" href="https://iili.io/fjNLbs4.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <div class="ambient-pattern" aria-hidden="true"></div>
-
-  <!-- Header -->
-  <header class="header">
+<body data-root="">
+  <header id="main-header">
     <div class="header-container">
-      <a href="index.html" class="brand" aria-label="DP Films Home">
-        <img src="https://i.postimg.cc/GtRtnqFf/DP-FILMS-LOGO.png" alt="DP FILMS Logo" class="brand-logo" width="36" height="36">
-        <span>DP | FILMS</span>
+      <a href="index.html" class="logo" aria-label="DP.FILMS">
+        <span class="logo-mark"><img src="https://iili.io/fjNLbs4.png" alt="DP.FILMS" class="logo-img"></span>
+        <span class="logo-sub">Films</span>
       </a>
-
-      <button type="button" class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-
-      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
-        <ul class="nav-list">
-          <li><a href="index.html" class="nav-link">Home</a></li>
-          <li><a href="films.html" class="nav-link">Films</a></li>
-          <li><a href="awards.html" class="nav-link">Awards</a></li>
-          <li><a href="about.html" class="nav-link">About</a></li>
-          <li><a href="services.html" class="nav-link is-active">Services</a></li>
-          <li><a href="contact.html" class="nav-link">Contact</a></li>
-          <li><a href="submit.html" class="nav-cta-btn">Join the Team</a></li>
-        </ul>
-
-        <div class="lang-switcher">
-          <a href="services.html" class="is-active">EN</a>
-          <span class="lang-sep">/</span>
+      <div class="header-right">
+        <div class="header-langs" aria-label="Language">
+          <a href="services.html" class="active">EN</a>
+          <span aria-hidden="true">/</span>
           <a href="lt/services.html">LT</a>
         </div>
-      </nav>
+        <button type="button" class="burger" id="burger-menu" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
   </header>
 
-  <main style="padding-top: calc(var(--header-height) + 32px); padding-bottom: 80px;">
-    <div class="container" style="max-width: 900px;">
-      <!-- Breadcrumbs -->
-      <nav class="breadcrumbs" aria-label="Breadcrumbs">
-        <a href="index.html">Home</a>
-        <span class="crumb-sep">/</span>
-        <span class="crumb-current">Services &amp; Collaboration</span>
+  <div class="nav-overlay" id="nav-overlay" aria-hidden="true">
+    <div class="nav-panel" role="dialog" aria-modal="true" aria-label="Navigation">
+      <div class="nav-panel-top">
+        <span class="nav-panel-label">DP.FILMS</span>
+        <button type="button" class="nav-close" id="nav-close" aria-label="Close menu">&times;</button>
+      </div>
+      <nav class="mobile-nav" aria-label="Primary">
+        <a href="index.html" class="nav-link"><span class="nav-num">01</span><span class="nav-label-text">Home</span></a>
+        <a href="films.html" class="nav-link"><span class="nav-num">02</span><span class="nav-label-text">Films</span></a>
+        <a href="awards.html" class="nav-link"><span class="nav-num">03</span><span class="nav-label-text">Awards</span></a>
+        <a href="about.html" class="nav-link"><span class="nav-num">04</span><span class="nav-label-text">About</span></a>
+        <a href="services.html" class="nav-link active"><span class="nav-num">05</span><span class="nav-label-text">Collaboration</span></a>
+        <a href="submit.html" class="nav-link"><span class="nav-num">06</span><span class="nav-label-text">Join the Team</span></a>
+        <a href="contact.html" class="nav-link nav-secondary"><span class="nav-label-text">Contact</span></a>
+        <a href="privacy.html" class="nav-link nav-secondary"><span class="nav-label-text">Privacy Policy</span></a>
+        <a href="terms.html" class="nav-link nav-secondary"><span class="nav-label-text">Terms of Service</span></a>
       </nav>
-
-      <div style="margin-bottom: 40px;">
-        <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary-accent); text-transform: uppercase; letter-spacing: 0.1em;">Team Collaboration Model</span>
-        <h1 style="font-size: 2.6rem; color: var(--primary-accent); margin-top: 6px;">How We Work Together</h1>
-        <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.6; margin-top: 8px;">
-          Clear roles, mutual creative respect, and guaranteed festival credits. Transparent collaboration for short film projects.
-        </p>
+      <div class="nav-panel-footer">
+        <div class="nav-panel-langs">
+          <a href="services.html" class="active">EN</a>
+          <a href="lt/services.html">LT</a>
+        </div>
+        <a href="mailto:info@dominikphotofficial.lt">info@dominikphotofficial.lt</a>
       </div>
+    </div>
+  </div>
 
-      <!-- What Collaborators Get -->
-      <section style="background: #ffffff; border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 32px; margin-bottom: 40px; box-shadow: var(--shadow-subtle);">
-        <h2 style="font-size: 1.4rem; color: var(--primary-accent); margin-bottom: 18px;">What You Get as a Collaborator</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px;">
-          <div>
-            <h3 style="font-size: 1.1rem; color: var(--primary-accent); margin-bottom: 8px;">1. Guaranteed Screen Credit</h3>
-            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6;">
-              Prominent screen credit in both opening and ending titles (e.g. <em>"Jane Doe — Screenplay"</em>) across all festival screenings and online distribution.
-            </p>
-          </div>
-          <div>
-            <h3 style="font-size: 1.1rem; color: var(--primary-accent); margin-bottom: 8px;">2. Official Deal Memo</h3>
-            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6;">
-              A formal bilateral collaboration agreement signed before production commences, protecting your moral authorship rights.
-            </p>
-          </div>
-          <div>
-            <h3 style="font-size: 1.1rem; color: var(--primary-accent); margin-bottom: 8px;">3. International Distribution</h3>
-            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6;">
-              Completed films are targeted for European and international film festival submissions, youth showcases, and high-definition public releases.
-            </p>
-          </div>
-          <div>
-            <h3 style="font-size: 1.1rem; color: var(--primary-accent); margin-bottom: 8px;">4. Production Master Files</h3>
-            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6;">
-              High-resolution ProRes video masters, pristine stills, and audio stems for your personal showreel and acting/directing portfolio.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Roles Needed -->
-      <section style="margin-bottom: 40px;">
-        <h2 style="font-size: 1.4rem; color: var(--primary-accent); margin-bottom: 20px;">Roles Currently Needed</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
-          <div style="background: var(--bg-surface); border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 24px;">
-            <div style="font-size: 1.5rem; margin-bottom: 8px;">📜</div>
-            <h3 style="font-size: 1.15rem; color: var(--primary-accent); margin-bottom: 6px;">Screenwriters &amp; Co-Writers</h3>
-            <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
-              Writers with short narrative scripts (5–15 pages) featuring strong visual dialogue, psychological tension, or atmospheric winter drama.
-            </p>
-          </div>
-
-          <div style="background: var(--bg-surface); border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 24px;">
-            <div style="font-size: 1.5rem; margin-bottom: 8px;">🎭</div>
-            <h3 style="font-size: 1.15rem; color: var(--primary-accent); margin-bottom: 6px;">Actors &amp; Performers</h3>
-            <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
-              Performers comfortable with subtle, nuanced on-camera acting and emotional restraint. Open to actors from Lithuania and internationally.
-            </p>
-          </div>
-
-          <div style="background: var(--bg-surface); border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 24px;">
-            <div style="font-size: 1.5rem; margin-bottom: 8px;">🎬</div>
-            <h3 style="font-size: 1.15rem; color: var(--primary-accent); margin-bottom: 6px;">Co-Directors &amp; Story Editors</h3>
-            <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
-              Creative directors wanting a dedicated cinematographer and editor to bring their visual vision to life on location or remotely.
-            </p>
-          </div>
-
-          <div style="background: var(--bg-surface); border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 24px;">
-            <div style="font-size: 1.5rem; margin-bottom: 8px;">🎵</div>
-            <h3 style="font-size: 1.15rem; color: var(--primary-accent); margin-bottom: 6px;">Sound Designers &amp; Composers</h3>
-            <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
-              Musicians and audio engineers specializing in organic ambient textures, silence dynamics, and cinematic atmospheric scores.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- The 4-Step Process -->
-      <section style="margin-bottom: 40px;">
-        <h2 style="font-size: 1.4rem; color: var(--primary-accent); margin-bottom: 20px;">The 4-Step Production Process</h2>
-        <div style="display: flex; flex-direction: column; gap: 16px;">
-          <div style="display: flex; gap: 18px; align-items: flex-start; background: #ffffff; border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 20px;">
-            <div style="font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; color: #ffffff; background: var(--primary-accent); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
-            <div>
-              <h3 style="font-size: 1.1rem; color: var(--primary-accent);">Pitch or Role Application</h3>
-              <p style="font-size: 0.92rem; color: var(--text-secondary); margin-top: 4px; line-height: 1.6;">You fill out the submission form with your screenplay, pitch, or reel. I review every entry personally within 48 hours.</p>
-            </div>
-          </div>
-
-          <div style="display: flex; gap: 18px; align-items: flex-start; background: #ffffff; border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 20px;">
-            <div style="font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; color: #ffffff; background: var(--primary-accent); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
-            <div>
-              <h3 style="font-size: 1.1rem; color: var(--primary-accent);">Creative Consultation &amp; Agreement</h3>
-              <p style="font-size: 0.92rem; color: var(--text-secondary); margin-top: 4px; line-height: 1.6;">We connect via Telegram or video call to align on visual tone, timeline, and sign our mutual deal memo guarantee.</p>
-            </div>
-          </div>
-
-          <div style="display: flex; gap: 18px; align-items: flex-start; background: #ffffff; border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 20px;">
-            <div style="font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; color: #ffffff; background: var(--primary-accent); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
-            <div>
-              <h3 style="font-size: 1.1rem; color: var(--primary-accent);">Filming &amp; Post-Production</h3>
-              <p style="font-size: 0.92rem; color: var(--text-secondary); margin-top: 4px; line-height: 1.6;">Production takes place on location or remotely. I handle camera direction, cinematography, rough cut, color grading, and audio mastering.</p>
-            </div>
-          </div>
-
-          <div style="display: flex; gap: 18px; align-items: flex-start; background: #ffffff; border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 20px;">
-            <div style="font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; color: #ffffff; background: var(--primary-accent); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
-            <div>
-              <h3 style="font-size: 1.1rem; color: var(--primary-accent);">Festival Submissions &amp; Distribution</h3>
-              <p style="font-size: 0.92rem; color: var(--text-secondary); margin-top: 4px; line-height: 1.6;">The film is submitted to international festivals and celebrated online with full credits and portfolio assets for everyone.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Technical Capabilities (Cinematography & Editing) -->
-      <section style="background: var(--bg-surface); border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 28px; margin-bottom: 40px;">
-        <h2 style="font-size: 1.35rem; color: var(--primary-accent); margin-bottom: 12px;">Technical Capabilities</h2>
-        <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">
-          Informational list of technical production services I provide for collaborating directors and creators:
+  <main class="page-main">
+    <div class="container">
+      <header class="page-header-block">
+        <span class="feature-kicker">Collaboration Terms</span>
+        <h1>How We Make a Film Together</h1>
+        <hr class="divider">
+        <p class="page-header-lead">
+          Transparent roles, respect for original authorship, and guaranteed opening and closing screen credits across all festival and online screenings.
         </p>
-        <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.92rem; color: var(--text-secondary);">
-          <li>🎥 <strong>Cinematography:</strong> Lighting setups, camera operating, mobile rigs, framing, drone cinematography.</li>
-          <li>🎬 <strong>Editing &amp; Pacing:</strong> Non-linear editing, narrative assembly, scene rhythm, trailer cuts.</li>
-          <li>🎨 <strong>Color Grading:</strong> DaVinci Resolve color pipelines, filmic emulation, and mood-matching.</li>
-        </ul>
+      </header>
+
+      <section style="margin-bottom: var(--sp-6);">
+        <div class="section-header-editorial">
+          <span class="section-label-caps">Open Roles</span>
+          <span class="section-count-muted">Any Country · Remote or On-Set</span>
+        </div>
+        <div class="two-col-split fade-in-up">
+          <div class="card-surface">
+            <h3 style="margin-bottom: var(--sp-2);">Screenwriters</h3>
+            <p>Short narrative scripts or treatments (5–15 pages) with visual clarity, silence, and strong human subtext.</p>
+          </div>
+          <div class="card-surface">
+            <h3 style="margin-bottom: var(--sp-2);">Actors &amp; Performers</h3>
+            <p>Performers comfortable with understated, camera-first acting in Lithuanian, English, or international co-productions.</p>
+          </div>
+          <div class="card-surface">
+            <h3 style="margin-bottom: var(--sp-2);">Directors &amp; Co-Directors</h3>
+            <p>Storytellers seeking a dedicated cinematographer, editor, and colorist to realize a shared narrative vision.</p>
+          </div>
+          <div class="card-surface">
+            <h3 style="margin-bottom: var(--sp-2);">Sound Designers &amp; Crew</h3>
+            <p>Audio artists shaping ambient textures, sparse dialogue mixes, and restrained original scores.</p>
+          </div>
+        </div>
       </section>
 
-      <!-- Action -->
-      <div style="text-align: center; padding: 20px 0;">
-        <a href="submit.html" class="btn-primary" style="padding: 14px 32px; font-size: 1.05rem;">Submit Your Pitch or Apply &rarr;</a>
-      </div>
+      <section style="margin-bottom: var(--sp-6);">
+        <div class="section-header-editorial">
+          <span class="section-label-caps">What You Receive</span>
+          <span class="section-count-muted">Mutual Guarantees</span>
+        </div>
+        <div class="hairline-list">
+          <div class="hairline-row fade-in-up">
+            <span class="hairline-row-year">01</span>
+            <span class="hairline-row-title">Guaranteed Screen Credit</span>
+            <span class="hairline-row-result">Opening &amp; Closing Titles</span>
+            <span class="hairline-row-place">Every festival screening &amp; release carries your official role title.</span>
+          </div>
+          <div class="hairline-row fade-in-up">
+            <span class="hairline-row-year">02</span>
+            <span class="hairline-row-title">100% Author Copyright</span>
+            <span class="hairline-row-result">Full Moral &amp; IP Ownership</span>
+            <span class="hairline-row-place">Writers and composers keep full copyright over original work.</span>
+          </div>
+          <div class="hairline-row fade-in-up">
+            <span class="hairline-row-year">03</span>
+            <span class="hairline-row-title">Collaboration Deal Memo</span>
+            <span class="hairline-row-result">Signed Before Production</span>
+            <span class="hairline-row-place">Clear written scope, schedule, and credit terms agreed in advance.</span>
+          </div>
+          <div class="hairline-row fade-in-up">
+            <span class="hairline-row-year">04</span>
+            <span class="hairline-row-title">Showreel Master Files</span>
+            <span class="hairline-row-result">High-Res Delivery</span>
+            <span class="hairline-row-place">Full-resolution film masters and frame stills provided for your portfolio.</span>
+          </div>
+        </div>
+      </section>
+
+      <section style="margin-bottom: var(--sp-6);">
+        <div class="section-header-editorial">
+          <span class="section-label-caps">Commercial Filming</span>
+          <span class="section-count-muted">Individual Activity · Since 2026</span>
+        </div>
+        <div class="notice-box">
+          <strong>Official Filming Services:</strong> Since 2026, Dominik Šuškevič operates under registered Individual Activity (<em>Individuali veikla</em>) in Lithuania and is available for commissioned videography, cinematography, and editing projects alongside collaborative short narrative films. Contact <a href="mailto:info@dominikphotofficial.lt" style="color: var(--accent); text-decoration: underline;">info@dominikphotofficial.lt</a> for rates and availability.
+        </div>
+      </section>
+
+      <section class="booking-block fade-in-up" style="padding-top: var(--sp-4);">
+        <span class="feature-kicker">Ready to Start</span>
+        <h2>Send Your Application or Script</h2>
+        <p>Tell me what role you bring to the set and attach a short treatment or reel link if available.</p>
+        <a href="submit.html" class="btn-primary">Join the Team</a>
+      </section>
     </div>
   </main>
 
-  <footer style="background: #ffffff; border-top: 1px solid var(--border-medium); padding: 48px 0 24px;">
-    <div class="container" style="max-width: 900px;">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-        <div>&copy; 2026 Dominik Šuškevič (DP | FILMS). All rights reserved.</div>
-        <div style="display: flex; gap: 20px;">
-          <a href="privacy.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">Privacy</a>
-          <a href="terms.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">Terms</a>
-          <a href="contact.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">Contact</a>
+  <footer class="footer-minimal">
+    <div class="container">
+      <div class="footer-editorial-grid">
+        <div class="footer-brand-col">
+          <a href="index.html" class="logo" aria-label="DP.FILMS">
+            <span class="logo-mark"><img src="https://iili.io/fjNLbs4.png" alt="DP.FILMS" class="logo-img"></span>
+            <span class="logo-sub">Films</span>
+          </a>
+          <p class="footer-brand-tagline">Space · Light · Emotion</p>
+          <a href="mailto:info@dominikphotofficial.lt" style="font-size: var(--fs-sm); color: var(--text-muted);">info@dominikphotofficial.lt</a>
+        </div>
+        <div>
+          <h3 class="footer-col-title">Navigation</h3>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="films.html">Films (11 Works)</a></li>
+            <li><a href="awards.html">Awards</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="submit.html">Join the Team</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer-col-title">Information</h3>
+          <ul class="footer-links">
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-min-bottom">
+        <div>&copy; 2026 Dominik Šuškevič · DP.FILMS</div>
+        <div class="footer-min-langs">
+          <a href="services.html" class="active">EN</a>
+          <span aria-hidden="true">/</span>
+          <a href="lt/services.html">LT</a>
         </div>
       </div>
     </div>
   </footer>
 
-  <script type="module" src="js/main.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>

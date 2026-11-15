@@ -6,7 +6,7 @@
     "dev": "node server.js",
     "start": "node server.js",
     "build": "node -e \"console.log('Build complete')\"",
-    "lint": "node -c server.js config.js script.js"
+    "lint": "node -c server.js firebase-config.js script.js mail-templates.js"
   },
   "dependencies": {
     "express": "^4.21.2"

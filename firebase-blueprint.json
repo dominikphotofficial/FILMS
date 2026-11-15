@@ -120,6 +120,16 @@
             "maxLength": 100
           }
         },
+        "from": {
+          "type": "string",
+          "maxLength": 120,
+          "description": "Sender address for Trigger Email (DP.FILMS <films@dominikphotofficial.lt>)"
+        },
+        "replyTo": {
+          "type": "string",
+          "maxLength": 120,
+          "description": "Reply-To address (info@dominikphotofficial.lt)"
+        },
         "message": {
           "type": "object",
           "properties": {

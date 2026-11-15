@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join the Team / Submit Application — DP.FILMS</title>
+  <meta name="description" content="Submit your screenplay, film idea, or apply to collaborate as an actor, writer, director, or sound designer on the next DP.FILMS short film.">
+  <link rel="canonical" href="https://films.dominikphotofficial.lt/submit.html">
+  <link rel="alternate" hreflang="en" href="https://films.dominikphotofficial.lt/submit.html">
+  <link rel="alternate" hreflang="lt" href="https://films.dominikphotofficial.lt/lt/submit.html">
+  <link rel="icon" type="image/png" href="https://iili.io/fjNLbs4.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body data-root="../">
+  <header id="main-header">
+    <div class="header-container">
+      <a href="index.html" class="logo" aria-label="DP.FILMS">
+        <span class="logo-mark"><img src="https://iili.io/fjNLbs4.png" alt="DP.FILMS" class="logo-img"></span>
+        <span class="logo-sub">Films</span>
+      </a>
+      <div class="header-right">
+        <div class="header-langs" aria-label="Language">
+          <a href="submit.html" class="active">EN</a>
+          <span aria-hidden="true">/</span>
+          <a href="../lt/submit.html">LT</a>
+        </div>
+        <button type="button" class="burger" id="burger-menu" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="nav-overlay" id="nav-overlay" aria-hidden="true">
+    <div class="nav-panel" role="dialog" aria-modal="true" aria-label="Navigation">
+      <div class="nav-panel-top">
+        <span class="nav-panel-label">DP.FILMS</span>
+        <button type="button" class="nav-close" id="nav-close" aria-label="Close menu">&times;</button>
+      </div>
+      <nav class="mobile-nav" aria-label="Primary">
+        <a href="index.html" class="nav-link"><span class="nav-num">01</span><span class="nav-label-text">Home</span></a>
+        <a href="films.html" class="nav-link"><span class="nav-num">02</span><span class="nav-label-text">Films</span></a>
+        <a href="awards.html" class="nav-link"><span class="nav-num">03</span><span class="nav-label-text">Awards</span></a>
+        <a href="about.html" class="nav-link"><span class="nav-num">04</span><span class="nav-label-text">About</span></a>
+        <a href="services.html" class="nav-link"><span class="nav-num">05</span><span class="nav-label-text">Collaboration</span></a>
+        <a href="submit.html" class="nav-link active"><span class="nav-num">06</span><span class="nav-label-text">Join the Team</span></a>
+        <a href="contact.html" class="nav-link nav-secondary"><span class="nav-label-text">Contact</span></a>
+        <a href="privacy.html" class="nav-link nav-secondary"><span class="nav-label-text">Privacy Policy</span></a>
+        <a href="terms.html" class="nav-link nav-secondary"><span class="nav-label-text">Terms of Service</span></a>
+      </nav>
+      <div class="nav-panel-footer">
+        <div class="nav-panel-langs">
+          <a href="submit.html" class="active">EN</a>
+          <a href="../lt/submit.html">LT</a>
+        </div>
+        <a href="mailto:info@dominikphotofficial.lt">info@dominikphotofficial.lt</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="page-main">
+    <div class="container">
+      <header class="page-header-block">
+        <span class="feature-kicker">Recruitment &amp; Pitch</span>
+        <h1>Join the Film Team</h1>
+        <hr class="divider">
+        <p class="page-header-lead">
+          Apply for a role or share a short film script or concept. Every application is read personally within 48 hours.
+        </p>
+      </header>
+
+      <div class="two-col-split">
+        <div class="card-surface">
+          <div id="form-alert-box" class="form-alert" style="margin-bottom: var(--sp-3);"></div>
+
+          <form id="film-proposal-form" class="form-stack">
+            <input type="text" name="website_hp" style="display: none;" tabindex="-1" autocomplete="off">
+
+            <div class="form-group">
+              <label for="input-name" class="form-label">Full Name *</label>
+              <input type="text" id="input-name" name="name" class="form-input" placeholder="Your full name" required>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="input-country" class="form-label">Country / Location *</label>
+                <input type="text" id="input-country" name="country" class="form-input" placeholder="e.g. Lithuania, Poland, UK" required>
+              </div>
+              <div class="form-group">
+                <label for="input-role" class="form-label">Your Role *</label>
+                <select id="input-role" name="role" class="form-input">
+                  <option value="Screenwriter">Screenwriter</option>
+                  <option value="Actor">Actor / Performer</option>
+                  <option value="Director">Co-Director / Director</option>
+                  <option value="Sound Designer / Composer">Sound Designer / Composer</option>
+                  <option value="Crew / Producer">Technical Crew / Producer</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="input-type" class="form-label">Proposal Type *</label>
+                <select id="input-type" name="type" class="form-input">
+                  <option value="Join the Film Team">Join the Film Team</option>
+                  <option value="Film Idea">Film Idea</option>
+                  <option value="Screenplay">Screenplay</option>
+                  <option value="Commercial/Videography Collaboration">Commercial Collaboration</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="input-contact-type" class="form-label">Preferred Contact *</label>
+                <select id="input-contact-type" name="contactType" class="form-input">
+                  <option value="Email">Email</option>
+                  <option value="Telegram">Telegram</option>
+                  <option value="Instagram">Instagram</option>
+                  <option value="Phone / WhatsApp">Phone / WhatsApp</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="input-handle" class="form-label">Email or Handle *</label>
+              <input type="text" id="input-handle" name="handle" class="form-input" placeholder="you@example.com or @username" required>
+            </div>
+
+            <div class="form-group">
+              <label for="input-message" class="form-label">Message, Logline or Reel Link *</label>
+              <textarea id="input-message" name="message" class="form-input" rows="5" placeholder="Describe your background, idea, or paste a showreel / portfolio link..." required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="input-file">Attachment (Optional, .pdf / .doc / .docx / .txt, max 25 MB)</label>
+              <input type="file" id="input-file" name="file" accept=".pdf,.doc,.docx,.txt" style="display: none;">
+              <div id="file-drop-zone" class="file-drop-zone" tabindex="0" role="button">
+                Click or drop a script / treatment file here
+              </div>
+              <div id="file-selected-badge" class="file-selected-row">
+                <span id="file-name-display"></span>
+                <button type="button" id="btn-remove-file" class="file-remove-btn" aria-label="Remove file">&times;</button>
+              </div>
+              <div id="upload-progress-box" class="progress-track">
+                <div id="upload-progress-bar" class="progress-fill"></div>
+              </div>
+            </div>
+
+            <div class="consent-row">
+              <input type="checkbox" id="input-consent" name="consent" required>
+              <label for="input-consent">
+                I agree to the processing of my submitted information in accordance with the <a href="privacy.html" target="_blank">Privacy Policy</a> and <a href="terms.html" target="_blank">Terms of Service</a>.
+              </label>
+            </div>
+
+            <button type="submit" id="form-submit-btn" class="btn-primary">Send Application</button>
+          </form>
+
+          <div id="form-success-card" class="form-success-panel">
+            <span class="feature-kicker">Confirmed</span>
+            <h2>Application Received</h2>
+            <p id="form-success-desc">Thank you! Your application has been recorded and delivered to Dominik Šuškevič.</p>
+            <a href="films.html" class="btn-secondary">Watch My Films</a>
+          </div>
+        </div>
+
+        <aside style="display: flex; flex-direction: column; gap: var(--sp-4);">
+          <div class="card-surface">
+            <span class="feature-kicker">Process</span>
+            <h2 style="font-size: var(--fs-lg); margin-bottom: var(--sp-3);">What Happens Next</h2>
+            <ul class="feature-list">
+              <li>Personal review by Dominik within 48 hours.</li>
+              <li>Introductory video call or message via your chosen channel.</li>
+              <li>Written Collaboration Deal Memo guaranteeing opening/closing screen credit.</li>
+              <li>You retain 100% copyright over your original creative writing.</li>
+            </ul>
+          </div>
+
+          <div class="card-surface">
+            <span class="feature-kicker">Direct Channels</span>
+            <div class="meta-rows" style="margin-top: var(--sp-2);">
+              <div class="meta-row">
+                <span class="meta-label">Email</span>
+                <span class="meta-value"><a href="mailto:info@dominikphotofficial.lt" style="text-decoration: underline;">info@dominikphotofficial.lt</a></span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label">Telegram</span>
+                <span class="meta-value"><a href="https://t.me/dominikphotofficial" target="_blank" rel="noopener noreferrer">@dominikphotofficial ↗</a></span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label">Instagram</span>
+                <span class="meta-value"><a href="https://www.instagram.com/dominikphotofficial" target="_blank" rel="noopener noreferrer">@dominikphotofficial ↗</a></span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer-minimal">
+    <div class="container">
+      <div class="footer-editorial-grid">
+        <div class="footer-brand-col">
+          <a href="index.html" class="logo" aria-label="DP.FILMS">
+            <span class="logo-mark"><img src="https://iili.io/fjNLbs4.png" alt="DP.FILMS" class="logo-img"></span>
+            <span class="logo-sub">Films</span>
+          </a>
+          <p class="footer-brand-tagline">Space · Light · Emotion</p>
+          <a href="mailto:info@dominikphotofficial.lt" style="font-size: var(--fs-sm); color: var(--text-muted);">info@dominikphotofficial.lt</a>
+        </div>
+        <div>
+          <h3 class="footer-col-title">Navigation</h3>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="films.html">Films (11 Works)</a></li>
+            <li><a href="awards.html">Awards</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Collaboration Terms</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer-col-title">Information</h3>
+          <ul class="footer-links">
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-min-bottom">
+        <div>&copy; 2026 Dominik Šuškevič · DP.FILMS</div>
+        <div class="footer-min-langs">
+          <a href="submit.html" class="active">EN</a>
+          <span aria-hidden="true">/</span>
+          <a href="../lt/submit.html">LT</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="../script.js"></script>
+</body>
+</html>

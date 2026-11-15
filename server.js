@@ -67,7 +67,7 @@ function saveTeam(list) {
 const DEFAULT_PROFILE = {
   name: 'Dominik Šuškevič',
   email: 'dominikphotofficial.lt@gmail.com',
-  title: 'Certified Videographer, Cinematographer & Director',
+  title: 'Filmmaker & Photographer',
   publicContactEmail: 'info@dominikphotofficial.lt',
   updatedAt: new Date().toISOString()
 };
@@ -400,13 +400,48 @@ app.post('/api/admin/profile', (req, res) => {
 });
 
 // ==========================================================================
-// Static Assets & Web Routes
+// Static Assets & Flat Multi-Page Web Routes
 // ==========================================================================
 
-// Serve static assets from root
 app.use(express.static(__dirname));
 
-// Explicit English version: /en, /en/, /en/index.html
+const FLAT_PAGES = [
+  'films',
+  'awards',
+  'frozen-time',
+  'about',
+  'services',
+  'submit',
+  'contact',
+  'privacy',
+  'terms'
+];
+
+// Clean extensionless & trailing-slash routes for root, /en, and /lt
+FLAT_PAGES.forEach((page) => {
+  app.get([`/${page}`, `/${page}/`, `/${page}.html`], (req, res) => {
+    res.sendFile(path.join(__dirname, `${page}.html`));
+  });
+  app.get([`/en/${page}`, `/en/${page}/`, `/en/${page}.html`], (req, res) => {
+    res.sendFile(path.join(__dirname, 'en', `${page}.html`));
+  });
+  app.get([`/lt/${page}`, `/lt/${page}/`, `/lt/${page}.html`], (req, res) => {
+    res.sendFile(path.join(__dirname, 'lt', `${page}.html`));
+  });
+});
+
+// Legacy alias support for /awards/frozen-time paths -> flat frozen-time.html
+app.get(['/awards/frozen-time', '/awards/frozen-time/', '/awards/frozen-time.html'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'frozen-time.html'));
+});
+app.get(['/en/awards/frozen-time', '/en/awards/frozen-time/', '/en/awards/frozen-time.html'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'en', 'frozen-time.html'));
+});
+app.get(['/lt/awards/frozen-time', '/lt/awards/frozen-time/', '/lt/awards/frozen-time.html'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'lt', 'frozen-time.html'));
+});
+
+// Explicit English mirror: /en, /en/, /en/index.html
 app.get(['/en', '/en/', '/en/index.html'], (req, res) => {
   res.sendFile(path.join(__dirname, 'en', 'index.html'));
 });
@@ -416,25 +451,19 @@ app.get(['/lt', '/lt/', '/lt/index.html'], (req, res) => {
   res.sendFile(path.join(__dirname, 'lt', 'index.html'));
 });
 
-// Admin panel (stealth URL - accessed directly via address bar)
-app.get(['/admin', '/admin.html'], (req, res) => {
+// Admin panel
+app.get(['/admin', '/admin/', '/admin.html'], (req, res) => {
   res.sendFile(path.join(__dirname, 'admin.html'));
 });
 
 // Root /
-app.get('/', (req, res) => {
+app.get(['/', '/index.html'], (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Fallback route handler
-app.get('*', (req, res) => {
-  if (req.path.startsWith('/lt')) {
-    res.sendFile(path.join(__dirname, 'lt', 'index.html'));
-  } else if (req.path.startsWith('/en')) {
-    res.sendFile(path.join(__dirname, 'en', 'index.html'));
-  } else {
-    res.sendFile(path.join(__dirname, 'index.html'));
-  }
+// Branded 404 handler
+app.use((req, res) => {
+  res.status(404).sendFile(path.join(__dirname, '404.html'));
 });
 
 app.listen(PORT, HOST, () => {
