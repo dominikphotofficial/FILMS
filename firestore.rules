@@ -6,6 +6,10 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
     function isAdmin() {
       return request.auth != null
           && request.auth.token.email_verified == true
@@ -14,53 +18,83 @@ service cloud.firestore {
 
     function isValidSubmission(data) {
       return data.keys().hasAll(['name', 'handle', 'contact', 'message'])
-          && data.name is string
-          && data.name.size() > 0
-          && data.name.size() <= 120
-          && data.handle is string
-          && data.handle.size() > 0
-          && data.handle.size() <= 200
-          && data.contact is string
-          && data.contact.size() > 0
-          && data.contact.size() <= 250
-          && data.message is string
-          && data.message.size() > 0
-          && data.message.size() <= 8000
-          && (!('status' in data) || data.status == 'new');
+          && data.keys().hasOnly([
+            'name', 'country', 'role', 'category', 'type',
+            'contactType', 'handle', 'contact', 'message',
+            'status', 'unread', 'notes', 'lang',
+            'fileName', 'fileSizeBytes', 'fileMimeType',
+            'storagePath', 'fileUrl', 'createdAt'
+          ])
+          && data.name is string && data.name.size() > 0 && data.name.size() <= 120
+          && data.handle is string && data.handle.size() > 0 && data.handle.size() <= 200
+          && data.contact is string && data.contact.size() > 0 && data.contact.size() <= 250
+          && data.message is string && data.message.size() > 0 && data.message.size() <= 8000
+          && (!('country' in data) || (data.country is string && data.country.size() <= 120))
+          && (!('role' in data) || (data.role is string && data.role.size() <= 80))
+          && (!('category' in data) || (data.category is string && data.category.size() <= 40))
+          && (!('type' in data) || (data.type is string && data.type.size() <= 80))
+          && (!('contactType' in data) || (data.contactType is string && data.contactType.size() <= 40))
+          && (!('status' in data) || data.status == 'new')
+          && (!('unread' in data) || data.unread is bool)
+          && (!('notes' in data) || (data.notes is string && data.notes.size() <= 5000))
+          && (!('lang' in data) || data.lang in ['en', 'lt'])
+          && (!('fileName' in data) || data.fileName == null || (data.fileName is string && data.fileName.size() <= 255))
+          && (!('fileSizeBytes' in data) || data.fileSizeBytes == null || (data.fileSizeBytes is number && data.fileSizeBytes >= 0 && data.fileSizeBytes <= 26214400))
+          && (!('fileMimeType' in data) || data.fileMimeType == null || (data.fileMimeType is string && data.fileMimeType.size() <= 120))
+          && (!('storagePath' in data) || data.storagePath == null || (data.storagePath is string && data.storagePath.size() <= 500))
+          && (!('fileUrl' in data) || data.fileUrl == null)
+          && (!('createdAt' in data) || data.createdAt == request.time);
     }
 
     function isValidPublicAdminNotification(data) {
-      return data.keys().hasAll(['to', 'message'])
+      return data.keys().hasAll(['to', 'message', 'submissionId', 'applicantName', 'applicantContact', 'applicantMessage'])
+          && data.keys().hasOnly([
+            'from', 'to', 'replyTo', 'submissionId',
+            'applicantName', 'applicantCountry', 'applicantRole', 'proposalType',
+            'applicantContactType', 'applicantHandle', 'applicantContact', 'applicantMessage',
+            'fileName', 'storagePath', 'lang', 'message', 'createdAt'
+          ])
           && !('template' in data)
           && data.to is list
           && data.to.size() == 1
           && data.to[0] == 'info@dominikphotofficial.lt'
           && (!('from' in data) || data.from == 'DP.FILMS <films@dominikphotofficial.lt>')
           && (!('replyTo' in data) || data.replyTo == 'info@dominikphotofficial.lt')
+          && isValidId(data.submissionId)
+          && existsAfter(/databases/$(database)/documents/submissions/$(data.submissionId))
+          && data.applicantName is string && data.applicantName.size() > 0 && data.applicantName.size() <= 120
+          && data.applicantContact is string && data.applicantContact.size() > 0 && data.applicantContact.size() <= 250
+          && data.applicantMessage is string && data.applicantMessage.size() > 0 && data.applicantMessage.size() <= 8000
+          && (!('applicantCountry' in data) || (data.applicantCountry is string && data.applicantCountry.size() <= 120))
+          && (!('applicantRole' in data) || (data.applicantRole is string && data.applicantRole.size() <= 80))
+          && (!('proposalType' in data) || (data.proposalType is string && data.proposalType.size() <= 80))
+          && (!('applicantContactType' in data) || (data.applicantContactType is string && data.applicantContactType.size() <= 40))
+          && (!('applicantHandle' in data) || (data.applicantHandle is string && data.applicantHandle.size() <= 200))
+          && (!('fileName' in data) || data.fileName == null || (data.fileName is string && data.fileName.size() <= 255))
+          && (!('storagePath' in data) || data.storagePath == null || (data.storagePath is string && data.storagePath.size() <= 500))
+          && (!('lang' in data) || data.lang in ['en', 'lt'])
           && data.message is map
           && data.message.keys().hasAll(['subject', 'text', 'html'])
-          && data.message.subject is string
-          && data.message.subject.size() > 0
-          && data.message.subject.size() <= 250
-          && data.message.text is string
-          && data.message.text.size() > 0
-          && data.message.text.size() <= 15000
-          && data.message.html is string
-          && data.message.html.size() > 0
-          && data.message.html.size() <= 30000;
+          && data.message.keys().hasOnly(['subject', 'text', 'html'])
+          && data.message.subject is string && data.message.subject.size() > 0 && data.message.subject.size() <= 250
+          && data.message.text is string && data.message.text.size() > 0 && data.message.text.size() <= 15000
+          && data.message.html is string && data.message.html.size() > 0 && data.message.html.size() <= 30000
+          && (!('createdAt' in data) || data.createdAt == request.time);
     }
 
     // Film Team Submissions & Pitch Inquiries
     match /submissions/{submissionId} {
-      allow create: if isValidSubmission(request.resource.data);
-      allow read, update, delete: if isAdmin();
+      allow create: if isValidId(submissionId) && isValidSubmission(request.resource.data);
+      allow get, update, delete: if isAdmin() && isValidId(submissionId);
+      allow list: if isAdmin();
     }
 
     // Trigger Email Queue (firebase/firestore-send-email)
     // Automated sender: films@dominikphotofficial.lt · Inbox/Reply-To: info@dominikphotofficial.lt
     match /mail/{mailId} {
-      allow create: if isValidPublicAdminNotification(request.resource.data) || isAdmin();
-      allow read, update, delete: if isAdmin();
+      allow create: if isValidId(mailId) && (isValidPublicAdminNotification(request.resource.data) || isAdmin());
+      allow get, update, delete: if isAdmin() && isValidId(mailId);
+      allow list: if isAdmin();
     }
 
     // Reusable Email Templates

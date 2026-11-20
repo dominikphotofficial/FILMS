@@ -850,13 +850,14 @@ function initSubmissionForm() {
       return;
     }
 
-    const name = form.elements['name']?.value?.trim() || '';
-    const country = form.elements['country']?.value?.trim() || 'Global';
-    const role = form.elements['role']?.value || 'Other';
-    const type = form.elements['type']?.value || 'Join the Film Team';
-    const contactType = form.elements['contactType']?.value || 'Email';
-    const handle = form.elements['handle']?.value?.trim() || '';
-    const message = form.elements['message']?.value?.trim() || '';
+    const name = (form.elements['name']?.value?.trim() || '').slice(0, 120);
+    const country = (form.elements['country']?.value?.trim() || 'Global').slice(0, 120);
+    const role = (form.elements['role']?.value || 'Other').slice(0, 80);
+    const type = (form.elements['type']?.value || 'Join the Film Team').slice(0, 80);
+    const contactType = (form.elements['contactType']?.value || 'Email').slice(0, 40);
+    const handle = (form.elements['handle']?.value?.trim() || '').slice(0, 200);
+    const message = (form.elements['message']?.value?.trim() || '').slice(0, 8000);
+    const contactLine = `${contactType}: ${handle}`.slice(0, 250);
     const consent = Boolean(form.elements['consent']?.checked);
 
     if (!name || !country || !handle || !message) {
@@ -892,13 +893,13 @@ function initSubmissionForm() {
       const file = currentFile || fileInput?.files?.[0];
 
       if (file) {
-        fileName = file.name;
+        fileName = (file.name || 'attachment').slice(0, 255);
         fileSizeBytes = file.size;
         if (progressBox) progressBox.style.display = 'block';
         if (progressBar) progressBar.style.width = '25%';
 
         if (storage) {
-          const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+          const safeName = (file.name || 'attachment').replace(/[^a-zA-Z0-9._-]/g, '_').slice(0, 180);
           const targetPath = `${STORAGE_FOLDER}/${Date.now()}_${safeName}`;
           const storageRef = ref(storage, targetPath);
 
@@ -907,7 +908,14 @@ function initSubmissionForm() {
               resolve();
             }, 14000);
             const task = uploadBytesResumable(storageRef, file, {
-              contentType: file.type || 'application/octet-stream'
+              contentType: file.type || 'application/octet-stream',
+              customMetadata: {
+                applicantName: name,
+                applicantCountry: country,
+                applicantRole: role,
+                applicantContact: contactLine,
+                proposalType: type
+              }
             });
             task.on(
               'state_changed',
@@ -945,7 +953,7 @@ function initSubmissionForm() {
         type,
         contactType,
         handle,
-        contact: `${contactType}: ${handle}`,
+        contact: contactLine,
         message,
         status: 'new',
         unread: true,
@@ -953,7 +961,7 @@ function initSubmissionForm() {
         lang: currentLang,
         fileName: fileName || null,
         fileSizeBytes: fileSizeBytes || null,
-        fileMimeType: file?.type || null,
+        fileMimeType: file?.type ? file.type.slice(0, 120) : null,
         storagePath: storageUploaded ? storagePath : null,
         fileUrl: null
       };
@@ -976,17 +984,19 @@ function initSubmissionForm() {
           const plainText = [
             `NEW FILM TEAM APPLICATION — DP.FILMS`,
             `====================================`,
-            `Name:         ${name}`,
-            `Country:      ${country}`,
-            `Role:         ${role} [${category}]`,
-            `Proposal:     ${type}`,
-            `Contact:      ${contactType} — ${handle}`,
-            `Language:     ${currentLang.toUpperCase()}`,
-            `Submitted:    ${new Date().toUTCString()}`,
+            `Submission ID: ${subRef.id}`,
+            `Full Name:     ${name}`,
+            `Country:       ${country}`,
+            `Role:          ${role} [${category}]`,
+            `Proposal Type: ${type}`,
+            `Contact Type:  ${contactType}`,
+            `Handle/Email:  ${handle}`,
+            `Language:      ${currentLang.toUpperCase()}`,
+            `Submitted:     ${new Date().toUTCString()}`,
             attachmentLine,
             `------------------------------------`,
             message
-          ].join('\n');
+          ].join('\n').slice(0, 15000);
 
           const htmlBody = `
             <div style="font-family:Montserrat,Arial,sans-serif;max-width:600px;margin:0 auto;padding:24px;color:#1a1a1a;background:#ffffff;border:1px solid #e8e8e8;">
@@ -995,26 +1005,41 @@ function initSubmissionForm() {
                 <h2 style="margin:6px 0 0;font-size:20px;color:#1a1a1a;">${escapeHtml(name)} — ${escapeHtml(role)} (${escapeHtml(country)})</h2>
               </div>
               <p style="font-size:14px;line-height:1.6;margin:0 0 12px;">
+                <strong>Full Name:</strong> ${escapeHtml(name)}<br>
+                <strong>Country:</strong> ${escapeHtml(country)}<br>
+                <strong>Role:</strong> ${escapeHtml(role)} (${escapeHtml(category)})<br>
                 <strong>Proposal:</strong> ${escapeHtml(type)}<br>
                 <strong>Contact (${escapeHtml(contactType)}):</strong> ${escapeHtml(handle)}<br>
-                <strong>Country:</strong> ${escapeHtml(country)}
-                ${fileName ? `<br><strong>Attachment:</strong> ${escapeHtml(fileName)}${storageUploaded ? ' — <a href="https://films.dominikphotofficial.lt/admin.html" style="color:#113939;">Open in Admin</a>' : ' (upload incomplete)'}` : ''}
+                <strong>Language:</strong> ${escapeHtml(currentLang.toUpperCase())}<br>
+                <strong>Submission ID:</strong> ${escapeHtml(subRef.id)}
+                ${fileName ? `<br><strong>Attachment:</strong> ${escapeHtml(fileName)}${storageUploaded && storagePath ? ` (${escapeHtml(storagePath)}) — <a href="https://films.dominikphotofficial.lt/admin.html" style="color:#113939;">Open in Admin</a>` : ' (upload incomplete)'}` : ''}
               </p>
               <div style="background:#fafaf8;border-left:2px solid #113939;padding:16px;font-size:14px;line-height:1.65;white-space:pre-wrap;">${escapeHtml(message)}</div>
             </div>
-          `;
+          `.slice(0, 30000);
 
           const mailRef = doc(collection(db, 'mail'));
           batch.set(mailRef, {
             from: TRIGGER_EMAIL_FROM,
             to: [NOTIFICATION_EMAIL],
             replyTo: NOTIFICATION_EMAIL,
+            submissionId: subRef.id,
+            applicantName: name,
+            applicantCountry: country,
+            applicantRole: role,
+            proposalType: type,
+            applicantContactType: contactType,
+            applicantHandle: handle,
+            applicantContact: contactLine,
+            applicantMessage: message,
+            fileName: fileName || null,
+            storagePath: storageUploaded ? storagePath : null,
+            lang: currentLang,
             message: {
-              subject: `New film team application: ${name} (${role}, ${country})`,
+              subject: `New film team application: ${name} (${role}, ${country})`.slice(0, 250),
               text: plainText,
               html: htmlBody
             },
-            submissionId: subRef.id,
             createdAt: serverTimestamp()
           });
 

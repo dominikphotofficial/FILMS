@@ -8,22 +8,27 @@
         "name": {
           "type": "string",
           "minLength": 1,
-          "maxLength": 100,
+          "maxLength": 120,
           "description": "Applicant full name"
         },
         "country": {
           "type": "string",
-          "maxLength": 100,
+          "maxLength": 120,
           "description": "Applicant country or location"
         },
         "role": {
           "type": "string",
-          "maxLength": 60,
+          "maxLength": 80,
           "description": "Desired filmmaking role (Screenwriter, Actor, Director, Sound/Music, Crew, etc.)"
+        },
+        "category": {
+          "type": "string",
+          "maxLength": 40,
+          "description": "Normalized role category (Screenwriters, Actors, Directors, Sound, Crew)"
         },
         "type": {
           "type": "string",
-          "maxLength": 60,
+          "maxLength": 80,
           "description": "Type of proposal or collaboration"
         },
         "contactType": {
@@ -54,7 +59,7 @@
         },
         "status": {
           "type": "string",
-          "enum": ["new", "in_talks", "accepted", "rejected", "read", "archived"],
+          "enum": ["new", "reviewing", "shortlisted", "accepted", "rejected"],
           "description": "Processing status"
         },
         "unread": {
@@ -82,13 +87,13 @@
         },
         "fileMimeType": {
           "type": "string",
-          "maxLength": 100,
+          "maxLength": 120,
           "description": "MIME type of uploaded document"
         },
         "fileUrl": {
           "type": "string",
           "maxLength": 2000,
-          "description": "Firebase Storage download URL"
+          "description": "Firebase Storage download URL (resolved only by admin)"
         },
         "storagePath": {
           "type": "string",
@@ -130,6 +135,66 @@
           "maxLength": 120,
           "description": "Reply-To address (info@dominikphotofficial.lt)"
         },
+        "submissionId": {
+          "type": "string",
+          "maxLength": 128,
+          "description": "Reference to the corresponding submission"
+        },
+        "applicantName": {
+          "type": "string",
+          "maxLength": 120,
+          "description": "Applicant full name"
+        },
+        "applicantCountry": {
+          "type": "string",
+          "maxLength": 120,
+          "description": "Applicant country"
+        },
+        "applicantRole": {
+          "type": "string",
+          "maxLength": 80,
+          "description": "Requested role"
+        },
+        "proposalType": {
+          "type": "string",
+          "maxLength": 80,
+          "description": "Type of proposal"
+        },
+        "applicantContactType": {
+          "type": "string",
+          "maxLength": 40,
+          "description": "Preferred contact channel"
+        },
+        "applicantHandle": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Applicant email or social handle"
+        },
+        "applicantContact": {
+          "type": "string",
+          "maxLength": 250,
+          "description": "Formatted applicant contact string"
+        },
+        "applicantMessage": {
+          "type": "string",
+          "maxLength": 8000,
+          "description": "Applicant message text"
+        },
+        "fileName": {
+          "type": "string",
+          "maxLength": 255,
+          "description": "Uploaded attachment file name"
+        },
+        "storagePath": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Firebase Storage object path"
+        },
+        "lang": {
+          "type": "string",
+          "enum": ["en", "lt"],
+          "description": "Submission language"
+        },
         "message": {
           "type": "object",
           "properties": {
@@ -163,11 +228,6 @@
               "description": "Handlebars replacement variables"
             }
           }
-        },
-        "submissionId": {
-          "type": "string",
-          "maxLength": 128,
-          "description": "Reference to the corresponding submission"
         },
         "createdAt": {
           "type": "string",
