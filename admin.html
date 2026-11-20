@@ -60,10 +60,9 @@
 
   <main class="page-main">
     <div class="container">
-      <!-- Auth Gate -->
       <section id="admin-auth-gate" class="container-narrow card-surface" style="margin-block: var(--sp-6); text-align: center;">
         <span class="feature-kicker">Administrator Access</span>
-        <h1 style="margin-bottom: var(--sp-3);">DP.FILMS Control Room</h1>
+        <h1 style="margin-bottom: var(--sp-3);">DP.FILMS Admin</h1>
         <p id="auth-gate-message" style="margin-bottom: var(--sp-4);">
           Verifying administrator session. Access is strictly restricted to <strong>dominikphotofficial.lt@gmail.com</strong>.
         </p>
@@ -73,12 +72,11 @@
         </div>
       </section>
 
-      <!-- Admin Workspace -->
       <section id="admin-workspace" style="display: none;">
         <div class="admin-topbar">
           <div>
             <span class="feature-kicker">Administration</span>
-            <h1>Submissions &amp; Team Ops</h1>
+            <h1>Submissions &amp; Collaborations</h1>
           </div>
           <div style="display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap;">
             <span id="admin-user-email" style="font-size: var(--fs-sm); color: var(--text-muted);"></span>
@@ -87,14 +85,12 @@
           </div>
         </div>
 
-        <!-- Primary View Tabs -->
         <div class="admin-tabs" role="tablist">
           <button type="button" class="admin-tab active" data-view="submissions">Submissions</button>
           <button type="button" class="admin-tab" data-view="templates">Email Templates</button>
           <button type="button" class="admin-tab" data-view="team">Profile &amp; Collaborators</button>
         </div>
 
-        <!-- VIEW 1: SUBMISSIONS -->
         <div id="view-submissions">
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--sp-3); margin-bottom: var(--sp-4);">
             <input type="text" id="admin-search" class="form-input" placeholder="Search name, country, role, message...">
@@ -108,7 +104,6 @@
             </select>
           </div>
 
-          <!-- Category Filter Tabs -->
           <div class="admin-tabs" id="category-tabs">
             <button type="button" class="admin-tab active" data-cat="all">All (<span id="cnt-all">0</span>)</button>
             <button type="button" class="admin-tab" data-cat="Screenwriters">Screenwriters (<span id="cnt-Screenwriters">0</span>)</button>
@@ -142,7 +137,6 @@
           </div>
         </div>
 
-        <!-- VIEW 2: EMAIL TEMPLATES -->
         <div id="view-templates" style="display: none;">
           <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--sp-3); margin-bottom: var(--sp-4);">
             <p style="font-size: var(--fs-sm); max-width: 680px;">
@@ -170,7 +164,6 @@
           </div>
         </div>
 
-        <!-- VIEW 3: PROFILE & COLLABORATORS -->
         <div id="view-team" style="display: none;">
           <div class="two-col-split">
             <div class="card-surface">
@@ -234,7 +227,6 @@
     </div>
   </main>
 
-  <!-- Modal: Send Email -->
   <div class="admin-modal-backdrop" id="modal-send-email" role="dialog" aria-modal="true" aria-label="Send Email">
     <div class="admin-modal-dialog">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--sp-4);">
@@ -272,7 +264,6 @@
     </div>
   </div>
 
-  <!-- Modal: Edit Template -->
   <div class="admin-modal-backdrop" id="modal-edit-template" role="dialog" aria-modal="true" aria-label="Edit Template">
     <div class="admin-modal-dialog">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--sp-4);">
@@ -320,7 +311,6 @@
     </div>
   </div>
 
-  <!-- Modal: Collaboration Deal Memo PDF -->
   <div class="admin-modal-backdrop" id="modal-agreement" role="dialog" aria-modal="true" aria-label="Collaboration Deal Memo">
     <div class="admin-modal-dialog">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--sp-4);">
@@ -369,12 +359,18 @@
       signInWithPopup,
       signOut
     } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import {
+      getStorage,
+      ref as storageRefFn,
+      getDownloadURL
+    } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js';
     import { firebaseConfig, FIRESTORE_COLLECTION, ADMIN_EMAIL, NOTIFICATION_EMAIL, TRIGGER_EMAIL_FROM } from './firebase-config.js';
     import { defaultMailTemplates, renderHandlebars } from './mail-templates.js';
 
     const fbApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
     const db = getFirestore(fbApp);
     const auth = getAuth(fbApp);
+    const storage = getStorage(fbApp);
 
     let submissions = [];
     let selectedId = null;
@@ -564,7 +560,7 @@
           <div class="meta-row"><span class="meta-label">Country</span><span class="meta-value">${escapeHtml(item.country)}</span></div>
           <div class="meta-row"><span class="meta-label">Proposal</span><span class="meta-value">${escapeHtml(item.type)}</span></div>
           <div class="meta-row"><span class="meta-label">Contact</span><span class="meta-value">${escapeHtml(item.contactType || '')}: ${escapeHtml(item.handle || item.contact)}</span></div>
-          ${item.fileName ? `<div class="meta-row"><span class="meta-label">Attachment</span><span class="meta-value">${item.fileUrl ? `<a href="${escapeHtml(item.fileUrl)}" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">${escapeHtml(item.fileName)} ↗</a>` : escapeHtml(item.fileName)}</span></div>` : ''}
+          ${item.fileName ? `<div class="meta-row"><span class="meta-label">Attachment</span><span class="meta-value" id="admin-attachment-slot">${item.fileUrl ? `<a href="${escapeHtml(item.fileUrl)}" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">${escapeHtml(item.fileName)} ↗</a>` : escapeHtml(item.fileName)}</span></div>` : ''}
         </div>
 
         <div style="margin-bottom:var(--sp-4);">
@@ -619,6 +615,24 @@
 
       document.getElementById('btn-reply-email')?.addEventListener('click', () => openSendEmailModal(item));
       document.getElementById('btn-deal-memo')?.addEventListener('click', () => openAgreementModal(item));
+
+      if (item.fileName && !item.fileUrl && item.storagePath) {
+        const slot = document.getElementById('admin-attachment-slot');
+        if (slot) {
+          slot.textContent = `${item.fileName} (loading download link...)`;
+          getDownloadURL(storageRefFn(storage, item.storagePath))
+            .then((url) => {
+              if (selectedId !== item.id) return;
+              item.fileUrl = url;
+              slot.innerHTML = `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">${escapeHtml(item.fileName)} ↗</a>`;
+            })
+            .catch((err) => {
+              if (selectedId !== item.id) return;
+              console.error('[DP.FILMS Admin] Attachment download URL error:', err);
+              slot.textContent = `${item.fileName} (${err?.code || 'download unavailable'})`;
+            });
+        }
+      }
 
       loadDeliveryLog(item.id);
     }

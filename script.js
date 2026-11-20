@@ -1,7 +1,4 @@
-// ==========================================================================
-// DP.FILMS — Unified Client Script (Navigation, Hero, Filmography,
-// Frozen Time Cold->Warm Transition, YouTube Overlay, Submissions)
-// ==========================================================================
+// DP.FILMS Client Script
 
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import {
@@ -15,8 +12,7 @@ import {
 import {
   getStorage,
   ref,
-  uploadBytesResumable,
-  getDownloadURL
+  uploadBytesResumable
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js';
 import {
   firebaseConfig,
@@ -69,9 +65,7 @@ try {
   console.error('[DP.FILMS] Firebase init error:', err);
 }
 
-// --------------------------------------------------------------------------
-// 1. Header Scroll State & Hero Scroll/Progress Visibility
-// --------------------------------------------------------------------------
+// Header Scroll State
 function initHeaderScroll() {
   const header = document.getElementById('main-header');
   const heroScroll = document.querySelector('.hero-scroll');
@@ -91,9 +85,7 @@ function initHeaderScroll() {
   updateScroll();
 }
 
-// --------------------------------------------------------------------------
-// 2. Burger Trigger & Slide-Over Navigation Drawer
-// --------------------------------------------------------------------------
+// Navigation Drawer
 function initDrawerMenu() {
   const burger = document.getElementById('burger-menu');
   const overlay = document.getElementById('nav-overlay');
@@ -174,9 +166,7 @@ function initDrawerMenu() {
   });
 }
 
-// --------------------------------------------------------------------------
-// 3. Home Hero Slideshow (6000ms interval, manual progress jump)
-// --------------------------------------------------------------------------
+// Hero Slideshow
 function initHeroSlideshow() {
   const slides = Array.from(document.querySelectorAll('.hero-slide'));
   const lines = Array.from(document.querySelectorAll('.hero-progress-line'));
@@ -216,9 +206,7 @@ function initHeroSlideshow() {
   startTimer();
 }
 
-// --------------------------------------------------------------------------
-// 4. IntersectionObserver Reveals & Lazy Image Fade
-// --------------------------------------------------------------------------
+// Scroll Reveals & Lazy Images
 function observeReveals(scope = document) {
   const targets = Array.from(scope.querySelectorAll('.fade-in-up, .reveal'));
   if (!targets.length) return;
@@ -274,9 +262,7 @@ function initLazyImages(scope = document) {
   });
 }
 
-// --------------------------------------------------------------------------
-// 5. Smooth Page Leave Fade (200ms) + bfcache Reset
-// --------------------------------------------------------------------------
+// Page Transition
 function initPageTransitions() {
   window.addEventListener('pageshow', () => {
     document.body.classList.remove('page-leaving');
@@ -320,9 +306,7 @@ function initPageTransitions() {
   });
 }
 
-// --------------------------------------------------------------------------
-// 6. Frozen Time: Background Hero Video, Cold -> Warmth & Type Motion
-// --------------------------------------------------------------------------
+// Frozen Time Background Video & Scroll Theme
 function shouldReduceDataOrMotion() {
   if (prefersReducedMotion()) return true;
   if (window.matchMedia('(prefers-reduced-data: reduce)').matches) return true;
@@ -481,9 +465,7 @@ function initLineReveals() {
   targets.forEach((el) => observer.observe(el));
 }
 
-// --------------------------------------------------------------------------
-// 7. Reusable Fullscreen YouTube Lightbox Component (data-youtube-id)
-// --------------------------------------------------------------------------
+// YouTube Lightbox Player
 function escapeHtml(str) {
   return String(str || '')
     .replace(/&/g, '&amp;')
@@ -617,9 +599,7 @@ function initVideoOverlay() {
   window.DPYouTubeLightbox = lightbox;
 }
 
-// --------------------------------------------------------------------------
-// 8. Filmography Card Renderer (Staggered Magazine Grid, Visible Video Previews)
-// --------------------------------------------------------------------------
+// Filmography Grid
 function bindFilmThumbnailFallback(img, fallbackThumb) {
   if (!img) return;
   const applyFallback = () => {
@@ -704,9 +684,7 @@ function initFilmGrids() {
   }
 }
 
-// --------------------------------------------------------------------------
-// 9. Awards Hairline Renderer
-// --------------------------------------------------------------------------
+// Awards List
 function initAwardsRows() {
   const container = document.getElementById('awards-rows');
   if (!container) return;
@@ -733,9 +711,7 @@ function initAwardsRows() {
 }
 
 
-// --------------------------------------------------------------------------
-// 11. Team Submission Form (Storage Upload + Atomic Firestore Batch)
-// --------------------------------------------------------------------------
+// Team Submission Form
 function normalizeCategory(roleValue) {
   const val = String(roleValue || '').toLowerCase();
   if (val.includes('screenwriter') || val.includes('writer') || val.includes('scenar')) return 'Screenwriters';
@@ -909,10 +885,10 @@ function initSubmissionForm() {
     }
 
     try {
-      let fileUrl = null;
       let fileName = null;
       let fileSizeBytes = null;
       let storagePath = null;
+      let storageUploaded = false;
       const file = currentFile || fileInput?.files?.[0];
 
       if (file) {
@@ -923,12 +899,16 @@ function initSubmissionForm() {
 
         if (storage) {
           const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-          storagePath = `${STORAGE_FOLDER}/${Date.now()}_${safeName}`;
-          const storageRef = ref(storage, storagePath);
+          const targetPath = `${STORAGE_FOLDER}/${Date.now()}_${safeName}`;
+          const storageRef = ref(storage, targetPath);
 
           await new Promise((resolve) => {
-            const timeout = setTimeout(resolve, 14000);
-            const task = uploadBytesResumable(storageRef, file);
+            const timeout = setTimeout(() => {
+              resolve();
+            }, 14000);
+            const task = uploadBytesResumable(storageRef, file, {
+              contentType: file.type || 'application/octet-stream'
+            });
             task.on(
               'state_changed',
               (snapshot) => {
@@ -939,17 +919,16 @@ function initSubmissionForm() {
               },
               (storageErr) => {
                 clearTimeout(timeout);
+                storageUploaded = false;
+                storagePath = null;
                 console.error('[DP.FILMS] Firebase Storage upload error:', storageErr?.code || storageErr?.message || storageErr);
                 resolve();
               },
-              async () => {
+              () => {
                 clearTimeout(timeout);
                 if (progressBar) progressBar.style.width = '100%';
-                try {
-                  fileUrl = await getDownloadURL(task.snapshot.ref);
-                } catch (urlErr) {
-                  console.error('[DP.FILMS] Storage download URL error:', urlErr);
-                }
+                storageUploaded = true;
+                storagePath = targetPath;
                 resolve();
               }
             );
@@ -975,8 +954,8 @@ function initSubmissionForm() {
         fileName: fileName || null,
         fileSizeBytes: fileSizeBytes || null,
         fileMimeType: file?.type || null,
-        storagePath: storagePath || null,
-        fileUrl: fileUrl || null
+        storagePath: storageUploaded ? storagePath : null,
+        fileUrl: null
       };
 
       let saved = false;
@@ -991,7 +970,7 @@ function initSubmissionForm() {
           });
 
           const attachmentLine = fileName
-            ? `Attachment: ${fileName} (${Math.max(1, Math.round(fileSizeBytes / 1024))} KB)\nFile URL: ${fileUrl || '(Uploaded to Storage)'}`
+            ? `Attachment: ${fileName} (${Math.max(1, Math.round(fileSizeBytes / 1024))} KB)\n${storageUploaded && storagePath ? `Storage Path: ${storagePath}\nOpen in Admin: https://films.dominikphotofficial.lt/admin.html` : 'Upload Status: Pending / Not saved to Storage'}`
             : 'Attachment: None';
 
           const plainText = [
@@ -1019,7 +998,7 @@ function initSubmissionForm() {
                 <strong>Proposal:</strong> ${escapeHtml(type)}<br>
                 <strong>Contact (${escapeHtml(contactType)}):</strong> ${escapeHtml(handle)}<br>
                 <strong>Country:</strong> ${escapeHtml(country)}
-                ${fileName ? `<br><strong>Attachment:</strong> ${escapeHtml(fileName)}${fileUrl ? ` — <a href="${escapeHtml(fileUrl)}" style="color:#113939;">Open File</a>` : ''}` : ''}
+                ${fileName ? `<br><strong>Attachment:</strong> ${escapeHtml(fileName)}${storageUploaded ? ' — <a href="https://films.dominikphotofficial.lt/admin.html" style="color:#113939;">Open in Admin</a>' : ' (upload incomplete)'}` : ''}
               </p>
               <div style="background:#fafaf8;border-left:2px solid #113939;padding:16px;font-size:14px;line-height:1.65;white-space:pre-wrap;">${escapeHtml(message)}</div>
             </div>

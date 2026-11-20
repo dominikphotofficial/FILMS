@@ -1,6 +1,5 @@
 /* ==========================================================================
-   DP.FILMS — Master Stylesheet (DP.PORTFOLIO Design System + Frozen Time Theme)
-   Typography: Montserrat (400 / 500 / 600) everywhere
+   DP.FILMS Stylesheet
    ========================================================================== */
 
 :root {
@@ -1837,84 +1836,84 @@ body.frozen-time .hero-content {
   align-items: center;
 }
 
-/* Hairline News Ribbon (Capsule-free) */
-.news-ribbon {
-  width: 100%;
-  max-width: 720px;
-  border-top: 1px solid rgba(255, 255, 255, 0.35);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
-  padding-block: var(--sp-3);
-  margin-bottom: var(--sp-4);
+/* Bottom Hero News Flag */
+.hero-news-flag {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: 84px;
+  z-index: 3;
+  max-width: 440px;
+  margin-inline: auto;
+  min-height: 44px;
+  padding: 8px 14px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  color: #ffffff;
-}
-
-.news-ribbon-kicker {
-  display: inline-flex;
   align-items: center;
   gap: 10px;
+  background-color: rgba(14, 18, 18, 0.46);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-left: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: var(--radius);
+  color: #ffffff;
+  text-decoration: none;
+  transition: background-color 250ms var(--ease), border-color 250ms var(--ease);
+}
+
+.hero-news-flag:hover {
+  background-color: rgba(17, 57, 57, 0.72);
+  border-color: rgba(255, 255, 255, 0.48);
+  border-left-color: #ffffff;
+}
+
+.hero-news-flag-tag {
+  flex-shrink: 0;
   font-size: var(--fs-xs);
-  font-weight: var(--fw-medium);
-  letter-spacing: var(--ls-label);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.92);
 }
 
-.news-ribbon-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: #ffffff;
+.hero-news-flag-sep {
   flex-shrink: 0;
-  animation: ribbonPulse 2.2s var(--ease) infinite;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: var(--fs-xs);
 }
 
-@keyframes ribbonPulse {
-  0%, 100% {
-    opacity: 0.45;
-    transform: scale(0.9);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.15);
-  }
-}
-
-.news-ribbon-divider {
-  width: 48px;
-  height: 1.5px;
-  background-color: rgba(255, 255, 255, 0.85);
-  border: none;
-  margin: 0;
-}
-
-.news-ribbon-line {
-  font-size: var(--fs-sm);
-  font-weight: var(--fw-medium);
-  color: #ffffff;
-  line-height: 1.45;
-  text-wrap: balance;
-}
-
-.news-ribbon-link {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
+.hero-news-flag-text {
   font-size: var(--fs-xs);
   font-weight: var(--fw-medium);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.9);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.45);
-  padding-block: 4px;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.92);
 }
 
-.news-ribbon-link:hover {
-  color: #ffffff;
-  border-bottom-color: #ffffff;
+.hero-news-flag-arrow {
+  flex-shrink: 0;
+  margin-left: auto;
+  font-size: var(--fs-sm);
+  color: rgba(255, 255, 255, 0.86);
+  transition: transform 250ms var(--ease);
+}
+
+.hero-news-flag:hover .hero-news-flag-arrow {
+  transform: translateX(4px);
+}
+
+@media (min-width: 768px) {
+  .hero-news-flag {
+    left: var(--gutter);
+    right: auto;
+    bottom: var(--sp-4);
+    margin-inline: 0;
+    max-width: 300px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-news-flag {
+    max-width: 440px;
+  }
 }
 
 /* Two-line 600 / 400 Hero Title */
@@ -1980,11 +1979,6 @@ body.frozen-time .hero-title-light {
 
   body.frozen-time .hero-scroll {
     bottom: 44px;
-  }
-
-  .news-ribbon {
-    padding-block: 10px;
-    margin-bottom: var(--sp-3);
   }
 }
 
@@ -2590,12 +2584,6 @@ img.dp-lazy.loaded {
     opacity: 1 !important;
     transform: none !important;
     transition-delay: 0ms !important;
-  }
-
-  .news-ribbon-dot {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
   }
 
   body.frozen-time,
