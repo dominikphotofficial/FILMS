@@ -177,6 +177,8 @@ app.post('/api/submit-proposal', (req, res) => {
       fileDataUrl: fileDataUrl || null,
       storageMethod: storageMethod || (fileDataUrl ? 'server_base64' : 'server_meta'),
       storagePath: storagePath || null,
+      firestoreError: body.firestoreError || null,
+      emailNotificationQueued: body.emailNotificationQueued !== undefined ? Boolean(body.emailNotificationQueued) : null,
       createdAtIso: new Date().toISOString(),
       createdAt: {
         seconds: Math.floor(Date.now() / 1000),
@@ -188,10 +190,14 @@ app.post('/api/submit-proposal', (req, res) => {
     saveSubmissions(submissions);
 
     console.log(`[API] New proposal received from ${name} (${contactType}: ${handle}) - ID: ${newId}`);
+    if (body.firestoreError) {
+      console.warn(`[API] Proposal ${newId} saved via fallback after Firestore error: ${body.firestoreError} (Trigger Email NOT queued)`);
+    }
 
     return res.status(200).json({
       success: true,
       id: newId,
+      emailNotificationQueued: newSubmission.emailNotificationQueued,
       message: 'Proposal successfully recorded'
     });
   } catch (err) {
@@ -417,42 +423,60 @@ const FLAT_PAGES = [
   'terms'
 ];
 
-// Clean extensionless & trailing-slash routes for root, /en, and /lt
+// Clean flat routes & trailing-slash canonicalization
 FLAT_PAGES.forEach((page) => {
-  app.get([`/${page}`, `/${page}/`, `/${page}.html`], (req, res) => {
+  app.get(`/${page}/`, (req, res) => {
+    res.redirect(301, `/${page}.html`);
+  });
+  app.get([`/${page}`, `/${page}.html`], (req, res) => {
     res.sendFile(path.join(__dirname, `${page}.html`));
   });
-  app.get([`/en/${page}`, `/en/${page}/`, `/en/${page}.html`], (req, res) => {
+  app.get(`/en/${page}/`, (req, res) => {
+    res.redirect(301, `/en/${page}.html`);
+  });
+  app.get([`/en/${page}`, `/en/${page}.html`], (req, res) => {
     res.sendFile(path.join(__dirname, 'en', `${page}.html`));
   });
-  app.get([`/lt/${page}`, `/lt/${page}/`, `/lt/${page}.html`], (req, res) => {
+  app.get(`/lt/${page}/`, (req, res) => {
+    res.redirect(301, `/lt/${page}.html`);
+  });
+  app.get([`/lt/${page}`, `/lt/${page}.html`], (req, res) => {
     res.sendFile(path.join(__dirname, 'lt', `${page}.html`));
   });
 });
 
 // Legacy alias support for /awards/frozen-time paths -> flat frozen-time.html
 app.get(['/awards/frozen-time', '/awards/frozen-time/', '/awards/frozen-time.html'], (req, res) => {
-  res.sendFile(path.join(__dirname, 'frozen-time.html'));
+  res.redirect(301, '/frozen-time.html');
 });
 app.get(['/en/awards/frozen-time', '/en/awards/frozen-time/', '/en/awards/frozen-time.html'], (req, res) => {
-  res.sendFile(path.join(__dirname, 'en', 'frozen-time.html'));
+  res.redirect(301, '/en/frozen-time.html');
 });
 app.get(['/lt/awards/frozen-time', '/lt/awards/frozen-time/', '/lt/awards/frozen-time.html'], (req, res) => {
-  res.sendFile(path.join(__dirname, 'lt', 'frozen-time.html'));
+  res.redirect(301, '/lt/frozen-time.html');
 });
 
-// Explicit English mirror: /en, /en/, /en/index.html
-app.get(['/en', '/en/', '/en/index.html'], (req, res) => {
+// Explicit English mirror: /en/ (redirect bare /en without slash so relative assets resolve inside /en/)
+app.get('/en', (req, res) => {
+  res.redirect(301, '/en/');
+});
+app.get(['/en/', '/en/index.html'], (req, res) => {
   res.sendFile(path.join(__dirname, 'en', 'index.html'));
 });
 
-// Explicit Lithuanian version: /lt, /lt/, /lt/index.html
-app.get(['/lt', '/lt/', '/lt/index.html'], (req, res) => {
+// Explicit Lithuanian version: /lt/ (redirect bare /lt without slash so relative assets resolve inside /lt/)
+app.get('/lt', (req, res) => {
+  res.redirect(301, '/lt/');
+});
+app.get(['/lt/', '/lt/index.html'], (req, res) => {
   res.sendFile(path.join(__dirname, 'lt', 'index.html'));
 });
 
 // Admin panel
-app.get(['/admin', '/admin/', '/admin.html'], (req, res) => {
+app.get('/admin/', (req, res) => {
+  res.redirect(301, '/admin.html');
+});
+app.get(['/admin', '/admin.html'], (req, res) => {
   res.sendFile(path.join(__dirname, 'admin.html'));
 });
 

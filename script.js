@@ -8,6 +8,7 @@ import {
   getFirestore,
   collection,
   doc,
+  getDocFromServer,
   writeBatch,
   serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
@@ -36,12 +37,36 @@ let app = null;
 let db = null;
 let storage = null;
 
+function logFirestoreError(operationType, path, error) {
+  const errInfo = {
+    error: error?.message || String(error),
+    code: error?.code || 'unknown',
+    operationType,
+    path,
+    projectId: firebaseConfig.projectId
+  };
+  console.error('[DP.FILMS] Firestore Error:', JSON.stringify(errInfo));
+  return errInfo;
+}
+
+async function testFirestoreConnection() {
+  if (!db) return;
+  try {
+    await getDocFromServer(doc(db, FIRESTORE_COLLECTION, '__connection_probe__'));
+  } catch (err) {
+    const msg = String(err?.message || '');
+    if (msg.includes('client is offline') || err?.code === 'unavailable') {
+      logFirestoreError('get', `${FIRESTORE_COLLECTION}/__connection_probe__`, err);
+    }
+  }
+}
+
 try {
   app = initializeApp(firebaseConfig);
   db = getFirestore(app);
   storage = getStorage(app);
 } catch (err) {
-  console.warn('[DP.FILMS] Firebase init notice:', err);
+  console.error('[DP.FILMS] Firebase init error:', err);
 }
 
 // --------------------------------------------------------------------------
@@ -912,8 +937,9 @@ function initSubmissionForm() {
                   progressBar.style.width = `${Math.min(95, pct)}%`;
                 }
               },
-              () => {
+              (storageErr) => {
                 clearTimeout(timeout);
+                console.error('[DP.FILMS] Firebase Storage upload error:', storageErr?.code || storageErr?.message || storageErr);
                 resolve();
               },
               async () => {
@@ -921,7 +947,9 @@ function initSubmissionForm() {
                 if (progressBar) progressBar.style.width = '100%';
                 try {
                   fileUrl = await getDownloadURL(task.snapshot.ref);
-                } catch {}
+                } catch (urlErr) {
+                  console.error('[DP.FILMS] Storage download URL error:', urlErr);
+                }
                 resolve();
               }
             );
@@ -1014,7 +1042,9 @@ function initSubmissionForm() {
           await batch.commit();
           saved = true;
         } catch (fsErr) {
-          console.warn('[DP.FILMS] Firestore batch notice:', fsErr);
+          logFirestoreError('write', `${FIRESTORE_COLLECTION}+mail`, fsErr);
+          submissionDoc.firestoreError = fsErr?.code || fsErr?.message || 'firestore_batch_failed';
+          submissionDoc.emailNotificationQueued = false;
         }
       }
 
@@ -1025,8 +1055,17 @@ function initSubmissionForm() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(submissionDoc)
           });
-          if (apiRes.ok) saved = true;
-        } catch {}
+          if (apiRes.ok) {
+            saved = true;
+            if (submissionDoc.firestoreError) {
+              console.error('[DP.FILMS] Submission saved via /api/submit-proposal fallback ONLY. Trigger Email document was NOT created in Firestore:', submissionDoc.firestoreError);
+            }
+          } else {
+            console.error('[DP.FILMS] /api/submit-proposal fallback returned HTTP', apiRes.status);
+          }
+        } catch (apiErr) {
+          console.error('[DP.FILMS] /api/submit-proposal fallback network error:', apiErr);
+        }
       }
 
       if (!saved) {
@@ -1084,4 +1123,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSubmissionForm();
   observeReveals(document);
   initLazyImages(document);
+  if (document.getElementById('film-proposal-form')) {
+    testFirestoreConnection();
+  }
 });

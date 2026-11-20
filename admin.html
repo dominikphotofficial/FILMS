@@ -636,10 +636,13 @@
         box.innerHTML = snap.docs.map((d) => {
           const data = d.data();
           const state = data.delivery?.state || 'QUEUED';
-          return `<div style="padding:8px 0;border-bottom:1px solid var(--border);"><strong>${escapeHtml(data.message?.subject || 'Email')}</strong> → ${escapeHtml((data.to || []).join(', '))} (${escapeHtml(state)})</div>`;
+          const errDetail = data.delivery?.error ? `<div style="color:#8b2635;margin-top:4px;">Error: ${escapeHtml(data.delivery.error)}</div>` : '';
+          const fromLine = data.from ? `<div style="color:var(--text-faint);">From: ${escapeHtml(data.from)}</div>` : '';
+          return `<div style="padding:8px 0;border-bottom:1px solid var(--border);"><strong>${escapeHtml(data.message?.subject || 'Email')}</strong> → ${escapeHtml((data.to || []).join(', '))} (<strong>${escapeHtml(state)}</strong>)${fromLine}${errDetail}</div>`;
         }).join('');
-      } catch {
-        box.textContent = 'Unable to load mail delivery status.';
+      } catch (err) {
+        console.error('[DP.FILMS Admin] Failed loading mail delivery log:', err);
+        box.textContent = `Unable to load mail delivery status: ${err?.message || 'Permission or query error'}`;
       }
     }
 
@@ -789,43 +792,70 @@
     }
 
     document.getElementById('btn-test-self-email')?.addEventListener('click', async () => {
+      const fb = document.getElementById('send-email-feedback');
       const subject = document.getElementById('send-email-subject').value.trim();
       const text = document.getElementById('send-email-text').value;
       const html = `<div style="font-family:Montserrat,Arial,sans-serif;padding:24px;white-space:pre-wrap;">${escapeHtml(text)}</div>`;
-      await addDoc(collection(db, 'mail'), {
-        from: TRIGGER_EMAIL_FROM,
-        to: [ADMIN_EMAIL],
-        replyTo: NOTIFICATION_EMAIL,
-        message: { subject: `[TEST] ${subject}`, text, html },
-        createdAt: serverTimestamp()
-      });
-      document.getElementById('send-email-feedback').textContent = `Test copy queued to ${ADMIN_EMAIL}.`;
+      try {
+        await addDoc(collection(db, 'mail'), {
+          from: TRIGGER_EMAIL_FROM,
+          to: [ADMIN_EMAIL],
+          replyTo: NOTIFICATION_EMAIL,
+          message: { subject: `[TEST] ${subject}`, text, html },
+          createdAt: serverTimestamp()
+        });
+        if (fb) {
+          fb.style.color = 'var(--accent)';
+          fb.textContent = `Test copy queued to ${ADMIN_EMAIL} from ${TRIGGER_EMAIL_FROM}.`;
+        }
+      } catch (err) {
+        console.error('[DP.FILMS Admin] Test email queue error:', err);
+        if (fb) {
+          fb.style.color = '#8b2635';
+          fb.textContent = `Firestore queue error: ${err?.message || err}`;
+        }
+      }
     });
 
     document.getElementById('form-send-email')?.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (!currentEmailItem) return;
+      const fb = document.getElementById('send-email-feedback');
       const toAddr = document.getElementById('send-email-to').value.trim();
       if (!toAddr.includes('@')) {
-        document.getElementById('send-email-feedback').textContent = 'Recipient must be a valid email address.';
+        if (fb) {
+          fb.style.color = '#8b2635';
+          fb.textContent = 'Recipient must be a valid email address.';
+        }
         return;
       }
       const subject = document.getElementById('send-email-subject').value.trim();
       const text = document.getElementById('send-email-text').value;
       const html = `<div style="font-family:Montserrat,Arial,sans-serif;max-width:600px;margin:0 auto;padding:24px;border:1px solid #e8e8e8;line-height:1.65;white-space:pre-wrap;">${escapeHtml(text)}</div>`;
-      await addDoc(collection(db, 'mail'), {
-        from: TRIGGER_EMAIL_FROM,
-        to: [toAddr],
-        replyTo: NOTIFICATION_EMAIL,
-        message: { subject, text, html },
-        submissionId: currentEmailItem.id,
-        createdAt: serverTimestamp()
-      });
-      document.getElementById('send-email-feedback').textContent = `Queued to ${toAddr}.`;
-      setTimeout(() => {
-        document.getElementById('modal-send-email').classList.remove('open');
-        loadDeliveryLog(currentEmailItem.id);
-      }, 900);
+      try {
+        await addDoc(collection(db, 'mail'), {
+          from: TRIGGER_EMAIL_FROM,
+          to: [toAddr],
+          replyTo: NOTIFICATION_EMAIL,
+          message: { subject, text, html },
+          submissionId: currentEmailItem.id,
+          createdAt: serverTimestamp()
+        });
+        if (fb) {
+          fb.style.color = 'var(--accent)';
+          fb.textContent = `Queued to ${toAddr} from ${TRIGGER_EMAIL_FROM}.`;
+        }
+        setTimeout(() => {
+          document.getElementById('modal-send-email').classList.remove('open');
+          loadDeliveryLog(currentEmailItem.id);
+        }, 900);
+      } catch (err) {
+        console.error('[DP.FILMS Admin] Send email queue error:', err);
+        if (fb) {
+          fb.style.color = '#8b2635';
+          fb.textContent = `Firestore queue error: ${err?.message || err}`;
+        }
+      }
     });
 
     // Deal Memo PDF Modal

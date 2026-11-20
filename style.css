@@ -615,7 +615,7 @@ body.has-hero #main-header:not(.scrolled) .burger span {
 .hero {
   position: relative;
   height: 100svh;
-  min-height: 520px;
+  min-height: 560px;
   background-color: #141a1a;
   overflow: hidden;
   display: flex;
@@ -666,8 +666,13 @@ body.has-hero #main-header:not(.scrolled) .burger span {
   position: relative;
   z-index: 2;
   text-align: center;
+  padding-top: 72px;
+  padding-bottom: 96px;
   padding-inline: var(--gutter);
   max-width: 960px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .hero-kicker {
@@ -1969,6 +1974,10 @@ body.frozen-time .hero-title-light {
 }
 
 @media (max-width: 639px) {
+  .hero-scroll {
+    bottom: 20px;
+  }
+
   body.frozen-time .hero-scroll {
     bottom: 44px;
   }
@@ -1977,6 +1986,11 @@ body.frozen-time .hero-title-light {
     padding-block: 10px;
     margin-bottom: var(--sp-3);
   }
+}
+
+.feature-board-media.portrait-media img {
+  object-fit: cover;
+  object-position: center 20%;
 }
 
 @media (min-width: 640px) {
